@@ -24,13 +24,17 @@ http.get "http://registry.npmjs.org/#{name}", (res) ->
         hash.update chunk
       res.on 'end', ->
         process.stdout.write """
-                             "#{name}" = buildNodePackage rec {
-                               name = "#{name}-#{version}";
-                               src = fetchurl {
-                                 url = "http://registry.npmjs.org/#{name}/-/${name}.tgz";
-                                 sha256 = "#{hash.digest('hex')}";
+                             #{}  "#{name}" = self."#{name}-#{version}";
+
+                               "#{name}-#{version}" = buildNodePackage rec {
+                                 name = "#{name}-#{version}";
+                                 src = fetchurl {
+                                   url = "http://registry.npmjs.org/#{name}/-/${name}.tgz";
+                                   sha256 = "#{hash.digest('hex')}";
+                                 };
+                                 deps = [
+                             #{("      self.\"#{dep}#{if ver is "*" then "" else "-#{ver}"}\"" for dep, ver of deps).join "\n"}
+                                 ];
                                };
-                               deps = [ #{("self.\"#{dep}\"" for dep in deps).join " "} ];
-                             };
                              """
-    deps = (key for key, value of (pkginfo.versions[version].dependencies ? {}))
+    deps = pkginfo.versions[version].dependencies ? {}
