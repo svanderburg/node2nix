@@ -31,6 +31,6 @@ http.get "http://registry.npmjs.org/#{name}", (res) ->
                                  sha256 = "#{hash.digest('hex')}";
                                };
                                deps = [ #{deps.join " "} ];
-                             }
+                             };
                              """
     deps = (key for key, value of (pkginfo.versions[version].dependencies ? {}))
