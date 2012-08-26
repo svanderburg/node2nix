@@ -1,6 +1,7 @@
 #!/usr/bin/env coffee
 http = require 'http'
 crypto = require 'crypto'
+semver = require 'semver'
 
 generated = {}
 
@@ -13,7 +14,8 @@ generateExpr = (name, version) ->
       val += chunk
     res.on 'end', ->
       pkginfo = JSON.parse val
-      version = pkginfo['dist-tags'].stable ? pkginfo['dist-tags'].latest if version is "*"
+      versions = (key for own key, value of pkginfo.versions)
+      version = semver.maxSatisfying versions, version
       deps = pkginfo.versions[version].dependencies ? {}
       (generateExpr(nm, ver) unless generated[nm + "-" + ver]?) for nm, ver of deps
       http.get "http://registry.npmjs.org/#{name}/-/#{name}-#{version}.tgz", (res) ->
