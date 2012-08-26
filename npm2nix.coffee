@@ -24,7 +24,7 @@ generateExpr = (name, version) ->
           console.log """
             #{}  "#{name}" = self."#{name}-#{version}";
 
-              "#{name}-#{version}" = buildNodePackage rec {
+              "#{name}-#{version}" = self.buildNodePackage rec {
                 name = "#{name}-#{version}";
                 src = fetchurl {
                   url = "http://registry.npmjs.org/#{name}/-/${name}.tgz";
