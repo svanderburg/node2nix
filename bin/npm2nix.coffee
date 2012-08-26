@@ -5,8 +5,8 @@ semver = require 'semver'
 
 generated = {}
 
-generateExpr = (name, version) ->
-   generated[name + "-" + version] = true
+generateExpr = (name, range) ->
+   generated[name + "-" + range] = true
    http.get "http://registry.npmjs.org/#{name}", (res) ->
     res.setEncoding()
     val = ""
@@ -15,7 +15,7 @@ generateExpr = (name, version) ->
     res.on 'end', ->
       pkginfo = JSON.parse val
       versions = (key for own key, value of pkginfo.versions)
-      version = semver.maxSatisfying versions, version
+      version = semver.maxSatisfying versions, range
       deps = pkginfo.versions[version].dependencies ? {}
       (generateExpr(nm, ver) unless generated[nm + "-" + ver]?) for nm, ver of deps
       http.get "http://registry.npmjs.org/#{name}/-/#{name}-#{version}.tgz", (res) ->
@@ -24,9 +24,9 @@ generateExpr = (name, version) ->
           hash.update chunk
         res.on 'end', ->
           console.log """
-            #{}  "#{name}" = self."#{name}-#{version}";
+            #{}  "#{name}" = self."#{name}-#{range}";
 
-              "#{name}-#{version}" = self.buildNodePackage rec {
+              "#{name}-#{range}" = self.buildNodePackage rec {
                 name = "#{name}-#{version}";
                 src = fetchurl {
                   url = "http://registry.npmjs.org/#{name}/-/${name}.tgz";
