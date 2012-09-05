@@ -17,6 +17,11 @@ generateExpr = (name, range) ->
       versions = (key for own key, value of pkginfo.versions)
       version = semver.maxSatisfying versions, range
       deps = pkginfo.versions[version].dependencies ? {}
+      patchLatest = false
+      for nm, ver of deps
+        if ver == 'latest'
+          deps[nm] = '*'
+          patchLatest = true
       (generateExpr(nm, ver) unless generated[nm + "-" + ver]?) for nm, ver of deps
       http.get "http://registry.npmjs.org/#{name}/-/#{name}-#{version}.tgz", (res) ->
         hash = crypto.createHash 'sha256'
@@ -28,7 +33,7 @@ generateExpr = (name, range) ->
 
               "#{name}-#{range}" = self.buildNodePackage rec {
                 name = "#{name}-#{version}";
-                src = fetchurl {
+                src = #{if patchLatest then 'self.patchLatest' else 'fetchurl'} {
                   url = "http://registry.npmjs.org/#{name}/-/${name}.tgz";
                   sha256 = "#{hash.digest('hex')}";
                 };
