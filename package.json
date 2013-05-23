@@ -1,18 +1,34 @@
 {
   "name": "npm2nix"
 
-, "version": "0.1.1"
+, "version": "1.0.0"
+
+, "description": "Generate nix expressions to build npm packages"
+
+, "homepage": "https://bitbucket.org/shlevy/npm2nix"
 
 , "author": {
     "name": "Shea Levy"
   , "email": "shea@shealevy.com"
   }
 
-, "directories": {
-    "bin": "./bin"
-  },
+, "bin": { "npm2nix": "lib/command.js" }
 
-  "dependencies": {
+, "dependencies": {
     "semver": "1"
+  }
+
+, "repository": {
+    "type": "hg"
+  , "url": "https://bitbucket.org/shlevy/npm2nix"
+  }
+
+, "licenses": [ {
+    "type": "MIT"
+  , "url": "https://bitbucket.org/shlevy/npm2nix/raw/default/LICENSE"
+  } ]
+
+, "scripts": {
+    "prepublish": "coffee --bare --compile --lint --output lib src/*.coffee"
   }
 }
