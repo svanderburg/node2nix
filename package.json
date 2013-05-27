@@ -31,4 +31,8 @@
 , "scripts": {
     "prepublish": "coffee --bare --compile --lint --output lib src/*.coffee"
   }
+
+, "engines": {
+    "node": ">=0.9.4"
+  }
 }
