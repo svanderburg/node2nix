@@ -29,7 +29,9 @@ fs.readFile file, (err, json) ->
     pkgCount -= 1
     if pkgCount is 0
       strings = [ "[" ]
-      for fullName, pkg of packages
+      keys = (key for key, val of packages).sort()
+      for fullName in keys
+        pkg = packages[fullName]
         if pkg is true
           console.error "Internal error: Package #{fullName} never filled in, "
           process.exit 6
