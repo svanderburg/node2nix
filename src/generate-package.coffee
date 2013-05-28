@@ -64,14 +64,12 @@ generatePackage = (name, range, callback) ->
         hash = crypto.createHash 'sha256'
         hash.on 'error', (err) ->
           error "Error getting hash for #{name}-#{version}: #{err}"
-        readHash = ->
+        res.pipe hash
+        hash.on 'readable', ->
           hashBuffer = hash.read 32
           if hashBuffer?
             hashes["#{name}-#{version}"] = hashBuffer
             handleHash()
-        res.pipe hash
-        hash.on 'readable', readHash
-        readHash()
 
   if name of pkginfos
     handleInfo()
