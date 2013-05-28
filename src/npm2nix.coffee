@@ -57,9 +57,14 @@ fs.readFile file, (err, json) ->
       console.log(strings.join("\n  ") + "\n]")
 
   for pkg in packages
-    unless 'name' of pkg
-      console.error "Each package must have a name, but #{JSON.stringify pkg} doesn't"
-      process.exit 5
-    range = pkg.range ? "*"
-    fullNames["#{pkg.name}-#{range}"] = true
-    generatePackage pkg.name, range, generateCallback
+    if typeof pkg is "string"
+      name = pkg
+      range = "*"
+    else
+      unless 'name' of pkg
+        console.error "Each package must have a name, but #{JSON.stringify pkg} doesn't"
+        process.exit 5
+      name = pkg.name
+      range = pkg.range ? "*"
+    fullNames["#{name}-#{range}"] = true
+    generatePackage name, range, generateCallback
