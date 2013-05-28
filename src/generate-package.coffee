@@ -40,8 +40,8 @@ generatePackage = (name, range, callback) ->
         unless deps instanceof Object
           return error "Non-object dependencies field for version #{version} of #{name}"
         patchLatest = false
-        for nm, ver of deps
-          if ver is 'latest'
+        for nm, rng of deps
+          if rng is 'latest'
             deps[nm] = '*'
             patchLatest = true
         pkgCount = 1 # in the no dependency case, there is one package to add
@@ -49,10 +49,10 @@ generatePackage = (name, range, callback) ->
           pkgCount -= 1
           if pkgCount is 0
             callback knownExprs
-        for nm, ver of deps
-          unless knownExprs["#{nm}-#{ver}"]
+        for nm, rng of deps
+          unless knownExprs["#{nm}-#{rng}"]
             pkgCount += 1
-            generatePackage nm, ver, finishedCallback
+            generatePackage nm, rng, finishedCallback
         http.get "http://registry.npmjs.org/#{name}/-/#{name}-#{version}.tgz", (res) ->
           unless res.statusCode is 200
             return error "Failed to get tarball for #{name}-#{version}: #{http.STATUS_CODES[res.statusCode]}"

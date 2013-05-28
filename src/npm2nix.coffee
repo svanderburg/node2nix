@@ -44,8 +44,11 @@ fs.readFile file, (err, json) ->
                 fullName = \"#{escapeNixString fullName}\";
                 hash = \"#{escapeNixString pkg.hash.toString 'hex'}\";
                 patchLatest = #{if pkg.patchLatest then 'true' else 'false'};
-              }
+                dependencies = [
           """
+          for nm, rng of pkg.dependencies
+            strings.push "    { name = \"#{escapeNixString nm}\"; range = \"#{escapeNixString rng}\"; }"
+          strings.push "  ];\n  }"
       console.log(strings.join("\n  ") + "\n]")
 
   for pkg in packages
