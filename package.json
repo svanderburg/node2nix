@@ -14,6 +14,8 @@
 
 , "bin": { "npm2nix": "lib/command.js" }
 
+, "main": "lib/generate-package.js"
+
 , "dependencies": {
     "semver": "1"
   }
