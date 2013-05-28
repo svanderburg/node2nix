@@ -1,23 +1,52 @@
+fs = require 'fs'
 generatePackage = require './generate-package'
 
-name = process.argv[2]
-range = process.argv[3] ? "*"
-generatePackage name, range, (packages) ->
-  printPackage = (pkg, name, range) ->
-    console.log """
-      #{}  "#{name} = self."#{name}-#{range}";
-        "#{name}-#{range}" = self.buildNodePackage rec {
-          name = "#{name}-#{pkg.version}";
-          src = #{if pkg.patchLatest then 'self.patchLatest' else 'fetchurl' } {
-            url = "http://registry.npmjs.org/#{name}/-/${name}.tgz";
-            sha256 = "#{pkg.hash.toString 'hex'}";
-          };
-          deps = [
-      #{("      self.\"#{dep}#{if ver is "*" then "" else "-#{ver}"}\"" for dep, ver of pkg.dependencies).join "\n"}
-          ];
-        };
+file = process.argv[2]
 
-    """
-    for dep, ver of pkg.dependencies
-      printPackage packages["#{dep}-#{ver}"], dep, ver
-  printPackage packages["#{name}-#{range}"], name, range
+unless file?
+  console.error "Usage: #{process.argv[1]} PACKAGES_FILE"
+  process.exit 1
+
+escapeNixString = (string) ->
+  string.replace /(\\|\$\{|")/g, "\\$&"
+
+fs.readFile file, (err, json) ->
+  if err?
+    console.error "Error reading file #{file}: #{err}"
+    process.exit 2
+  try
+    packages = JSON.parse json
+  catch error
+    console.error "Error parsing JSON file #{file}: error"
+    process.exit 3
+
+  unless packages instanceof Array
+    console.error "#{file} must represent an array of packages"
+    process.exit 4
+
+  pkgCount = packages.length
+  generateCallback = (packages) ->
+    pkgCount -= 1
+    if pkgCount is 0
+      strings = [ "[" ]
+      for fullName, pkg of packages
+        if pkg is true
+          console.error "Internal error: Package #{fullName} never filled in, "
+          process.exit 6
+        strings.push """
+          {
+              baseName = \"#{escapeNixString pkg.name}\";
+              version = \"#{escapeNixString pkg.version}\";
+              fullName = \"#{escapeNixString fullName}\";
+              hash = \"#{escapeNixString pkg.hash.toString 'hex'}\";
+              patchLatest = #{if pkg.patchLatest then 'true' else 'false'};
+            }
+        """
+      console.log(strings.join("\n  ") + "\n]")
+
+  for pkg in packages
+    unless 'name' of pkg
+      console.error "Each package must have a name, but #{JSON.stringify pkg} doesn't"
+      process.exit 5
+    range = pkg.range ? "*"
+    generatePackage pkg.name, range, generateCallback

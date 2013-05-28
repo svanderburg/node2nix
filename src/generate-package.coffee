@@ -41,6 +41,7 @@ generatePackage = (name, range, callback) ->
                 patchLatest: patchLatest
                 dependencies: deps
                 version: version
+                name: name
               finishedCallback()
           res.pipe hash
           hash.on 'readable', readHash
