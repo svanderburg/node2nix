@@ -4,6 +4,7 @@ semver = require 'semver'
 
 knownExprs = {}
 pkginfos = {}
+hashes = {}
 
 generatePackage = (name, range, callback) ->
   # Avoid dependency cycles
@@ -42,27 +43,35 @@ generatePackage = (name, range, callback) ->
       unless knownExprs["#{nm}-#{rng}"]
         pkgCount += 1
         generatePackage nm, rng, finishedCallback
-    http.get "http://registry.npmjs.org/#{name}/-/#{name}-#{version}.tgz", (res) ->
-      unless res.statusCode is 200
-        return error "Failed to get tarball for #{name}-#{version}: #{http.STATUS_CODES[res.statusCode]}"
-      res.on 'error', (err) ->
-        error "Error getting tarball for #{name}-#{version}: #{err}"
-      hash = crypto.createHash 'sha256'
-      hash.on 'error', (err) ->
-        error "Error getting hash for #{name}-#{version}: #{err}"
-      readHash = ->
-        hashBuffer = hash.read 32
-        if hashBuffer?
-          knownExprs["#{name}-#{range}"] =
-            hash: hashBuffer
-            patchLatest: patchLatest
-            dependencies: deps
-            version: version
-            name: name
-          finishedCallback()
-      res.pipe hash
-      hash.on 'readable', readHash
-      readHash()
+
+    handleHash = ->
+      knownExprs["#{name}-#{range}"] =
+        hash: hashes["#{name}-#{version}"]
+        patchLatest: patchLatest
+        dependencies: deps
+        version: version
+        name: name
+      finishedCallback()
+
+    if "#{name}-#{version}" of hashes
+      handleHash()
+    else
+      http.get "http://registry.npmjs.org/#{name}/-/#{name}-#{version}.tgz", (res) ->
+        unless res.statusCode is 200
+          return error "Failed to get tarball for #{name}-#{version}: #{http.STATUS_CODES[res.statusCode]}"
+        res.on 'error', (err) ->
+          error "Error getting tarball for #{name}-#{version}: #{err}"
+        hash = crypto.createHash 'sha256'
+        hash.on 'error', (err) ->
+          error "Error getting hash for #{name}-#{version}: #{err}"
+        readHash = ->
+          hashBuffer = hash.read 32
+          if hashBuffer?
+            hashes["#{name}-#{version}"] = hashBuffer
+            handleHash()
+        res.pipe hash
+        hash.on 'readable', readHash
+        readHash()
 
   if name of pkginfos
     handleInfo()
