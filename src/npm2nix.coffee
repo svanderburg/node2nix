@@ -10,6 +10,8 @@ unless file?
 escapeNixString = (string) ->
   string.replace /(\\|\$\{|")/g, "\\$&"
 
+fullNames = {}
+
 fs.readFile file, (err, json) ->
   if err?
     console.error "Error reading file #{file}: #{err}"
@@ -46,6 +48,7 @@ fs.readFile file, (err, json) ->
                 fullName = \"#{escapeNixString fullName}\";
                 hash = \"#{escapeNixString pkg.hash.toString 'hex'}\";
                 patchLatest = #{if pkg.patchLatest then 'true' else 'false'};
+                topLevel = #{if fullName of fullNames then 'true' else 'false'};
                 dependencies = [
           """
           for nm, rng of pkg.dependencies
@@ -58,4 +61,5 @@ fs.readFile file, (err, json) ->
       console.error "Each package must have a name, but #{JSON.stringify pkg} doesn't"
       process.exit 5
     range = pkg.range ? "*"
+    fullNames["#{pkg.name}-#{range}"] = true
     generatePackage pkg.name, range, generateCallback
