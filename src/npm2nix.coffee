@@ -17,7 +17,7 @@ fs.readFile file, (err, json) ->
   try
     packages = JSON.parse json
   catch error
-    console.error "Error parsing JSON file #{file}: error"
+    console.error "Error parsing JSON file #{file}: #{error}"
     process.exit 3
 
   unless packages instanceof Array
@@ -33,15 +33,19 @@ fs.readFile file, (err, json) ->
         if pkg is true
           console.error "Internal error: Package #{fullName} never filled in, "
           process.exit 6
-        strings.push """
-          {
-              baseName = \"#{escapeNixString pkg.name}\";
-              version = \"#{escapeNixString pkg.version}\";
-              fullName = \"#{escapeNixString fullName}\";
-              hash = \"#{escapeNixString pkg.hash.toString 'hex'}\";
-              patchLatest = #{if pkg.patchLatest then 'true' else 'false'};
-            }
-        """
+        # !!! instanceof String returns false for strings from literals, WHAT?
+        if typeof pkg is "string"
+          console.error "Error getting package info for #{fullName}: #{pkg}"
+        else
+          strings.push """
+            {
+                baseName = \"#{escapeNixString pkg.name}\";
+                version = \"#{escapeNixString pkg.version}\";
+                fullName = \"#{escapeNixString fullName}\";
+                hash = \"#{escapeNixString pkg.hash.toString 'hex'}\";
+                patchLatest = #{if pkg.patchLatest then 'true' else 'false'};
+              }
+          """
       console.log(strings.join("\n  ") + "\n]")
 
   for pkg in packages
