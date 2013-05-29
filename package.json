@@ -1,7 +1,7 @@
 {
   "name": "npm2nix"
 
-, "version": "1.1.0"
+, "version": "1.2.0"
 
 , "description": "Generate nix expressions to build npm packages"
 
@@ -18,6 +18,10 @@
 
 , "dependencies": {
     "semver": "1"
+  }
+
+, "devDependencies": {
+    "coffee-script": ">=1.6.2 <2.0.0"
   }
 
 , "repository": {

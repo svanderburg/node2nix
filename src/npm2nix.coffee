@@ -22,11 +22,6 @@ fs.readFile file, (err, json) ->
     console.error "Error parsing JSON file #{file}: #{error}"
     process.exit 3
 
-  unless packages instanceof Array
-    console.error "#{file} must represent an array of packages"
-    process.exit 4
-
-  pkgCount = packages.length
   generateCallback = (packages) ->
     pkgCount -= 1
     if pkgCount is 0
@@ -56,15 +51,43 @@ fs.readFile file, (err, json) ->
           strings.push "  ];\n  }"
       console.log(strings.join("\n  ") + "\n]")
 
-  for pkg in packages
-    if typeof pkg is "string"
-      name = pkg
-      range = "*"
-    else
-      unless 'name' of pkg
-        console.error "Each package must have a name, but #{JSON.stringify pkg} doesn't"
-        process.exit 5
-      name = pkg.name
-      range = pkg.range ? "*"
-    fullNames["#{name}-#{range}"] = true
-    generatePackage name, range, generateCallback
+  if packages instanceof Array
+    pkgCount = packages.length
+
+    for pkg in packages
+      if typeof pkg is "string"
+        name = pkg
+        range = "*"
+      else
+        unless 'name' of pkg
+          console.error "Each package must have a name, but #{JSON.stringify pkg} doesn't"
+          process.exit 5
+        name = pkg.name
+        range = pkg.range ? "*"
+      fullNames["#{name}-#{range}"] = true
+      generatePackage name, range, generateCallback
+  else if packages instanceof Object
+    unless 'dependencies' of packages or 'devDependencies' of packages
+      console.error "#{file} specifies no dependencies"
+      process.exit 7
+
+    unless not ('dependencies' of packages) or packages.dependencies instanceof Object
+      console.error "#{file} has an invalid dependencies field"
+      process.exit 7
+
+    unless not ('devDependencies' of packages) or packages.devDependencies instanceof Object
+      console.error "#{file} has an invalid devDependencies field"
+      process.exit 8
+
+    pkgCount = 0
+    addPackage = (name, range) ->
+      pkgCount += 1
+      range = '*' if range is 'latest' #ugh
+      fullNames["#{name}-#{range}"] = true
+      generatePackage name, range, generateCallback
+    addPackage name, range for name, range of packages.dependencies ? {}
+    addPackage name, range for name, range of packages.devDependencies ? {}
+
+  else
+    console.error "#{file} must represent an array of packages or be a valid npm packages.json"
+    process.exit 4
