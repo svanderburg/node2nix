@@ -35,7 +35,7 @@
   } ]
 
 , "scripts": {
-    "prepublish": "coffee --bare --compile --lint --output lib src/*.coffee"
+    "prepublish": "coffee --bare --compile --output lib src/*.coffee"
   }
 
 , "engines": {
