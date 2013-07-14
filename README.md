@@ -8,4 +8,4 @@ Usage
 
 JSON structure
 --------------
-npm2nix expects the passed JSON file to be a list of objects and strings. Strings are taken as the name of the package. Each object must contain a `name` key (e.g. `coffee-script`) and may optionally contain a `range` key formatted in a way understood by [semver](https://github.com/isaacs/node-semver) (e.g. `~1.2.4`). Alternatively, the passed JSON file can be an npm `package.json`, in which case the expressions for its dependencies will be generated.
+npm2nix expects the passed JSON file to be a list of strings and at most one object. Strings are taken as the name of the package. The object must be a valid dependencies object for an for an npm `packages.json` file. Alternatively, the passed JSON file can be an npm `package.json`, in which case the expressions for its dependencies will be generated.

@@ -14,11 +14,13 @@
 
 , "bin": { "npm2nix": "lib/command.js" }
 
-, "main": "lib/generate-package.js"
+, "main": "lib/package-fetcher.js"
 
 , "dependencies": {
-    "semver": "1"
+    "semver": ">=2.0.10 <3.0.0"
   , "argparse": "0.1.15"
+  , "npm-registry-client": "0.2.27"
+  , "npmconf": "0.1.1"
   }
 
 , "devDependencies": {
