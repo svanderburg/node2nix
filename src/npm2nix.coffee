@@ -1,21 +1,44 @@
 fs = require 'fs'
+path = require 'path'
+argparse = require 'argparse'
 generatePackage = require './generate-package'
 
-file = process.argv[2]
+version = require('../package.json').version
 
-unless file?
-  console.error "Usage: #{process.argv[1]} PACKAGES_FILE"
-  process.exit 1
+parser = new argparse.ArgumentParser {
+  version: version
+  description: 'Generate nix expressions to build npm packages'
+  epilog: """
+      The package list can be either an npm package.json, in which case npm2nix
+      will generate expressions for its dependencies, or a list of strings and
+      objects, where the strings are interpreted as package names and the objects
+      must have key `name', representing the package name and may have key
+      `range', representing the acceptible version range in a format understood
+      by the semver module
+    """
+}
+
+parser.addArgument [ 'packageList' ],
+  help: 'The file containing the packages to generate expressions for'
+  type: path.resolve
+  metavar: 'INPUT'
+
+parser.addArgument [ 'output' ],
+  help: 'The output file to generate'
+  type: path.resolve
+  metavar: 'OUTPUT'
+
+args = parser.parseArgs()
 
 escapeNixString = (string) ->
   string.replace /(\\|\$\{|")/g, "\\$&"
 
 fullNames = {}
 
-fs.readFile file, (err, json) ->
+fs.readFile args.packageList, (err, json) ->
   if err?
     console.error "Error reading file #{file}: #{err}"
-    process.exit 2
+    process.exit 1
   try
     packages = JSON.parse json
   catch error
@@ -49,7 +72,7 @@ fs.readFile file, (err, json) ->
           for nm, rng of pkg.dependencies
             strings.push "    { name = \"#{escapeNixString nm}\"; range = \"#{escapeNixString rng}\"; }"
           strings.push "  ];\n  }"
-      console.log(strings.join("\n  ") + "\n]")
+      fs.writeFileSync args.output, strings.join("\n  ") + "\n]"
 
   if packages instanceof Array
     pkgCount = packages.length
