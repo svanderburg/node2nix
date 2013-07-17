@@ -39,24 +39,6 @@ PackageFetcher.prototype.fetch = (name, spec, registry) ->
         else
           @emit 'error', "Unknown spec #{spec}", name, spec
 
-makeNewRegistry = (registry, newUrl) ->
-  # uuugh
-  cfg = do ->
-    deleted = {}
-    # !!! Shared cache dir, is that OK? Uses etags so probably
-    local = registry: newUrl
-    baseCfg = registry.config
-    get: (key) ->
-      if key of local
-        local[key]
-      else if key of deleted
-        undefined
-      else
-        baseCfg.get key
-    set: (key, value) -> local[key] = value
-    del: (k) -> deleted[key] = true; delete local[key]
-  new RegistryClient cfg
-
 PackageFetcher.prototype._fetchFromRegistry = (name, spec, registry) ->
   handlePackage = (pkg) =>
     unless pkg.dist.tarball?
@@ -181,20 +163,39 @@ do ->
 PackageFetcher.prototype._fetchFromGit = (name, spec, parsed) ->
   @emit 'error', "git dependencies not yet supported", name, spec
 
-PackageFetcher.prototype._handleDeps = (pkg, registry) ->
-  # !!! TODO: Handle optionalDependencies, peerDependencies
-  deps = pkg.dependencies or {}
-  registry = makeNewRegistry registry, pkg.registry if 'registry' of pkg
-  for nm, dep of deps
-    # !!! Seeming conflict between CommonJS Registry spec and npm on the one
-    # hand and CommonJS Package spec on the other. Package spec allows deps
-    # to be an object of options (e.g. "ssl": { "gnutls": "1.2.3", "openssl": "2.3.4" })
-    # but npm only allows simple strings and Registry only allows version, registry
-    # objects in addition to simple strings. Ignoring package spec until/unless a
-    # registry entry in the wild shows up with that format
-    if dep instanceof Object
-      @fetch nm, dep.version, makeNewRegistry registry, dep.registry
-    else
-      @fetch nm, dep, registry
+do ->
+  makeNewRegistry = (registry, newUrl) ->
+    # uuugh
+    cfg = do ->
+      deleted = {}
+      # !!! Shared cache dir, is that OK? Uses etags so probably
+      local = registry: newUrl
+      baseCfg = registry.config
+      get: (key) ->
+        if key of local
+          local[key]
+        else if key of deleted
+          undefined
+        else
+          baseCfg.get key
+      set: (key, value) -> local[key] = value
+      del: (k) -> deleted[key] = true; delete local[key]
+    new RegistryClient cfg
+
+  PackageFetcher.prototype._handleDeps = (pkg, registry) ->
+    # !!! TODO: Handle optionalDependencies, peerDependencies
+    deps = pkg.dependencies or {}
+    registry = makeNewRegistry registry, pkg.registry if 'registry' of pkg
+    for nm, dep of deps
+      # !!! Seeming conflict between CommonJS Registry spec and npm on the one
+      # hand and CommonJS Package spec on the other. Package spec allows deps
+      # to be an object of options (e.g. "ssl": { "gnutls": "1.2.3", "openssl": "2.3.4" })
+      # but npm only allows simple strings and Registry only allows version, registry
+      # objects in addition to simple strings. Ignoring package spec until/unless a
+      # registry entry in the wild shows up with that format
+      if dep instanceof Object
+        @fetch nm, dep.version, makeNewRegistry registry, dep.registry
+      else
+        @fetch nm, dep, registry
 
 module.exports = PackageFetcher
