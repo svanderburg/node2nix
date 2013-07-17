@@ -3,6 +3,7 @@ path = require 'path'
 
 argparse = require 'argparse'
 npmconf = require 'npmconf'
+RegistryClient = require 'npm-registry-client'
 
 PackageFetcher = require './package-fetcher'
 
@@ -73,7 +74,8 @@ npmconf.load (err, conf) ->
   if err?
     console.error "Error loading npm config: #{err}"
     process.exit 7
-  fetcher = new PackageFetcher conf
+  registry = new RegistryClient conf
+  fetcher = new PackageFetcher()
   fs.readFile args.packageList, (err, json) ->
     if err?
       console.error "Error reading file #{file}: #{err}"
@@ -110,7 +112,7 @@ npmconf.load (err, conf) ->
       spec = '*' if spec is 'latest' #ugh
       fullNames[name] ?= {}
       fullNames[name][spec] = true
-      fetcher.fetch name, spec
+      fetcher.fetch name, spec, registry
     if packages instanceof Array
       for pkg in packages
         if typeof pkg is "string"

@@ -14,7 +14,6 @@ PackageFetcher = (cfg) ->
     events.EventEmitter.call this
     @_seen = {}
     @_pkginfos = {}
-    @_registryClient = new RegistryClient cfg
     this
 
 PackageFetcher.prototype = Object.create events.EventEmitter.prototype,
@@ -32,17 +31,35 @@ PackageFetcher.prototype.fetch = (name, spec, registry) ->
       parsed = url.parse spec
       switch parsed.protocol
         when 'git:', 'git+ssh:', 'git+http:', 'git+https:'
-          @_fetchFromGit name, spec, parsed
+          @_fetchFromGit name, spec, registry, parsed
         when 'http:', 'https:'
-          @_fetchFromHTTP name, spec, parsed
+          @_fetchFromHTTP name, spec, registry, parsed
         else
           @emit 'error', "Unknown spec #{spec}", name, spec
+
+makeNewRegistry = (registry, newUrl) ->
+  # uuugh
+  cfg = do ->
+    deleted = {}
+    # !!! Shared cache dir, is that OK? Uses etags so probably
+    local = registry: newUrl
+    baseCfg = registry.config
+    get: (key) ->
+      if key of local
+        local[key]
+      else if key of deleted
+        undefined
+      else
+        baseCfg.get key
+    set: (key, value) -> local[key] = value
+    del: (k) -> deleted[key] = true; delete local[key]
+  new RegistryClient cfg
 
 PackageFetcher.prototype._fetchFromRegistry = (name, spec, registry) ->
   handlePackage = (pkg) =>
     # !!! TODO: Handle optionalDependencies, peerDependencies
     deps = pkg.dependencies or {}
-    registry = pkg.registry ? registry
+    registry = makeNewRegistry registry, pkg.registry if 'registry' of pkg
     for nm, dep of deps
       # !!! Seeming conflict between CommonJS Registry spec and npm on the one
       # hand and CommonJS Package spec on the other. Package spec allows deps
@@ -51,7 +68,7 @@ PackageFetcher.prototype._fetchFromRegistry = (name, spec, registry) ->
       # objects in addition to simple strings. Ignoring package spec until/unless a
       # registry entry in the wild shows up with that format
       if dep instanceof Object
-        @fetch nm, dep.version, dep.registry
+        @fetch nm, dep.version, makeNewRegistry registry, dep.registry
       else
         @fetch nm, dep, registry
     unless pkg.dist.tarball?
@@ -67,26 +84,7 @@ PackageFetcher.prototype._fetchFromRegistry = (name, spec, registry) ->
             pkg.dist.sha256sum = sha256sum
             @emit 'fetched', name, spec, pkg
 
-  if registry?
-    # uuuugh
-    cfg = do ->
-      deleted = {}
-      # !!! Shared cache dir, is that OK? Uses etags so probably
-      local = registry: registry
-      baseCfg = @_registryClient.config
-      get: (key) ->
-        if key of local
-          local[key]
-        else if key of deleted
-          undefined
-        else
-          baseCfg.get key
-      set: (key, value) -> local[key] = value
-      del: (k) -> deleted[key] = true; delete local[key]
-    client = new RegistryClient cfg
-  else
-    client = @_registryClient
-  client.get "/#{encodeURIComponent name}", (err, info) =>
+  registry.get "/#{encodeURIComponent name}", (err, info) =>
     if err?
       @emit 'error', "Error getting registry info for #{name}: #{err}", name, spec
     else
@@ -98,7 +96,7 @@ PackageFetcher.prototype._fetchFromRegistry = (name, spec, registry) ->
         if pkg instanceof Object
           handlePackage pkg
         else
-          client.get "/#{encodeURIComponent name}/#{version}", (err, info) =>
+          registry.get "/#{encodeURIComponent name}/#{version}", (err, info) =>
             if err?
               @emit 'error', "Error getting package info for #{name}@#{version}: #{err}", name, spec
             else
