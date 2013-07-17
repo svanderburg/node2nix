@@ -57,20 +57,7 @@ makeNewRegistry = (registry, newUrl) ->
 
 PackageFetcher.prototype._fetchFromRegistry = (name, spec, registry) ->
   handlePackage = (pkg) =>
-    # !!! TODO: Handle optionalDependencies, peerDependencies
-    deps = pkg.dependencies or {}
-    registry = makeNewRegistry registry, pkg.registry if 'registry' of pkg
-    for nm, dep of deps
-      # !!! Seeming conflict between CommonJS Registry spec and npm on the one
-      # hand and CommonJS Package spec on the other. Package spec allows deps
-      # to be an object of options (e.g. "ssl": { "gnutls": "1.2.3", "openssl": "2.3.4" })
-      # but npm only allows simple strings and Registry only allows version, registry
-      # objects in addition to simple strings. Ignoring package spec until/unless a
-      # registry entry in the wild shows up with that format
-      if dep instanceof Object
-        @fetch nm, dep.version, makeNewRegistry registry, dep.registry
-      else
-        @fetch nm, dep, registry
+    @_handleDeps pkg, registry
     unless pkg.dist.tarball?
       @emit 'error', "Could not find supported dist type for #{pkg.name}@#{pkg.version} in #{util.inspect pkg.dist}", name, spec
     else
@@ -107,6 +94,22 @@ PackageFetcher.prototype._fetchFromHTTP = (name, spec, parsed) ->
 
 PackageFetcher.prototype._fetchFromGit = (name, spec, parsed) ->
   @emit 'error', "git dependencies not yet supported", name, spec
+
+PackageFetcher.prototype._handleDeps = (pkg, registry) ->
+  # !!! TODO: Handle optionalDependencies, peerDependencies
+  deps = pkg.dependencies or {}
+  registry = makeNewRegistry registry, pkg.registry if 'registry' of pkg
+  for nm, dep of deps
+    # !!! Seeming conflict between CommonJS Registry spec and npm on the one
+    # hand and CommonJS Package spec on the other. Package spec allows deps
+    # to be an object of options (e.g. "ssl": { "gnutls": "1.2.3", "openssl": "2.3.4" })
+    # but npm only allows simple strings and Registry only allows version, registry
+    # objects in addition to simple strings. Ignoring package spec until/unless a
+    # registry entry in the wild shows up with that format
+    if dep instanceof Object
+      @fetch nm, dep.version, makeNewRegistry registry, dep.registry
+    else
+      @fetch nm, dep, registry
 
 fetchUrl = do ->
   cache = {}
