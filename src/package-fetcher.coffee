@@ -1,9 +1,11 @@
 http = require 'http'
 crypto = require 'crypto'
+zlib = require 'zlib'
 events = require 'events'
 url = require 'url'
 util = require 'util'
 
+tar = require 'tar'
 semver = require 'semver'
 RegistryClient = require 'npm-registry-client'
 
@@ -89,8 +91,97 @@ PackageFetcher.prototype._fetchFromRegistry = (name, spec, registry) ->
             else
               handlePackage info
 
-PackageFetcher.prototype._fetchFromHTTP = (name, spec, parsed) ->
-  @emit 'error', "HTTP dependencies not yet supported", name, spec
+do ->
+  cache = {}
+
+  addFetchedCallback = (cached, cb) ->
+    if 'err' of cached
+      cb cached.err
+    else if 'pkg' of cached
+      cb undefined, cached.pkg
+    else
+      cached.callbacks.push cb
+
+  PackageFetcher.prototype._fetchFromHTTP = (name, spec, registry, parsed) ->
+    href = parsed.href
+    callback = (err, pkg) =>
+      if err?
+        @emit 'error', "Error fetching #{href}: #{err}", name, spec
+      else
+        @emit 'fetched', name, spec, pkg
+    if href of cache
+      addFetchedCallback cache[href], callback
+    else
+      cached = callbacks: [ callback ]
+      cache[href] = cached
+      error = (err) ->
+        unless 'err' of cached
+          cached.err = err
+          cb err for cb in cached.callbacks
+
+      client = switch parsed.protocol
+        when 'http:'
+          http
+        when 'https:'
+          https
+        else
+          undefined
+      unless client?
+        error "Unsupported protocol #{parsed.protocol}"
+      else
+        unzip = zlib.createGunzip()
+        computeHash = crypto.createHash 'sha256'
+        tarParser = new tar.Parse()
+
+        unzip.pipe tarParser
+
+        unzip.on 'error', (err) -> error "Error while unzipping #{href}: #{err}"
+
+        computeHash.on 'error', (err) -> error "Error while computing hash of #{href}: #{err}"
+
+        tarParser.on 'error', (err) -> error "Error while parsing tarball unzipped from #{href}: #{err}"
+
+        client.get href, (res) =>
+          unless res.statusCode is 200
+            error "Unsuccessful status code while GETting #{href}: #{http.STATUS_CODES[res.statusCode]}"
+          else
+            res.on 'error', (err) -> error "Error while GETting #{href}: #{err}"
+
+            tee = ->
+              while (chunk = res.read()) isnt null
+                unzip.write chunk
+                computeHash.write chunk
+            res.on 'readable', tee
+
+            earlyEnd = -> error "No package.json found in #{href}"
+
+            res.on 'end', earlyEnd
+            tarParser.on 'entry', (entry) =>
+              if /^[^/]*\/package\.json$/.test entry.path
+                chunks = []
+                length = 0
+
+                entry.on 'data', (chunk) ->
+                  chunks.push chunk
+                  length += chunk.length
+
+                entry.on 'end', =>
+                  pkg = JSON.parse Buffer.concat(chunks, length).toString()
+                  @_handleDeps pkg, registry
+                  chunks = null
+                  unzip.unpipe tarParser
+                  unzip.end()
+                  # tarParser doesn't like this...
+                  # tarParser.end()
+                  res.removeListener 'readable', tee
+                  res.removeListener 'end', earlyEnd
+                  computeHash.on 'readable', ->
+                    hashBuf = computeHash.read 32
+                    unless hashBuf is null
+                      pkg.dist = { tarball: href, sha256sum: hashBuf.toString 'hex' }
+                      cached.pkg = pkg
+                      cb undefined, pkg for cb in cached.callbacks
+                  res.pipe computeHash
 
 PackageFetcher.prototype._fetchFromGit = (name, spec, parsed) ->
   @emit 'error', "git dependencies not yet supported", name, spec

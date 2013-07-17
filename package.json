@@ -21,6 +21,7 @@
   , "argparse": "0.1.15"
   , "npm-registry-client": "0.2.27"
   , "npmconf": "0.1.1"
+  , "tar": "0.1.17"
   }
 
 , "devDependencies": {
