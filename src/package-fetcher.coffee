@@ -86,7 +86,7 @@ PackageFetcher.prototype._fetchFromRegistry = (name, spec, registry) ->
     client = new RegistryClient cfg
   else
     client = @_registryClient
-  client.get "/#{encodeURIComponent name}", (err, info) ->
+  client.get "/#{encodeURIComponent name}", (err, info) =>
     if err?
       @emit 'error', "Error getting registry info for #{name}: #{err}", name, spec
     else
@@ -98,7 +98,7 @@ PackageFetcher.prototype._fetchFromRegistry = (name, spec, registry) ->
         if pkg instanceof Object
           handlePackage pkg
         else
-          client.get "/#{encodeURIComponent name}/#{version}", (err, info) ->
+          client.get "/#{encodeURIComponent name}/#{version}", (err, info) =>
             if err?
               @emit 'error', "Error getting package info for #{name}@#{version}: #{err}", name, spec
             else
