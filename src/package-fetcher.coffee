@@ -59,19 +59,14 @@ makeNewRegistry = (registry, newUrl) ->
 
 PackageFetcher.prototype._fetchFromRegistry = (name, spec, registry) ->
   handlePackage = (pkg) =>
-    @_handleDeps pkg, registry
     unless pkg.dist.tarball?
       @emit 'error', "Could not find supported dist type for #{pkg.name}@#{pkg.version} in #{util.inspect pkg.dist}", name, spec
     else
       if pkg.dist.shasum? # Sometimes npm gives us shasums, how nice
+        @_handleDeps pkg, registry
         @emit 'fetched', name, spec, pkg
       else
-        fetchUrl pkg.dist.tarball, (err, sha256sum) =>
-          if err?
-            @emit 'error', "Error getting hash of #{pkg.dist.tarball} for #{pkg.name}@#{pkg.version}: #{err}", name, spec
-          else
-            pkg.dist.sha256sum = sha256sum
-            @emit 'fetched', name, spec, pkg
+        @_fetchFromHTTP name, spec, registry, url.parse dist.tarball
 
   registry.get "/#{encodeURIComponent name}", (err, info) =>
     if err?
@@ -201,38 +196,5 @@ PackageFetcher.prototype._handleDeps = (pkg, registry) ->
       @fetch nm, dep.version, makeNewRegistry registry, dep.registry
     else
       @fetch nm, dep, registry
-
-fetchUrl = do ->
-  cache = {}
-  (u, callback) ->
-    if cache[u]?
-      callback undefined, cache[u]
-    else
-      parsed = url.parse u
-      client = switch parsed.protocol
-        when 'http:'
-          http
-        when 'https:'
-          https
-        else
-          undefined
-      unless client?
-        callback "Unsupported protocol #{parsed.protocol}"
-      else
-        client.get u, (res) ->
-          unless res.statusCode is 200
-            callback "Unsuccessful status code while GETting #{u}: #{http.STATUS_CODES[res.statusCode]}"
-          else
-            res.on 'error', (err) -> callback "Error while GETting #{u}: #{err}"
-            hash = crypto.createHash 'sha256'
-            hash.on 'error', (err) ->
-              callback "Error calculating hash for #{u}: #{err}"
-            res.pipe hash
-            hash.on 'readable', ->
-              hashBuffer = hash.read 32
-              if hashBuffer?
-                hashString = hashBuffer.toString 'hex'
-                cache[u] = hashString
-                callback hashString
 
 module.exports = PackageFetcher
