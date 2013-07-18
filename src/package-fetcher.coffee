@@ -1,4 +1,5 @@
 http = require 'http'
+https = require 'https'
 crypto = require 'crypto'
 zlib = require 'zlib'
 events = require 'events'
