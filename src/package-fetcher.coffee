@@ -122,7 +122,7 @@ do ->
         redirectCount = 0
         getCallback = (res) =>
           unless res.statusCode is 200
-            if res.statusCode in [ "300", "301", "302", "303", "307", "308" ]
+            if res.statusCode in [ 300, 301, 302, 303, 307, 308 ]
               redirectCount += 1
               if redirectCount > 5
                 error "Unable to GET #{href}: Too many redirects"
