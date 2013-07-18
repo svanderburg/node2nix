@@ -119,9 +119,19 @@ do ->
 
         tarParser.on 'error', (err) -> error "Error while parsing tarball unzipped from #{href}: #{err}"
 
-        client.get href, (res) =>
+        redirectCount = 0
+        getCallback = (res) =>
           unless res.statusCode is 200
-            error "Unsuccessful status code while GETting #{href}: #{http.STATUS_CODES[res.statusCode]}"
+            if res.statusCode >= 300 and res.statusCode < 400
+              redirectCount += 1
+              if redirectCount > 5
+                error "Unable to GET #{href}: Too many redirects"
+              else unless 'location' of res.headers
+                error "Bad HTTP response while GETting #{href}: Redirect with no Location header"
+              else
+                client.get res.headers.location, getCallback
+            else
+              error "Unsuccessful status code while GETting #{href}: #{http.STATUS_CODES[res.statusCode]}"
           else
             res.on 'error', (err) -> error "Error while GETting #{href}: #{err}"
 
@@ -161,6 +171,7 @@ do ->
                       cb undefined, pkg for cb in cached.callbacks
                   res.pipe computeHash
 
+        client.get href, getCallback
 PackageFetcher.prototype._fetchFromGit = (name, spec, parsed) ->
   @emit 'error', "git dependencies not yet supported", name, spec
 
