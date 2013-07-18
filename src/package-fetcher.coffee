@@ -140,10 +140,23 @@ do ->
                 unzip.write chunk
                 computeHash.write chunk
             res.on 'readable', tee
+            endComputeHash = -> computeHash.end()
+            res.on 'end', endComputeHash
 
             earlyEnd = -> error "No package.json found in #{href}"
+            tarParser.on 'end', earlyEnd
 
-            res.on 'end', earlyEnd
+            pkg = null
+            hashBuf = null
+            finished = ->
+              pkg.dist = { tarball: href, sha256sum: hashBuf.toString 'hex' }
+              cached.pkg = pkg
+              cb undefined, pkg for cb in cached.callbacks
+
+            computeHash.on 'readable', ->
+              hashBuf = computeHash.read 32
+              finished() unless hashBuf is null or pkg is null
+
             tarParser.on 'entry', (entry) =>
               if /^[^/]*\/package\.json$/.test entry.path
                 chunks = []
@@ -162,14 +175,10 @@ do ->
                   # tarParser doesn't like this...
                   # tarParser.end()
                   res.removeListener 'readable', tee
-                  res.removeListener 'end', earlyEnd
-                  computeHash.on 'readable', ->
-                    hashBuf = computeHash.read 32
-                    unless hashBuf is null
-                      pkg.dist = { tarball: href, sha256sum: hashBuf.toString 'hex' }
-                      cached.pkg = pkg
-                      cb undefined, pkg for cb in cached.callbacks
+                  res.removeListener 'end', endComputeHash
+                  tarParser.removeListener 'end', earlyEnd
                   res.pipe computeHash
+                  finished() unless hashBuf is null
 
         client.get href, getCallback
 PackageFetcher.prototype._fetchFromGit = (name, spec, parsed) ->
