@@ -15,8 +15,7 @@ PackageFetcher = (cfg) ->
     new PackageFetcher cfg
   else
     events.EventEmitter.call this
-    @_seen = {}
-    @_pkginfos = {}
+    @_peerDependencies = {}
     this
 
 PackageFetcher.prototype = Object.create events.EventEmitter.prototype,
@@ -24,9 +23,9 @@ PackageFetcher.prototype = Object.create events.EventEmitter.prototype,
 
 PackageFetcher.prototype.fetch = (name, spec, registry) ->
   spec = '*' if spec is 'latest' # ugh
-  unless @_seen[name]?[spec]?
-    @_seen[name] ?= {}
-    @_seen[name][spec] = true
+  unless 'name' of @_peerDependencies and 'spec' of @_peerDependencies[name]
+    @_peerDependencies[name] ?= {}
+    @_peerDependencies[name][spec] = []
     @emit 'fetching', name, spec
     if semver.validRange spec
       @_fetchFromRegistry name, spec, registry
@@ -46,7 +45,7 @@ PackageFetcher.prototype._fetchFromRegistry = (name, spec, registry) ->
       @emit 'error', "Could not find supported dist type for #{pkg.name}@#{pkg.version} in #{util.inspect pkg.dist}", name, spec
     else
       if pkg.dist.shasum? # Sometimes npm gives us shasums, how nice
-        @_handleDeps pkg, registry
+        @_havePackage name, spec, pkg, registry
         @emit 'fetched', name, spec, pkg
       else
         @_fetchFromHTTP name, spec, registry, url.parse dist.tarball
@@ -168,7 +167,7 @@ do ->
 
                 entry.on 'end', =>
                   pkg = JSON.parse Buffer.concat(chunks, length).toString()
-                  @_handleDeps pkg, registry
+                  @_havePackage name, spec, pkg, registry
                   chunks = null
                   unzip.unpipe tarParser
                   unzip.end()
@@ -218,5 +217,17 @@ do ->
         @fetch nm, dep.version, makeNewRegistry registry, dep.registry
       else
         @fetch nm, dep, registry
+
+PackageFetcher.prototype._havePackage = (name, spec, pkg, registry) ->
+  peerDependencies = pkg.peerDependencies ? {}
+  cb peerDependencies for cb in @_peerDependencies[name][spec]
+  @_peerDependencies[name][spec] = peerDependencies
+  @_handleDeps pkg, registry
+
+PackageFetcher.prototype._getPeerDependencies(name, spec, callback) ->
+  if @_peerDependencies[name][spec] instanceof Array
+    @_peerDependencies[name][spec].push callback
+  else
+    process.nextTick => callback @_peerDependencies[name][spec]
 
 module.exports = PackageFetcher
