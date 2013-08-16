@@ -51,7 +51,12 @@ do ->
         dependencies = [
     """
     patchLatest = 'false'
-    for nm, spc of pkg.dependencies
+    for nm, spc of pkg.dependencies or {}
+      spc = spc.version if spc instanceof Object
+      stream.write "\n      { name = \"#{escapeNixString nm}\"; spec = \"#{escapeNixString spc}\"; }"
+    stream.write "\n    ];"
+    stream.write "\n    peerDependencies = ["
+    for nm, spc of pkg.peerDependencies or {}
       spc = spc.version if spc instanceof Object
       stream.write "\n      { name = \"#{escapeNixString nm}\"; spec = \"#{escapeNixString spc}\"; }"
     stream.write "\n    ];"

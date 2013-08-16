@@ -204,10 +204,9 @@ do ->
 
   PackageFetcher.prototype._handleDeps = (pkg, registry) ->
     # !!! TODO: Handle optionalDependencies, peerDependencies
-    deps = pkg.dependencies or {}
     registry = makeNewRegistry registry, pkg.registry if 'registry' of pkg
     pkg.patchLatest = false
-    for nm, dep of deps
+    handleDep = (nm, dep) =>
       # !!! Seeming conflict between CommonJS Registry spec and npm on the one
       # hand and CommonJS Package spec on the other. Package spec allows deps
       # to be an object of options (e.g. "ssl": { "gnutls": "1.2.3", "openssl": "2.3.4" })
@@ -221,6 +220,10 @@ do ->
         pkg.patchLatest = true
         dep = '*'
       @fetch nm, dep, registry
+    for nm, dep of pkg.dependencies or {}
+      handleDep nm, dep
+    for nm, dep of pkg.peerDependencies or {}
+      handleDep nm, dep
 
 PackageFetcher.prototype._havePackage = (name, spec, pkg, registry) ->
   peerDependencies = pkg.peerDependencies ? {}
@@ -228,7 +231,7 @@ PackageFetcher.prototype._havePackage = (name, spec, pkg, registry) ->
   @_peerDependencies[name][spec] = peerDependencies
   @_handleDeps pkg, registry
 
-PackageFetcher.prototype._getPeerDependencies(name, spec, callback) ->
+PackageFetcher.prototype._getPeerDependencies = (name, spec, callback) ->
   if @_peerDependencies[name][spec] instanceof Array
     @_peerDependencies[name][spec].push callback
   else
