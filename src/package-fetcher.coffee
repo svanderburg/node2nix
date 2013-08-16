@@ -206,6 +206,7 @@ do ->
     # !!! TODO: Handle optionalDependencies, peerDependencies
     deps = pkg.dependencies or {}
     registry = makeNewRegistry registry, pkg.registry if 'registry' of pkg
+    pkg.patchLatest = false
     for nm, dep of deps
       # !!! Seeming conflict between CommonJS Registry spec and npm on the one
       # hand and CommonJS Package spec on the other. Package spec allows deps
@@ -214,9 +215,12 @@ do ->
       # objects in addition to simple strings. Ignoring package spec until/unless a
       # registry entry in the wild shows up with that format
       if dep instanceof Object
-        @fetch nm, dep.version, makeNewRegistry registry, dep.registry
-      else
-        @fetch nm, dep, registry
+        registry = makeNewRegistry registry, dep.registry
+        dep = dep.version
+      if dep is 'latest'
+        pkg.patchLatest = true
+        dep = '*'
+      @fetch nm, dep, registry
 
 PackageFetcher.prototype._havePackage = (name, spec, pkg, registry) ->
   peerDependencies = pkg.peerDependencies ? {}

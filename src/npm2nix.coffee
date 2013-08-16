@@ -53,12 +53,9 @@ do ->
     patchLatest = 'false'
     for nm, spc of pkg.dependencies
       spc = spc.version if spc instanceof Object
-      if spc is 'latest'
-        patchLatest = 'true'
-        spc = '*'
       stream.write "\n      { name = \"#{escapeNixString nm}\"; spec = \"#{escapeNixString spc}\"; }"
     stream.write "\n    ];"
-    stream.write "\n    patchLatest = #{patchLatest};"
+    stream.write "\n    patchLatest = #{if pkg.patchLatest then 'true' else 'false'};"
     if pkg.dist.shasum?
       stream.write "\n    sha1 = \"#{pkg.dist.shasum}\";"
     else if pkg.dist.sha256sum?
