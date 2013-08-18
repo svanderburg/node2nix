@@ -15,8 +15,7 @@ PackageFetcher = (cfg) ->
     new PackageFetcher cfg
   else
     events.EventEmitter.call this
-    @_seen = {}
-    @_pkginfos = {}
+    @_peerDependencies = {}
     this
 
 PackageFetcher.prototype = Object.create events.EventEmitter.prototype,
@@ -24,9 +23,9 @@ PackageFetcher.prototype = Object.create events.EventEmitter.prototype,
 
 PackageFetcher.prototype.fetch = (name, spec, registry) ->
   spec = '*' if spec is 'latest' # ugh
-  unless @_seen[name]?[spec]?
-    @_seen[name] ?= {}
-    @_seen[name][spec] = true
+  unless 'name' of @_peerDependencies and 'spec' of @_peerDependencies[name]
+    @_peerDependencies[name] ?= {}
+    @_peerDependencies[name][spec] = []
     @emit 'fetching', name, spec
     if semver.validRange spec
       @_fetchFromRegistry name, spec, registry
@@ -46,7 +45,7 @@ PackageFetcher.prototype._fetchFromRegistry = (name, spec, registry) ->
       @emit 'error', "Could not find supported dist type for #{pkg.name}@#{pkg.version} in #{util.inspect pkg.dist}", name, spec
     else
       if pkg.dist.shasum? # Sometimes npm gives us shasums, how nice
-        @_handleDeps pkg, registry
+        @_havePackage name, spec, pkg, registry
         @emit 'fetched', name, spec, pkg
       else
         @_fetchFromHTTP name, spec, registry, url.parse dist.tarball
@@ -168,7 +167,7 @@ do ->
 
                 entry.on 'end', =>
                   pkg = JSON.parse Buffer.concat(chunks, length).toString()
-                  @_handleDeps pkg, registry
+                  @_havePackage name, spec, pkg, registry
                   chunks = null
                   unzip.unpipe tarParser
                   unzip.end()
@@ -203,20 +202,94 @@ do ->
       del: (k) -> deleted[key] = true; delete local[key]
     new RegistryClient cfg
 
+  tryMergeDeps = (dep1, dep2) ->
+    if dep1 instanceof Object
+      dep1 = dep1.version
+    if dep2 instanceof Object
+      dep2 = dep2.version
+    if dep1 is 'latest'
+      dep1 = '*'
+    if dep2 is 'latest'
+      dep2 = '*'
+    if semver.validRange(dep1) and semver.validRange(dep2)
+      merged = new semver.Range dep1
+      range2 = new semver.Range dep2
+      mergedSet = []
+      for left in merged.set
+        for right in range2.set
+          subset = left.concat(right)
+          subset.splice(left.length - 1, 1)
+          mergedSet.push subset
+      merged.set = mergedSet
+      merged.format()
+    else
+      undefined
+
   PackageFetcher.prototype._handleDeps = (pkg, registry) ->
     # !!! TODO: Handle optionalDependencies, peerDependencies
-    deps = pkg.dependencies or {}
     registry = makeNewRegistry registry, pkg.registry if 'registry' of pkg
-    for nm, dep of deps
+    pkg.patchLatest = false
+    handleDep = (nm, dep) =>
       # !!! Seeming conflict between CommonJS Registry spec and npm on the one
       # hand and CommonJS Package spec on the other. Package spec allows deps
       # to be an object of options (e.g. "ssl": { "gnutls": "1.2.3", "openssl": "2.3.4" })
       # but npm only allows simple strings and Registry only allows version, registry
       # objects in addition to simple strings. Ignoring package spec until/unless a
       # registry entry in the wild shows up with that format
+      thisRegistry = registry
       if dep instanceof Object
-        @fetch nm, dep.version, makeNewRegistry registry, dep.registry
-      else
-        @fetch nm, dep, registry
+        thisRegistry = makeNewRegistry registry, dep.registry
+        dep = dep.version
+      if dep is 'latest'
+        pkg.patchLatest = true
+        dep = '*'
+      @fetch nm, dep, thisRegistry
+    for nm, dep of pkg.dependencies or {}
+      handleDep nm, dep
+    for nm, dep of pkg.peerDependencies or {}
+      handleDep nm, dep
+
+    handlePeerDependencies = (peerDependencies) =>
+      peerDeps = {}
+      for nm, dep of peerDependencies
+        if dep instanceof Object
+          dep = dep.version
+        if dep is 'latest'
+          dep = '*'
+          pkg.patchLatest = true
+        if nm of pkg.dependencies
+          merged = tryMergeDeps dep, pkg.dependencies[nm]
+          if merged?
+            dep = merged
+          else
+            @emit 'error',
+              "Cannot merge top-level dependency #{nm}: #{pkg.dependencies[nm]} of #{name}@#{pkg.version} with peerDependency #{nm}: #{dep} since both are not valid semver ranges",
+              name,
+              pkg.version
+            return
+        handleDep nm, dep
+        pkg.dependencies[nm] = dep
+        peerDeps[nm] = dep
+      for nm, dep of peerDeps
+        @_getPeerDependencies nm, dep, handlePeerDependencies
+
+    for nm, dep of pkg.dependencies or {}
+      if dep instanceof Object
+        dep = dep.version
+      if dep is 'latest'
+        dep = '*'
+      @_getPeerDependencies nm, dep, handlePeerDependencies
+
+PackageFetcher.prototype._havePackage = (name, spec, pkg, registry) ->
+  peerDependencies = pkg.peerDependencies ? {}
+  cb peerDependencies for cb in @_peerDependencies[name][spec]
+  @_peerDependencies[name][spec] = peerDependencies
+  @_handleDeps pkg, registry
+
+PackageFetcher.prototype._getPeerDependencies = (name, spec, callback) ->
+  if @_peerDependencies[name][spec] instanceof Array
+    @_peerDependencies[name][spec].push callback
+  else
+    callback @_peerDependencies[name][spec]
 
 module.exports = PackageFetcher
