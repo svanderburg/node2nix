@@ -207,6 +207,10 @@ do ->
       dep1 = dep1.version
     if dep2 instanceof Object
       dep2 = dep2.version
+    if dep1 is 'latest'
+      dep1 = '*'
+    if dep2 is 'latest'
+      dep2 = '*'
     if semver.validRange(dep1) and semver.validRange(dep2)
       merged = new semver.Range dep1
       range2 = new semver.Range dep2
@@ -244,28 +248,37 @@ do ->
       handleDep nm, dep
     for nm, dep of pkg.peerDependencies or {}
       handleDep nm, dep
+
+    handlePeerDependencies = (peerDependencies) =>
+      peerDeps = {}
+      for nm, dep of peerDependencies
+        if dep instanceof Object
+          dep = dep.version
+        if dep is 'latest'
+          dep = '*'
+          pkg.patchLatest = true
+        if nm of pkg.dependencies
+          merged = tryMergeDeps dep, pkg.dependencies[nm]
+          if merged?
+            dep = merged
+          else
+            @emit 'error',
+              "Cannot merge top-level dependency #{nm}: #{pkg.dependencies[nm]} of #{name}@#{pkg.version} with peerDependency #{nm}: #{dep} since both are not valid semver ranges",
+              name,
+              pkg.version
+            return
+        handleDep nm, dep
+        pkg.dependencies[nm] = dep
+        peerDeps[nm] = dep
+      for nm, dep of peerDeps
+        @_getPeerDependencies nm, dep, handlePeerDependencies
+
     for nm, dep of pkg.dependencies or {}
       if dep instanceof Object
         dep = dep.version
       if dep is 'latest'
         dep = '*'
-      @_getPeerDependencies nm, dep, (peerDependencies) =>
-        for nm, dep of peerDependencies
-          if dep is 'latest'
-            dep = '*'
-            pkg.patchLatest = true
-          if nm of pkg.dependencies
-            merged = tryMergeDeps dep, pkg.dependencies[nm]
-            if merged?
-              dep = merged
-            else
-              @emit 'error',
-                "Cannot merge top-level dependency #{nm}: #{pkg.dependencies[nm]} of #{name}@#{pkg.version} with peerDependency #{nm}: #{dep} since both are not valid semver ranges",
-                name,
-                pkg.version
-              return
-          handleDep nm, dep
-          pkg.dependencies[nm] = dep
+      @_getPeerDependencies nm, dep, handlePeerDependencies
 
 PackageFetcher.prototype._havePackage = (name, spec, pkg, registry) ->
   peerDependencies = pkg.peerDependencies ? {}
