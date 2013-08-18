@@ -202,6 +202,25 @@ do ->
       del: (k) -> deleted[key] = true; delete local[key]
     new RegistryClient cfg
 
+  tryMergeDeps = (dep1, dep2) ->
+    if dep1 instanceof Object
+      dep1 = dep1.version
+    if dep2 instanceof Object
+      dep2 = dep2.version
+    if semver.validRange(dep1) and semver.validRange(dep2)
+      merged = new semver.Range dep1
+      range2 = new semver.Range dep2
+      mergedSet = []
+      for left in merged.set
+        for right in range2.set
+          subset = left.concat(right)
+          subset.splice(left.length - 1, 1)
+          mergedSet.push subset
+      merged.set = mergedSet
+      merged.format()
+    else
+      undefined
+
   PackageFetcher.prototype._handleDeps = (pkg, registry) ->
     # !!! TODO: Handle optionalDependencies, peerDependencies
     registry = makeNewRegistry registry, pkg.registry if 'registry' of pkg
@@ -213,17 +232,40 @@ do ->
       # but npm only allows simple strings and Registry only allows version, registry
       # objects in addition to simple strings. Ignoring package spec until/unless a
       # registry entry in the wild shows up with that format
+      thisRegistry = registry
       if dep instanceof Object
-        registry = makeNewRegistry registry, dep.registry
+        thisRegistry = makeNewRegistry registry, dep.registry
         dep = dep.version
       if dep is 'latest'
         pkg.patchLatest = true
         dep = '*'
-      @fetch nm, dep, registry
+      @fetch nm, dep, thisRegistry
     for nm, dep of pkg.dependencies or {}
       handleDep nm, dep
     for nm, dep of pkg.peerDependencies or {}
       handleDep nm, dep
+    for nm, dep of pkg.dependencies or {}
+      if dep instanceof Object
+        dep = dep.version
+      if dep is 'latest'
+        dep = '*'
+      @_getPeerDependencies nm, dep, (peerDependencies) =>
+        for nm, dep of peerDependencies
+          if dep is 'latest'
+            dep = '*'
+            pkg.patchLatest = true
+          if nm of pkg.dependencies
+            merged = tryMergeDeps dep, pkg.dependencies[nm]
+            if merged?
+              dep = merged
+            else
+              @emit 'error',
+                "Cannot merge top-level dependency #{nm}: #{pkg.dependencies[nm]} of #{name}@#{pkg.version} with peerDependency #{nm}: #{dep} since both are not valid semver ranges",
+                name,
+                pkg.version
+              return
+          handleDep nm, dep
+          pkg.dependencies[nm] = dep
 
 PackageFetcher.prototype._havePackage = (name, spec, pkg, registry) ->
   peerDependencies = pkg.peerDependencies ? {}
@@ -235,6 +277,6 @@ PackageFetcher.prototype._getPeerDependencies = (name, spec, callback) ->
   if @_peerDependencies[name][spec] instanceof Array
     @_peerDependencies[name][spec].push callback
   else
-    process.nextTick => callback @_peerDependencies[name][spec]
+    callback @_peerDependencies[name][spec]
 
 module.exports = PackageFetcher
