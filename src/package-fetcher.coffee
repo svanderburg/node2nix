@@ -27,15 +27,15 @@ PackageFetcher.prototype.fetch = (name, spec, registry) ->
     @_peerDependencies[name] ?= {}
     @_peerDependencies[name][spec] = []
     @emit 'fetching', name, spec
-    if semver.validRange spec, true
-      @_fetchFromRegistry name, spec, registry
-    else
-      parsed = url.parse spec
-      switch parsed.protocol
-        when 'git:', 'git+ssh:', 'git+http:', 'git+https:'
-          @_fetchFromGit name, spec, registry, parsed
-        when 'http:', 'https:'
-          @_fetchFromHTTP name, spec, registry, parsed
+    parsed = url.parse spec
+    switch parsed.protocol
+      when 'git:', 'git+ssh:', 'git+http:', 'git+https:'
+        @_fetchFromGit name, spec, registry, parsed
+      when 'http:', 'https:'
+        @_fetchFromHTTP name, spec, registry, parsed
+      else
+        if semver.validRange spec, true
+          @_fetchFromRegistry name, spec, registry
         else
           @emit 'error', "Unknown spec #{spec}", name, spec
 
