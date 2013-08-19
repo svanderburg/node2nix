@@ -23,7 +23,7 @@ PackageFetcher.prototype = Object.create events.EventEmitter.prototype,
 
 PackageFetcher.prototype.fetch = (name, spec, registry) ->
   spec = '*' if spec is 'latest' # ugh
-  unless 'name' of @_peerDependencies and 'spec' of @_peerDependencies[name]
+  unless name of @_peerDependencies and spec of @_peerDependencies[name]
     @_peerDependencies[name] ?= {}
     @_peerDependencies[name][spec] = []
     @emit 'fetching', name, spec
