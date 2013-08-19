@@ -54,7 +54,7 @@ PackageFetcher.prototype._fetchFromRegistry = (name, spec, registry) ->
     if err?
       @emit 'error', "Error getting registry info for #{name}: #{err}", name, spec
     else
-      version = semver.maxSatisfying (key for key, value of info.versions), spec
+      version = semver.maxSatisfying (key for key, value of info.versions), spec, true
       unless version?
         @emit 'error', "Could not find version matching #{spec} for #{name} in #{util.inspect info.versions}", name, spec
       else
@@ -212,8 +212,8 @@ do ->
     if dep2 is 'latest'
       dep2 = '*'
     if semver.validRange(dep1, true) and semver.validRange(dep2, true)
-      merged = new semver.Range dep1
-      range2 = new semver.Range dep2
+      merged = new semver.Range dep1, true
+      range2 = new semver.Range dep2, true
       mergedSet = []
       for left in merged.set
         for right in range2.set
