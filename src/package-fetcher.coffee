@@ -27,7 +27,7 @@ PackageFetcher.prototype.fetch = (name, spec, registry) ->
     @_peerDependencies[name] ?= {}
     @_peerDependencies[name][spec] = []
     @emit 'fetching', name, spec
-    if semver.validRange spec
+    if semver.validRange spec, true
       @_fetchFromRegistry name, spec, registry
     else
       parsed = url.parse spec
@@ -211,7 +211,7 @@ do ->
       dep1 = '*'
     if dep2 is 'latest'
       dep2 = '*'
-    if semver.validRange(dep1) and semver.validRange(dep2)
+    if semver.validRange(dep1, true) and semver.validRange(dep2, true)
       merged = new semver.Range dep1
       range2 = new semver.Range dep2
       mergedSet = []
