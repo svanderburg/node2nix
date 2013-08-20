@@ -206,9 +206,9 @@ do ->
       dep1 = dep1.version
     if dep2 instanceof Object
       dep2 = dep2.version
-    if dep1 is 'latest'
+    if dep1 is 'latest' or dep1 is ''
       dep1 = '*'
-    if dep2 is 'latest'
+    if dep2 is 'latest' or dep2 is ''
       dep2 = '*'
     if semver.validRange(dep1, true) and semver.validRange(dep2, true)
       merged = new semver.Range dep1, true
@@ -242,6 +242,8 @@ do ->
       if dep is 'latest'
         pkg.patchLatest = true
         dep = '*'
+      if dep is ''
+        dep = '*'
       @fetch nm, dep, thisRegistry
     for nm, dep of pkg.dependencies or {}
       handleDep nm, dep
@@ -256,6 +258,8 @@ do ->
         if dep is 'latest'
           dep = '*'
           pkg.patchLatest = true
+        if dep is ''
+          dep = '*'
         if nm of pkg.dependencies
           merged = tryMergeDeps dep, pkg.dependencies[nm]
           if merged?
@@ -275,7 +279,7 @@ do ->
     for nm, dep of pkg.dependencies or {}
       if dep instanceof Object
         dep = dep.version
-      if dep is 'latest'
+      if dep is 'latest' or dep is ''
         dep = '*'
       @_getPeerDependencies nm, dep, handlePeerDependencies
 

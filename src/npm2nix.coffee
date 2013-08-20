@@ -51,7 +51,7 @@ do ->
     patchLatest = 'false'
     for nm, spc of pkg.dependencies or {}
       spc = spc.version if spc instanceof Object
-      if spc is 'latest'
+      if spc is 'latest' or spec is ''
         spc = '*'
       stream.write "\n      { name = \"#{escapeNixString nm}\"; spec = \"#{escapeNixString spc}\"; }"
     stream.write "\n    ];"
@@ -111,7 +111,7 @@ npmconf.load (err, conf) ->
       process.exit 8
 
     addPackage = (name, spec) ->
-      spec = '*' if spec is 'latest' #ugh
+      spec = '*' if spec is 'latest' or spec is '' #ugh
       fullNames[name] ?= {}
       fullNames[name][spec] = true
       fetcher.fetch name, spec, registry
