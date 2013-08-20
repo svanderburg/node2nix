@@ -45,7 +45,6 @@ do ->
     stream.write """
     \n  "#{escapeNixString name}"."#{escapeNixString spec}" = {
         version = "#{escapeNixString pkg.version}";
-        topLevel = #{if fullNames[name]?[spec]? then 'true' else 'false'};
         dependencies = [
     """
     patchLatest = 'false'
@@ -69,6 +68,10 @@ do ->
     if pkg.dist.tarball?
       stream.write "\n    tarball = \"#{pkg.dist.tarball}\";"
     stream.write "\n  };"
+    if fullNames[name] is spec
+      stream.write """
+      \n  "#topLevel"."#{escapeNixString name}" = "#{escapeNixString spec}";
+      """
   finalizePkgs = ->
     stream.end "\n}\n"
 
@@ -112,8 +115,7 @@ npmconf.load (err, conf) ->
 
     addPackage = (name, spec) ->
       spec = '*' if spec is 'latest' or spec is '' #ugh
-      fullNames[name] ?= {}
-      fullNames[name][spec] = true
+      fullNames[name] = spec
       fetcher.fetch name, spec, registry
     if packages instanceof Array
       for pkg in packages
