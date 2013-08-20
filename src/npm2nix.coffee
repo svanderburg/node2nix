@@ -40,12 +40,10 @@ fullNames = {}
 writePkg = finalizePkgs = undefined
 do ->
   stream = fs.createWriteStream args.output
-  stream.write "["
+  stream.write "{"
   writePkg = (name, spec, pkg) ->
     stream.write """
-    \n  {
-        name = "#{escapeNixString name}";
-        spec = "#{escapeNixString spec}";
+    \n  "#{escapeNixString name}"."#{escapeNixString spec}" = {
         version = "#{escapeNixString pkg.version}";
         topLevel = #{if fullNames[name]?[spec]? then 'true' else 'false'};
         dependencies = [
@@ -70,9 +68,9 @@ do ->
 
     if pkg.dist.tarball?
       stream.write "\n    tarball = \"#{pkg.dist.tarball}\";"
-    stream.write "\n  }"
+    stream.write "\n  };"
   finalizePkgs = ->
-    stream.end "\n]\n"
+    stream.end "\n}\n"
 
 npmconf.load (err, conf) ->
   if err?
