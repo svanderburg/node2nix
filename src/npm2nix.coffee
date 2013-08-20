@@ -50,7 +50,7 @@ do ->
     patchLatest = 'false'
     for nm, spc of pkg.dependencies or {}
       spc = spc.version if spc instanceof Object
-      if spc is 'latest' or spec is ''
+      if spc is 'latest' or spc is ''
         spc = '*'
       stream.write "\n      { name = \"#{escapeNixString nm}\"; spec = \"#{escapeNixString spc}\"; }"
     stream.write "\n    ];"
