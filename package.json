@@ -1,7 +1,7 @@
 {
   "name": "npm2nix"
 
-, "version": "4.0.1"
+, "version": "5.0.0"
 
 , "description": "Generate nix expressions to build npm packages"
 

@@ -40,37 +40,33 @@ fullNames = {}
 writePkg = finalizePkgs = undefined
 do ->
   stream = fs.createWriteStream args.output
-  stream.write "{"
+  stream.write "{ self, fetchurl, lib }:\n\n{"
   writePkg = (name, spec, pkg) ->
     stream.write """
-    \n  "#{escapeNixString name}"."#{escapeNixString spec}" = {
-        version = "#{escapeNixString pkg.version}";
-        dependencies = [
+    \n  full."#{escapeNixString name}"."#{escapeNixString spec}" = lib.makeOverridable self.buildNodePackage {
+        name = "#{escapeNixString name}-#{escapeNixString pkg.version}";
+        src = #{if pkg.patchLatest then "self.patchLatest" else "fetchurl"} {
+          url = "#{pkg.dist.tarball}";
+          #{if 'shasum' of pkg.dist then 'sha1' else 'sha256'} = "#{pkg.dist.shasum ? pkg.dist.sha256sum}";
+        };
+        buildInputs = self.nativeDeps."#{escapeNixString name}"."#{escapeNixString spec}" or [];
+        deps = [
     """
-    patchLatest = 'false'
     for nm, spc of pkg.dependencies or {}
       spc = spc.version if spc instanceof Object
       if spc is 'latest' or spc is ''
         spc = '*'
-      stream.write "\n      { name = \"#{escapeNixString nm}\"; spec = \"#{escapeNixString spc}\"; }"
+      stream.write "\n      self.full.\"#{escapeNixString nm}\".\"#{escapeNixString spc}\""
     stream.write "\n    ];"
     stream.write "\n    peerDependencies = ["
     for nm, spc of pkg.peerDependencies or {}
       spc = spc.version if spc instanceof Object
-      stream.write "\n      { name = \"#{escapeNixString nm}\"; spec = \"#{escapeNixString spc}\"; }"
+      stream.write "\n      self.full.\"#{escapeNixString nm}\".\"#{escapeNixString spc}\""
     stream.write "\n    ];"
-    stream.write "\n    patchLatest = #{if pkg.patchLatest then 'true' else 'false'};"
-    if pkg.dist.shasum?
-      stream.write "\n    sha1 = \"#{pkg.dist.shasum}\";"
-    else if pkg.dist.sha256sum?
-      stream.write "\n    sha256 = \"#{pkg.dist.sha256sum}\";"
-
-    if pkg.dist.tarball?
-      stream.write "\n    tarball = \"#{pkg.dist.tarball}\";"
     stream.write "\n  };"
     if fullNames[name] is spec
       stream.write """
-      \n  "#topLevel"."#{escapeNixString name}" = "#{escapeNixString spec}";
+      \n  "#{escapeNixString name}" = self.full."#{escapeNixString name}"."#{escapeNixString spec}";
       """
   finalizePkgs = ->
     stream.end "\n}\n"
