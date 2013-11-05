@@ -40,98 +40,99 @@ packageSet = {}
 
 writePkg = finalizePkgs = undefined
 do ->
-  findCycles = (name, spec, pkg) ->
-    index = 0
-    node = { name: name, spec: spec }
-    path = []
-    indices= []
-    pkg.cycles = []
-    loop
-      cycleDetected = false
-      for el in path
-        if el.name is node.name
-          cycleDetected = true
-          if el is path[0]
-            pkg.cycles.push path.slice 0
-      unless cycleDetected
-        peerDeps = packageSet[node.name][node.spec].peerDependencies or {}
-        if Object.keys(peerDeps).length > index
-          path.push node
-          indices.push index
-          name = Object.keys(peerDeps)[index]
-          node = { name: name, spec: peerDeps[name] }
-          index = 0
-          continue
-        else if path.length is 0
-          break
-      node = path.pop()
-      index = indices.pop() + 1
-  cycleMembers = {}
+  index = 0
+  stack = []
+  strongConnect = (pkg) ->
+    pkg.tarjanIndex = index
+    pkg.tarjanLowLink = index
+    index += 1
+    stackIndex = stack.length
+    stack.push pkg
+
+    peerDeps = pkg.peerDependencies or {}
+    for name, spec of peerDeps
+      otherPkg = packageSet[name][spec]
+
+      unless 'tarjanIndex' of otherPkg
+        strongConnect otherPkg
+        pkg.tarjanLowLink = otherPkg.tarjanLowLink if otherPkg.tarjanLowLink < pkg.tarjanLowLink
+      else
+        if otherPkg in stack
+          pkg.tarjanLowLink = otherPkg.tarjanIndex if otherPkg.tarjanIndex < pkg.tarjanLowLink
+
+    if pkg.tarjanLowLink is pkg.tarjanIndex
+      pkg.scc = stack[stackIndex..]
+      stack = stack[...stackIndex]
+
+
+  known = {}
 
   stream = fs.createWriteStream args.output
   stream.write "{ self, fetchurl, lib }:\n\n{"
   writePkg = (name, spec, pkg) ->
-    if name of cycleMembers and pkg.version of cycleMembers[name]
-      stream.write """
-      \n  full."#{escapeNixString name}"."#{escapeNixString spec}" = self.full."#{escapeNixString cycleMembers[name][pkg.version].name}"."#{escapeNixString cycleMembers[name][pkg.version].spec}";
-      """
-    else
-      findCycles name, spec, pkg
-      pkgs = [ pkg ]
-      names = [ name ]
-      specs = [ spec ]
-      seen = {}
-      seen[name] = true
-      count = 0
-      for cycle in pkg.cycles
-        for node in cycle
-          cycleMembers[node.name] ?= {}
-          cycleMembers[node.name][packageSet[node.name][node.spec].version] = { name: name, spec: spec }
-          unless seen[node.name]
-            pkgs.push packageSet[node.name][node.spec]
-            names.push node.name
-            specs.push node.spec
-            count += 1
-          seen[node.name] = true
-      stream.write "\n  full.\"#{escapeNixString name}\".\"#{escapeNixString spec}\" = lib.makeOverridable self.buildNodePackage {"
-      stream.write "\n    name = \"#{escapeNixString names[0]}-#{escapeNixString pkgs[0].version}\";\n    src = ["
-      for idx in [0..count]
-        pk = pkgs[idx]
-        stream.write """
-        \n      (#{if pk.patchLatest then 'self.patchLatest' else 'fetchurl'} {
-                url = "#{pk.dist.tarball}";
-                #{if 'shasum' of pk.dist then 'sha1' else 'sha256'} = "#{pk.dist.shasum ? pk.dist.sha256sum}";
-              })
-        """
-      stream.write "\n    ];\n    buildInputs ="
-      for idx in [0..count]
-        stream.write "\n      "
-        stream.write "++ " unless idx is 0
-        stream.write "(self.nativeDeps.\"#{escapeNixString names[idx]}\".\"#{escapeNixString specs[idx]}\" or [])"
-      stream.write ";\n    deps = ["
-      seenDeps = {}
-      for idx in [0..count]
-        for nm, spc of pkgs[idx].dependencies or {}
-          unless seenDeps[nm]
-            spc = spc.version if spc instanceof Object
-            if spc is 'latest' or spc is ''
-              spc = '*'
-            stream.write "\n      self.full.\"#{escapeNixString nm}\".\"#{escapeNixString spc}\""
-          seenDeps[nm] = true
-      stream.write "\n    ];\n    peerDependencies = ["
-      for idx in [0..count]
-        for nm, spc of pkgs[idx].peerDependencies or {}
-          unless seenDeps[nm] or seen[nm]
-            spc = spc.version if spc instanceof Object
-            if spc is 'latest' or spc is ''
-              spc = '*'
-            stream.write "\n      self.full.\"#{escapeNixString nm}\".\"#{escapeNixString spc}\""
-          seenDeps[nm] = true
-      stream.write "\n    ];\n    passthru.names = [ #{("\"#{escapeNixString nm}\"" for nm in names).join " "} ];\n  };"
+    stream.write """
+    \n  by-spec.\"#{escapeNixString name}\".\"#{escapeNixString spec}\" =
+        self.by-version.\"#{escapeNixString name}\".\"#{escapeNixString  pkg.version}\";
+    """
+    unless name of known and pkg.version of known[name]
+      known[name] ?= {}
+      known[name][pkg.version] = true
+      unless 'tarjanIndex' of pkg
+        strongConnect pkg
+      if 'scc' of pkg
+        names = [ ]
+        count = -1
+        cycleDeps = {}
+        for pk in pkg.scc
+          unless name of known and pk.version of known[name]
+            stream.write """
+            \n  by-version."#{escapeNixString pk.name}"."#{escapeNixString pk.version}" = self.by-version."#{escapeNixString name}"."#{escapeNixString pkg.version}";
+            """
+            known[pk.name] ?= {}
+            known[pk.name][pk.version] = true
+          names.push pk.name
+          cycleDeps[pk.name] = true
+          count += 1
+
+        stream.write "\n  by-version.\"#{escapeNixString name}\".\"#{escapeNixString pkg.version}\" = lib.makeOverridable self.buildNodePackage {"
+        stream.write "\n    name = \"#{escapeNixString names[0]}-#{escapeNixString pkg.scc[0].version}\";\n    src = ["
+        for idx in [0..count]
+          pk = pkg.scc[idx]
+          stream.write """
+          \n      (#{if pk.patchLatest then 'self.patchLatest' else 'fetchurl'} {
+                  url = "#{pk.dist.tarball}";
+                  #{if 'shasum' of pk.dist then 'sha1' else 'sha256'} = "#{pk.dist.shasum ? pk.dist.sha256sum}";
+                })
+          """
+        stream.write "\n    ];\n    buildInputs ="
+        for idx in [0..count]
+          stream.write "\n      "
+          stream.write "++ " unless idx is 0
+          stream.write "(self.nativeDeps.\"#{escapeNixString names[idx]}\" or [])"
+        stream.write ";\n    deps = ["
+        seenDeps = {}
+        for idx in [0..count]
+          for nm, spc of pkg.scc[idx].dependencies or {}
+            unless seenDeps[nm]
+              spc = spc.version if spc instanceof Object
+              if spc is 'latest' or spc is ''
+                spc = '*'
+              stream.write "\n      self.by-version.\"#{escapeNixString nm}\".\"#{packageSet[nm][spc].version}\""
+            seenDeps[nm] = true
+        stream.write "\n    ];\n    peerDependencies = ["
+        for idx in [0..count]
+          for nm, spc of pkg.scc[idx].peerDependencies or {}
+            unless seenDeps[nm] or cycleDeps[nm]
+              spc = spc.version if spc instanceof Object
+              if spc is 'latest' or spc is ''
+                spc = '*'
+              stream.write "\n      self.by-version.\"#{escapeNixString nm}\".\"#{packageSet[nm][spc].version}\""
+            seenDeps[nm] = true
+        stream.write "\n    ];\n    passthru.names = [ #{("\"#{escapeNixString nm}\"" for nm in names).join " "} ];\n  };"
 
     if fullNames[name] is spec
       stream.write """
-      \n  "#{escapeNixString name}" = self.full."#{escapeNixString name}"."#{escapeNixString spec}";
+      \n  "#{escapeNixString name}" = self.by-version."#{escapeNixString name}"."#{pkg.version}";
       """
 
   finalizePkgs = ->
@@ -145,21 +146,25 @@ npmconf.load (err, conf) ->
   fetcher = new PackageFetcher()
   fs.readFile args.packageList, (err, json) ->
     if err?
-      console.error "Error reading file #{file}: #{err}"
+      console.error "Error reading file #{args.packageList}: #{err}"
       process.exit 1
     try
       packages = JSON.parse json
     catch error
-      console.error "Error parsing JSON file #{file}: #{error}"
+      console.error "Error parsing JSON file #{args.packageList}: #{error}"
       process.exit 3
 
+    packageByVersion = {}
     pkgCount = 0
     fetcher.on 'fetching', ->
       pkgCount += 1
     fetcher.on 'fetched', (name, spec, pkg) ->
       pkgCount -= 1
+      packageByVersion[name] ?= {}
+      unless pkg.version of packageByVersion[name]
+        packageByVersion[name][pkg.version] = pkg
       packageSet[name] ?= {}
-      packageSet[name][spec] = pkg
+      packageSet[name][spec] = packageByVersion[name][pkg.version]
       if pkgCount is 0
         names = (key for key, val of packageSet).sort()
         for name in names
