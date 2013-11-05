@@ -52,7 +52,7 @@ do ->
         if el.name is node.name
           cycleDetected = true
           if el is path[0]
-            pkg.cycles.push path.slice 1
+            pkg.cycles.push path.slice 0
       unless cycleDetected
         peerDeps = packageSet[node.name][node.spec].peerDependencies or {}
         if Object.keys(peerDeps).length > index
@@ -71,9 +71,9 @@ do ->
   stream = fs.createWriteStream args.output
   stream.write "{ self, fetchurl, lib }:\n\n{"
   writePkg = (name, spec, pkg) ->
-    if name of cycleMembers and spec of cycleMembers[name]
+    if name of cycleMembers and pkg.version of cycleMembers[name]
       stream.write """
-      \n  full."#{escapeNixString name}"."#{escapeNixString spec}" = self.full."#{escapeNixString cycleMembers[name][spec].name}"."#{escapeNixString cycleMembers[name][spec].spec}";
+      \n  full."#{escapeNixString name}"."#{escapeNixString spec}" = self.full."#{escapeNixString cycleMembers[name][pkg.version].name}"."#{escapeNixString cycleMembers[name][pkg.version].spec}";
       """
     else
       findCycles name, spec, pkg
@@ -86,7 +86,7 @@ do ->
       for cycle in pkg.cycles
         for node in cycle
           cycleMembers[node.name] ?= {}
-          cycleMembers[node.name][node.spec] = { name: name, spec: spec }
+          cycleMembers[node.name][packageSet[node.name][node.spec].version] = { name: name, spec: spec }
           unless seen[node.name]
             pkgs.push packageSet[node.name][node.spec]
             names.push node.name
