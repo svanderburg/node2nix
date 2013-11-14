@@ -5,7 +5,15 @@ zlib = require 'zlib'
 events = require 'events'
 url = require 'url'
 util = require 'util'
+child_process = require 'child_process'
+path = require 'path'
+os = require 'os'
 
+temp = require 'temp'
+temp.track()
+
+fs = require 'fs.extra'
+findit = require 'findit'
 tar = require 'tar'
 semver = require 'semver'
 RegistryClient = require 'npm-registry-client'
@@ -94,6 +102,7 @@ do ->
         unless 'err' of cached
           cached.err = err
           cb err for cb in cached.callbacks
+          cached.callbacks = []
 
       client = switch parsed.protocol
         when 'http:'
@@ -150,6 +159,7 @@ do ->
               pkg.dist = { tarball: href, sha256sum: hashBuf.toString 'hex' }
               cached.pkg = pkg
               cb undefined, pkg for cb in cached.callbacks
+              cached.callbacks = []
 
             computeHash.on 'readable', ->
               hashBuf = computeHash.read 32
@@ -179,8 +189,173 @@ do ->
                   finished() unless hashBuf is null
 
         client.get href, getCallback
-PackageFetcher.prototype._fetchFromGit = (name, spec, parsed) ->
-  @emit 'error', "git dependencies not yet supported", name, spec
+do ->
+  cache = {}
+
+  addFetchedCallback = (cached, cb) ->
+    if 'err' of cached
+      cb cached.err
+    else if 'pkg' of cached
+      cb undefined, cached.pkg
+    else
+      cached.callbacks.push cb
+
+  PackageFetcher.prototype._fetchFromGit = (name, spec, registry, parsed) ->
+    parsed.protocol = switch parsed.protocol
+        when 'git:'
+          'git:'
+        when 'git+ssh:'
+          'ssh:'
+        when 'git+http:'
+          'http:'
+        when 'git+https:'
+          'https:'
+    href = parsed.format()
+    callback = (err, pkg) =>
+      if err?
+        @emit 'error', "Error fetching #{href} from git: #{err}", name, spec
+      else
+        @emit 'fetched', name, spec, pkg
+    if href of cache
+      addFetchedCallback cache[href], callback
+    else
+      cached = callbacks: [ callback ]
+      cache[href] = cached
+      error = (err) ->
+        unless 'err' of cached
+          cached.err = err
+          cb err for cb in cached.callbacks
+          cached.callbacks = []
+      commitIsh = if parsed.hash?
+        parsed.hash.slice 1
+      else
+        'master'
+      parsed.hash = null
+      temp.mkdir { dir: os.tmpDir(), prefix: "npm2nix-git-checkout-#{name}" }, (err, dirPath) =>
+        if err?
+          error "Error creating temporary directory for git checkout: #{err}"
+        else
+          oldError = error
+          error = (err) ->
+            fs.rmrf dirPath, ->
+            oldError err
+          gitClone = child_process.spawn "git", [ "clone", parsed.format() ], cwd: dirPath, stdio: "inherit"
+          gitClone.on 'error', (err) -> error "Error executing git clone: #{err}"
+          gitClone.on 'exit', (code, signal) =>
+            unless code?
+              error "git clone died with signal #{signal}"
+            else unless code is 0
+              error "git clone exited with non-zero status code #{code}"
+            else
+              fs.readdir dirPath, (err, files) =>
+                if err?
+                  error "Error reading directory #{dirPath}: #{err}"
+                else
+                  if files.length isnt 1
+                    error "git clone did not create exactly one directory"
+                  else
+                    pkg = null
+                    hash = null
+                    rev = null
+                    finished = ->
+                      fs.rmrf dirPath, ->
+                      pkg.dist = { git: parsed.format(), rev: rev, sha256sum: hash }
+                      cached.pkg = pkg
+                      cb undefined, pkg for cb in cached.callbacks
+                      cached.callbacks = []
+
+                    gitDir = "#{dirPath}/#{files[0]}"
+                    gitRevParse = child_process.spawn "git", [ "rev-parse", commitIsh ], cwd: gitDir, stdio: [ 0, 'pipe', 2 ]
+                    gitRevParse.on 'error', (err) -> error "Error executing git rev-parse: #{err}"
+                    gitRevParse.on 'exit', (code, signal) =>
+                      unless code?
+                        error "git rev-parse died with signal #{signal}"
+                      else unless code is 0
+                        error "git rev-parse exited with non-zero status code #{code}"
+                    gitRevParse.stdout.setEncoding "utf8"
+                    readRev = ->
+                      rev = gitRevParse.stdout.read 40
+                      if rev?
+                        gitRevParse.stdout.removeListener 'readable', readRev
+                        gitRevParse.stdout.removeListener 'end', earlyRevEnd
+                        gitRevParse.stdout.on 'data', ->
+                        finished() if pkg? and hash?
+                    gitRevParse.stdout.on 'readable', readRev
+                    readRev()
+                    earlyRevEnd = ->
+                      error "git rev-parse's stdout ended before 64 characters were read"
+                    gitRevParse.stdout.on 'end', earlyRevEnd
+
+                    gitCheckout = child_process.spawn "git", [ "checkout", commitIsh ], cwd: gitDir, stdio: "inherit"
+                    gitCheckout.on 'error', (err) -> error "Error executing git checkout: #{err}"
+                    gitCheckout.on 'exit', (code, signal) =>
+                      unless code?
+                        error "git checkout died with signal #{signal}"
+                      else unless code is 0
+                        error "git checkout exited with non-zero status code #{code}"
+                      else
+                        fs.readFile "#{gitDir}/package.json", encoding: "utf8", (err, data) =>
+                          if err?
+                            error "Error reading package.json in #{parsed.format()}##{commitIsh} clone: #{err}"
+                          else
+                            pkg = JSON.parse data
+                            @_havePackage name, spec, pkg, registry
+                            finished() if hash? and rev?
+                        finder = findit gitDir
+                        dotGitRegexp = /^\.git.*$/
+                        deletesLeft = 1
+                        deleteFinished = ->
+                          deletesLeft -= 1
+                          finder.emit 'noMoreDeletes' if deletesLeft is 0
+                        finder.on 'directory', (dir, stat, stop) ->
+                          if dotGitRegexp.test path.basename(dir)
+                            stop()
+                            deletesLeft += 1
+                            fs.rmrf dir, (err) ->
+                              if err?
+                                error "Error removing directory #{dir} in #{parsed.format()}##{commitIsh} clone: #{err}"
+                              else
+                                deleteFinished()
+                        finder.on 'file', (file) ->
+                          if dotGitRegexp.test path.basename(file)
+                            deletesLeft += 1
+                            fs.unlink file, (err) ->
+                              if err?
+                                error "Error unlinking file #{file} in #{parsed.format()}##{commitIsh} clone: #{err}"
+                              else
+                                deleteFinished()
+                        finder.on 'link', (link) ->
+                          if dotGitRegexp.test path.basename(link)
+                            deletesLeft += 1
+                            fs.unlink link, (err) ->
+                              if err?
+                                error "Error unlinking symlink #{link} in #{parsed.format()}##{commitIsh} clone: #{err}"
+                              else
+                                deleteFinished()
+                        finder.on 'error', (err) ->
+                          error "Error walking git tree to remove .git* files: #{err}"
+                        finder.on 'end', deleteFinished
+                        finder.once 'noMoreDeletes', ->
+                          nixHash = child_process.spawn "nix-hash", [ "--type", "sha256", gitDir ], stdio: [ 0, 'pipe', 2 ]
+                          nixHash.on 'error', (err) -> error "Error executing nix-hash: #{err}"
+                          nixHash.stdout.setEncoding "utf8"
+                          nixHash.on 'exit', (code, signal) ->
+                            unless code?
+                              error "nix-hash died with signal #{signal}"
+                            else unless code is 0
+                              error "nix-hash exited with non-zero status code #{code}"
+                          readHash = ->
+                            hash = nixHash.stdout.read 64
+                            if hash?
+                              nixHash.stdout.removeListener 'readable', readHash
+                              nixHash.stdout.removeListener 'end', earlyHashEnd
+                              nixHash.stdout.on 'data', ->
+                              finished() if pkg? and rev?
+                          nixHash.stdout.on 'readable', readHash
+                          readHash()
+                          earlyHashEnd = ->
+                            error "nix-hash's stdout ended before 64 characters were read"
+                          nixHash.stdout.on 'end', earlyHashEnd
 
 do ->
   makeNewRegistry = (registry, newUrl) ->
@@ -227,7 +402,7 @@ do ->
   PackageFetcher.prototype._handleDeps = (pkg, registry) ->
     # !!! TODO: Handle optionalDependencies, peerDependencies
     registry = makeNewRegistry registry, pkg.registry if 'registry' of pkg
-    pkg.patchLatest = false
+    pkg.needsPatch = false
     handleDep = (nm, dep) =>
       # !!! Seeming conflict between CommonJS Registry spec and npm on the one
       # hand and CommonJS Package spec on the other. Package spec allows deps
@@ -240,10 +415,13 @@ do ->
         thisRegistry = makeNewRegistry registry, dep.registry
         dep = dep.version
       if dep is 'latest'
-        pkg.patchLatest = true
+        pkg.needsPatch = true
         dep = '*'
       if dep is ''
         dep = '*'
+      parsed = url.parse dep
+      if parsed.protocol in [ 'git:', 'git+ssh:', 'git+http:', 'git+https:' ]
+        pkg.needsPatch = true
       @fetch nm, dep, thisRegistry
     for nm, dep of pkg.dependencies or {}
       handleDep nm, dep
@@ -257,7 +435,7 @@ do ->
           dep = dep.version
         if dep is 'latest'
           dep = '*'
-          pkg.patchLatest = true
+          pkg.needsPatch = true
         if dep is ''
           dep = '*'
         if nm of pkg.dependencies

@@ -68,7 +68,7 @@ do ->
   known = {}
 
   stream = fs.createWriteStream args.output
-  stream.write "{ self, fetchurl, lib }:\n\n{"
+  stream.write "{ self, fetchurl, fetchgit ? null, lib }:\n\n{"
   writePkg = (name, spec, pkg) ->
     stream.write """
     \n  by-spec.\"#{escapeNixString name}\".\"#{escapeNixString spec}\" =
@@ -98,12 +98,21 @@ do ->
         stream.write "\n    name = \"#{escapeNixString names[0]}-#{escapeNixString pkg.scc[0].version}\";\n    src = ["
         for idx in [0..count]
           pk = pkg.scc[idx]
-          stream.write """
-          \n      (#{if pk.patchLatest then 'self.patchLatest' else 'fetchurl'} {
-                  url = "#{pk.dist.tarball}";
-                  #{if 'shasum' of pk.dist then 'sha1' else 'sha256'} = "#{pk.dist.shasum ? pk.dist.sha256sum}";
-                })
-          """
+          if 'tarball' of pk.dist
+            stream.write """
+            \n      (#{if pk.needsPatch then 'self.patchSource fetchurl' else 'fetchurl'} {
+                    url = "#{pk.dist.tarball}";
+                    #{if 'shasum' of pk.dist then 'sha1' else 'sha256'} = "#{pk.dist.shasum ? pk.dist.sha256sum}";
+                  })
+            """
+          else
+            stream.write """
+            \n      (#{if pk.needsPatch then 'self.patchSource fetchgit' else 'fetchgit'} {
+                    url = "#{pk.dist.git}";
+                    rev = "#{pk.dist.rev}";
+                    sha256 = "#{pk.dist.sha256sum}";
+                  })
+            """
         stream.write "\n    ];\n    buildInputs ="
         for idx in [0..count]
           stream.write "\n      "
