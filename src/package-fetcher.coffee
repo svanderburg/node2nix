@@ -420,7 +420,7 @@ do ->
       if dep is ''
         dep = '*'
       parsed = url.parse dep
-      if parsed.protocol in [ 'git:', 'git+ssh:', 'git+http:', 'git+https:' ]
+      if parsed.protocol in [ 'git:', 'git+ssh:', 'git+http:', 'git+https:', 'http:', 'https:' ]
         pkg.needsPatch = true
       @fetch nm, dep, thisRegistry
     for nm, dep of pkg.dependencies or {}
