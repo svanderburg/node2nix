@@ -30,6 +30,10 @@ parser.addArgument [ 'output' ],
   type: path.resolve
   metavar: 'OUTPUT'
 
+parser.addArgument [ '--overwrite' ],
+  help: 'Whether to overwrite the helper default.nix expression (when generating for a package.json)',
+  action: 'storeTrue',
+
 args = parser.parseArgs()
 
 escapeNixString = (string) ->
@@ -203,6 +207,38 @@ npmconf.load (err, conf) ->
 
       addPackage name, spec for name, spec of packages.dependencies ? {}
       addPackage name, spec for name, spec of packages.devDependencies ? {}
+
+      pkgName = escapeNixString packages.name
+      fs.writeFile "default.nix", """
+        { #{pkgName} ? { outPath = ./.; name = "#{pkgName}"; }
+        }:
+        let
+          pkgs = import <nixpkgs> {};
+          nodePackages = import <nixpkgs/pkgs/top-level/node-packages.nix> {
+            inherit pkgs;
+            inherit (pkgs) stdenv nodejs fetchurl fetchgit;
+            neededNatives = [ pkgs.python ] ++ pkgs.lib.optional pkgs.stdenv.isLinux pkgs.utillinux;
+            self = nodePackages;
+            generated = ./#{path.relative process.cwd(), args.output};
+          };
+        in rec {
+          tarball = pkgs.runCommand "#{pkgName}-#{packages.version}.tgz" { buildInputs = [ pkgs.nodejs ]; } ''
+            mv `HOME=$PWD npm pack ${#{pkgName}}` $out
+          '';
+          build = nodePackages.buildNodePackage {
+            name = "#{pkgName}-#{packages.version}";
+            src = [ tarball ];
+            buildInputs = nodePackages.nativeDeps."#{pkgName}" or [];
+            deps = [ #{
+              ("nodePackages.by-spec.\"#{escapeNixString nm}\".\"#{escapeNixString spc}\"" for nm, spc of (packages.dependencies ? {})).join ' '
+            } ];
+            peerDependencies = [];
+            passthru.names = [ "#{pkgName}" ];
+          };
+        }
+        """, flag: "w#{if args.overwrite then '' else 'x'}", (err) ->
+          if err? and err.code isnt 'EEXIST'
+            console.error "Error writing helper default.nix: #{err}"
     else
       console.error "#{file} must represent an array of packages or be a valid npm package.json"
       process.exit 4
