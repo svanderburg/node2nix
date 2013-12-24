@@ -252,6 +252,9 @@ do ->
         dep = '*'
       if dep is ''
         dep = '*'
+      parsed = url.parse dep
+      if parsed.protocol in [ 'http:', 'https:' ]
+        pkg.patchLatest = true
       @fetch nm, dep, thisRegistry
     for nm, dep of pkg.dependencies or {}
       handleDep nm, dep
