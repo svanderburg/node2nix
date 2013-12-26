@@ -106,6 +106,7 @@ do ->
             stream.write """
             \n      (#{if pk.needsPatch then 'self.patchSource fetchurl' else 'fetchurl'} {
                     url = "#{pk.dist.tarball}";
+                    name = "#{pk.name}-#{pk.version}.tgz";
                     #{if 'shasum' of pk.dist then 'sha1' else 'sha256'} = "#{pk.dist.shasum ? pk.dist.sha256sum}";
                   })
             """
