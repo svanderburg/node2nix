@@ -99,7 +99,7 @@ do ->
           count += 1
 
         stream.write "\n  by-version.\"#{escapeNixString name}\".\"#{escapeNixString pkg.version}\" = lib.makeOverridable self.buildNodePackage {"
-        stream.write "\n    name = \"#{escapeNixString names[0]}-#{escapeNixString pkg.scc[0].version}\";\n    src = ["
+        stream.write "\n    name = \"#{if "bin" of pkg then "" else "node-"}#{escapeNixString names[0]}-#{escapeNixString pkg.scc[0].version}\";\n    src = ["
         for idx in [0..count]
           pk = pkg.scc[idx]
           if 'tarball' of pk.dist
