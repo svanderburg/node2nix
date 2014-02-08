@@ -212,10 +212,10 @@ npmconf.load (err, conf) ->
       pkgName = escapeNixString packages.name
       fs.writeFile "default.nix", """
         { #{pkgName} ? { outPath = ./.; name = "#{pkgName}"; }
+        , pkgs ? import <nixpkgs> {}
         }:
         let
-          pkgs = import <nixpkgs> {};
-          nodePackages = import <nixpkgs/pkgs/top-level/node-packages.nix> {
+          nodePackages = import "${pkgs.path}/pkgs/top-level/node-packages.nix" {
             inherit pkgs;
             inherit (pkgs) stdenv nodejs fetchurl fetchgit;
             neededNatives = [ pkgs.python ] ++ pkgs.lib.optional pkgs.stdenv.isLinux pkgs.utillinux;
