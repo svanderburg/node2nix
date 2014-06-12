@@ -5,7 +5,7 @@
 
 , "description": "Generate nix expressions to build npm packages"
 
-, "homepage": "https://bitbucket.org/shlevy/npm2nix"
+, "homepage": "https://github.com/NixOS/npm2nix"
 
 , "author": {
     "name": "Shea Levy"
