@@ -273,7 +273,7 @@ do ->
                       cached.callbacks = []
 
                     gitDir = "#{dirPath}/#{files[0]}"
-                    gitRevParse = child_process.spawn "git", [ "rev-parse", commitIsh ], cwd: gitDir, stdio: [ 0, 'pipe', 2 ]
+                    gitRevParse = child_process.spawn "git", [ "rev-parse", 'origin/' + commitIsh ], cwd: gitDir, stdio: [ 0, 'pipe', 2 ]
                     gitRevParse.on 'error', (err) -> error "Error executing git rev-parse: #{err}"
                     gitRevParse.on 'exit', (code, signal) =>
                       unless code?
