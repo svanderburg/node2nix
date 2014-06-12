@@ -32,8 +32,8 @@
   }
 
 , "repository": {
-    "type": "hg"
-  , "url": "https://bitbucket.org/shlevy/npm2nix"
+    "type": "git"
+  , "url": "https://github.com/NixOS/npm2nix"
   }
 
 , "licenses": [ {
