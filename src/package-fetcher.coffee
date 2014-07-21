@@ -372,7 +372,7 @@ do ->
       deleted = {}
       # !!! Shared cache dir, is that OK? Uses etags so probably
       local = registry: newUrl
-      baseCfg = registry.config
+      baseCfg = registry.conf
       get: (key) ->
         if key of local
           local[key]
