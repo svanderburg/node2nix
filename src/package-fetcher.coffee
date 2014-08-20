@@ -44,7 +44,15 @@ PackageFetcher.prototype.fetch = (name, spec, registry) ->
         if semver.validRange spec, true
           @_fetchFromRegistry name, spec, registry
         else
-          @emit 'error', "Unknown spec #{spec}", name, spec
+          if spec.indexOf "#" > -1
+            @_fetchFromGithub name, spec, registry
+          else
+            @emit 'error', "Unknown spec #{spec}", name, spec
+
+PackageFetcher.prototype._fetchFromGithub = (name, spec, registry) ->
+  new_spec = "git://github.com/" + spec.replace "#", ".git#"
+  parsed = url.parse new_spec
+  @_fetchFromGit name, spec, registry, parsed
 
 PackageFetcher.prototype._fetchFromRegistry = (name, spec, registry) ->
   handlePackage = (pkg) =>
@@ -273,7 +281,7 @@ do ->
                       cached.callbacks = []
 
                     gitDir = "#{dirPath}/#{files[0]}"
-                    gitRevParse = child_process.spawn "git", [ "rev-parse", 'origin/' + commitIsh ], cwd: gitDir, stdio: [ 0, 'pipe', 2 ]
+                    gitRevParse = child_process.spawn "git", [ "rev-parse", commitIsh ], cwd: gitDir, stdio: [ 0, 'pipe', 2 ]
                     gitRevParse.on 'error', (err) -> error "Error executing git rev-parse: #{err}"
                     gitRevParse.on 'exit', (code, signal) =>
                       unless code?
