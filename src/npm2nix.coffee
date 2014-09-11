@@ -99,7 +99,9 @@ do ->
           count += 1
 
         stream.write "\n  by-version.\"#{escapeNixString name}\".\"#{escapeNixString pkg.version}\" = lib.makeOverridable self.buildNodePackage {"
-        stream.write "\n    name = \"#{if "bin" of pkg then "" else "node-"}#{escapeNixString names[0]}-#{escapeNixString pkg.scc[0].version}\";\n    src = ["
+        stream.write "\n    name = \"#{escapeNixString names[0]}-#{escapeNixString pkg.scc[0].version}\";"
+        stream.write "\n    bin = #{if "bin" of pkg then "true" else "false"};"
+        stream.write "\n    src = ["
         for idx in [0..count]
           pk = pkg.scc[idx]
           if 'tarball' of pk.dist
@@ -123,7 +125,7 @@ do ->
           stream.write "\n      "
           stream.write "++ " unless idx is 0
           stream.write "(self.nativeDeps.\"#{escapeNixString names[idx]}\" or [])"
-        stream.write ";\n    deps = ["
+        stream.write ";\n    deps = {"
         seenDeps = {}
         for idx in [0..count]
           for nm, spc of pkg.scc[idx].dependencies or {}
@@ -131,9 +133,9 @@ do ->
               spc = spc.version if spc instanceof Object
               if spc is 'latest' or spc is ''
                 spc = '*'
-              stream.write "\n      self.by-version.\"#{escapeNixString nm}\".\"#{packageSet[nm][spc].version}\""
+              stream.write "\n      \"#{escapeNixString nm}-#{packageSet[nm][spc].version}\" = self.by-version.\"#{escapeNixString nm}\".\"#{packageSet[nm][spc].version}\";"
             seenDeps[nm] = true
-        stream.write "\n    ];\n    peerDependencies = ["
+        stream.write "\n    };\n    peerDependencies = ["
         for idx in [0..count]
           for nm, spc of pkg.scc[idx].peerDependencies or {}
             unless seenDeps[nm] or cycleDeps[nm]
