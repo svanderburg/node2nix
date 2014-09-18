@@ -20,6 +20,7 @@ var help = false;
 var production = true;
 var inputJSON = null;
 var outputNix = null;
+var executable;
 
 /* Define process rules for option parameters */
 
