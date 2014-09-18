@@ -7,7 +7,7 @@ Generate nix expressions from npmjs.org!
 Usage
 -----
 
-`npm2nix node-packages.json node-packages.generated.nix`
+`npm2nix -i node-packages.json -o node-packages.generated.nix`
 
 
 JSON structure
