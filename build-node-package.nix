@@ -1,4 +1,4 @@
-{ name, version, src, dependencies ? {}, buildInputs ? [], production ? true, npmFlags ? "", meta ? {}, linkDependencies ? false}:
+{ name, version, src, dependencies ? {}, buildInputs ? [], production ? true, npmFlags ? "", meta ? {}, linkDependencies ? false }:
 { providedDependencies ? {} }:
 
 with import <nixpkgs> {};
@@ -117,7 +117,7 @@ let
     inherit src meta;
     
     name = pkgName;
-    buildInputs = [ nodejs python semver ] ++ stdenv.lib.optional (stdenv.isLinux) utillinux ++ buildInputs;
+    buildInputs = [ nodejs python ] ++ stdenv.lib.optional (stdenv.isLinux) utillinux ++ buildInputs;
     buildPhase = "true";
   
     installPhase = ''
@@ -140,8 +140,11 @@ let
            
           if [ ! -x "node_modules/$(basename $depPath)" ]
           then
-              #ln -s $depPath node_modules
-              cp -r $depPath node_modules
+              ${if linkDependencies then ''
+                  ln -s $depPath node_modules
+                '' else ''
+                  cp -r $depPath node_modules
+                ''}
           fi
         ''
       ) requiredDependencies}
