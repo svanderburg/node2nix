@@ -9,6 +9,7 @@ var switches = [
     ['-h', '--help', 'Shows help sections'],
     ['-i', '--input FILE', 'Specifies a path to a JSON file containing an object with package settings or an array of dependencies'],
     ['-o', '--output FILE', 'A Nix expression representing a registry of Node.js packages'],
+    ['-c', '--composition FILE', 'A Nix composition expression allowing someone to deploy the generated Nix packages from the command-line'],
     ['-d', '--development', 'Specifies whether to do a development deployment for a package.json deployment (false by default)']
 ];
 
@@ -20,6 +21,7 @@ var help = false;
 var production = true;
 var inputJSON = null;
 var outputNix = null;
+var compositionNix = null;
 var executable;
 
 /* Define process rules for option parameters */
@@ -34,6 +36,10 @@ parser.on('input', function(arg, value) {
 
 parser.on('output', function(arg, value) {
     outputNix = value;
+});
+
+parser.on('composition', function(arg, value) {
+    compositionNix = value;
 });
 
 parser.on('development', function(arg, value) {
@@ -60,10 +66,10 @@ if(help) {
     }
 
     process.stdout.write("Usage:\n\n");
-    process.stdout.write(executable + " [options] -i package.json -o output.nix\n\n");
+    process.stdout.write(executable + " [options] -i package.json -o output.nix [ -c composition.nix ]\n\n");
     process.stdout.write("Options:\n\n");
     
-    var maxlen = 20;
+    var maxlen = 25;
     
     for(var i = 0; i < switches.length; i++) {
     
@@ -98,7 +104,7 @@ if(!outputNix) {
 }
 
 /* Perform the NPM to Nix conversion */
-npm2nix.npmToNix(inputJSON, outputNix, production, function(err) {
+npm2nix.npmToNix(inputJSON, outputNix, compositionNix, production, function(err) {
     if(err) {
         process.stderr.write(err + "\n");
         process.exit(1);
