@@ -7,8 +7,11 @@ Generate nix expressions from npmjs.org!
 Usage
 -----
 
-`npm2nix -i node-packages.json -o node-packages.generated.nix`
+    $ npm2nix -i package.json -o registry.nix -c default.nix
 
+and build the package with:
+
+    $ nix-build -A build
 
 JSON structure
 --------------
