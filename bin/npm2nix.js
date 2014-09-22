@@ -7,11 +7,13 @@ var npm2nix = require('../lib/npm2nix.js');
 
 var switches = [
     ['-h', '--help', 'Shows help sections'],
-    ['-i', '--input FILE', 'Specifies a path to a JSON file containing an object with package settings or an array of dependencies'],
-    ['-o', '--output FILE', 'Path to a Nix expression representing a registry of Node.js packages'],
+    ['-i', '--input FILE', 'Specifies a path to a JSON file containing an object with package settings or an array of dependencies (defaults to: package.json)'],
+    ['-o', '--output FILE', 'Path to a Nix expression representing a registry of Node.js packages (defaults to: registry.nix)'],
     ['-c', '--composition FILE', 'Path to a Nix composition expression allowing someone to deploy the generated Nix packages from the command-line (defaults to: default.nix)'],
     ['-b', '--build-function FILE', 'Path to a Nix expression capable of building a Node package with Nix (defaults to: build-node-package.nix)'],
-    ['-d', '--development', 'Specifies whether to do a development deployment for a package.json deployment (false by default)']
+    ['-d', '--development', 'Specifies whether to do a development (non-production) deployment for a package.json deployment (false by default)'],
+    ['--registry NAME', 'URL referring to the NPM packages registry. It defaults to the official NPM one, but can be overridden to support private registries'],
+    ['--link-dependencies', 'Create symlinks to the NPM dependencies instead of copying them. In many cases it should work fine, but it could give odd results with shared dependencies']
 ];
 
 var parser = new optparse.OptionParser(switches);
@@ -20,10 +22,12 @@ var parser = new optparse.OptionParser(switches);
 
 var help = false;
 var production = true;
-var inputJSON = null;
-var outputNix = null;
+var inputJSON = "package.json";
+var outputNix = "registry.nix";
 var compositionNix = "default.nix";
 var buildFunctionNix = "build-node-package.nix";
+var registryURL = "http://registry.npmjs.org";
+var linkDependencies = false;
 var executable;
 
 /* Define process rules for option parameters */
@@ -52,6 +56,14 @@ parser.on('development', function(arg, value) {
     production = false;
 });
 
+parser.on('registry', function(arg, value) {
+    registryURL = value;
+});
+
+parser.on('link-dependencies', function(arg, value) {
+    linkDependencies = true;
+});
+
 /* Define process rules for non-option parameters */
 
 parser.on(1, function(opt) {
@@ -72,7 +84,7 @@ if(help) {
     }
 
     process.stdout.write("Usage:\n\n");
-    process.stdout.write(executable + " [options] -i package.json -o output.nix ]\n\n");
+    process.stdout.write(executable + " [options]\n\n");
     process.stdout.write("Options:\n\n");
     
     var maxlen = 25;
@@ -97,20 +109,8 @@ if(help) {
     process.exit(0);
 }
 
-/* Verify the input parameters */
-
-if(!inputJSON) {
-    process.stderr.write("No input JSON file is provided!\n");
-    process.exit(1);
-}
-
-if(!outputNix) {
-    process.stderr.write("No output Nix expression file is provided!\n");
-    process.exit(1);
-}
-
 /* Perform the NPM to Nix conversion */
-npm2nix.npmToNix(inputJSON, outputNix, compositionNix, buildFunctionNix, production, function(err) {
+npm2nix.npmToNix(inputJSON, outputNix, compositionNix, buildFunctionNix, production, linkDependencies, registryURL, function(err) {
     if(err) {
         process.stderr.write(err + "\n");
         process.exit(1);
