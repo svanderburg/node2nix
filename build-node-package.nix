@@ -1,7 +1,6 @@
+{ stdenv, fetchurl, nodejs, python, utillinux, runCommand }:
 { name, version, src, dependencies ? {}, buildInputs ? [], production ? true, npmFlags ? "", meta ? {}, linkDependencies ? false }:
 { providedDependencies ? {} }:
-
-with import <nixpkgs> {};
 
 let
   semver = stdenv.mkDerivation {
@@ -90,13 +89,13 @@ let
   # Compose package name from 'node', the name and version number
   pkgName = "node-${name}-${version}";
   
-  # Extract the Node.js source code
+  # Extract the Node.js source code which is used to compile packages with native bindings
   nodeSources = runCommand "node-sources" {} ''
     tar --no-same-owner --no-same-permissions -xf ${nodejs.src}
     mv node-* $out
   '';
   
-  # Compose dependency information that this package must propagate to it
+  # Compose dependency information that this package must propagate to its
   # dependencies, so that provided dependencies are not included a second time.
   # This prevents cycles and wildcard version mismatches.
   
@@ -104,12 +103,12 @@ let
     (stdenv.lib.mapAttrs (dependencyName: dependency:
       builtins.listToAttrs (map (versionSpec:
         { name = dependency."${versionSpec}".version;
-          value = dependency."${versionSpec}".pkg;
+          value = true;
         }
       ) (builtins.attrNames dependency))
     ) dependencies) //
     providedDependencies //
-    { "${name}"."${version}" = self; };
+    { "${name}"."${version}" = true; };
     
   
   # Deploy the Node package with some tricks
@@ -141,10 +140,10 @@ let
           if [ ! -x "node_modules/$(basename $depPath)" ]
           then
               ${if linkDependencies then ''
-                  ln -s $depPath node_modules
-                '' else ''
-                  cp -r $depPath node_modules
-                ''}
+                ln -s $depPath node_modules
+              '' else ''
+                cp -r $depPath node_modules
+              ''}
           fi
         ''
       ) requiredDependencies}
