@@ -1,6 +1,25 @@
 { stdenv, fetchurl, nodejs, python, utillinux, runCommand }:
 
 let
+  buildNodeSourceDist =
+    { name, version, src }:
+    
+    stdenv.mkDerivation {
+      name = "node-tarball-${name}-${version}";
+      inherit src;
+      buildInputs = [ nodejs ];
+      buildPhase = ''
+        export HOME=$TMPDIR
+        tgzFile=$(npm pack)
+      '';
+      installPhase = ''
+        mkdir -p $out/tarballs
+        mv $tgzFile $out/tarballs
+        mkdir -p $out/nix-support
+        echo "file source-dist $out/tarballs/$tgzFile" >> $out/nix-support/hydra-build-products
+      '';
+    };
+
   semver = buildNodePackage {
     name = "semver";
     version = "3.0.1";
@@ -218,4 +237,4 @@ let
     in
     self;
 in
-buildNodePackage
+{ inherit buildNodeSourceDist buildNodePackage; }
