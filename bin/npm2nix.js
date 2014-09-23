@@ -10,7 +10,7 @@ var switches = [
     ['-i', '--input FILE', 'Specifies a path to a JSON file containing an object with package settings or an array of dependencies (defaults to: package.json)'],
     ['-o', '--output FILE', 'Path to a Nix expression representing a registry of Node.js packages (defaults to: registry.nix)'],
     ['-c', '--composition FILE', 'Path to a Nix composition expression allowing someone to deploy the generated Nix packages from the command-line (defaults to: default.nix)'],
-    ['-b', '--build-function FILE', 'Path to a Nix expression capable of building a Node package with Nix (defaults to: build-node-package.nix)'],
+    ['-e', '--node-env FILE', 'Path to the Nix expression implementing functions that build NPM packages (defaults to: node-env.nix)'],
     ['-d', '--development', 'Specifies whether to do a development (non-production) deployment for a package.json deployment (false by default)'],
     ['--registry NAME', 'URL referring to the NPM packages registry. It defaults to the official NPM one, but can be overridden to support private registries'],
     ['--link-dependencies', 'Create symlinks to the NPM dependencies instead of copying them. In many cases it should work fine, but it could give odd results with shared dependencies']
@@ -25,7 +25,7 @@ var production = true;
 var inputJSON = "package.json";
 var outputNix = "registry.nix";
 var compositionNix = "default.nix";
-var buildFunctionNix = "build-node-package.nix";
+var nodeEnvNix = "node-env.nix";
 var registryURL = "http://registry.npmjs.org";
 var linkDependencies = false;
 var executable;
@@ -48,8 +48,8 @@ parser.on('composition', function(arg, value) {
     compositionNix = value;
 });
 
-parser.on('build-function', function(arg, value) {
-    buildFunctionNix = value;
+parser.on('node-env', function(arg, value) {
+    nodeEnvNix = value;
 });
 
 parser.on('development', function(arg, value) {
@@ -110,7 +110,7 @@ if(help) {
 }
 
 /* Perform the NPM to Nix conversion */
-npm2nix.npmToNix(inputJSON, outputNix, compositionNix, buildFunctionNix, production, linkDependencies, registryURL, function(err) {
+npm2nix.npmToNix(inputJSON, outputNix, compositionNix, nodeEnvNix, production, linkDependencies, registryURL, function(err) {
     if(err) {
         process.stderr.write(err + "\n");
         process.exit(1);
