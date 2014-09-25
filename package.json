@@ -21,7 +21,7 @@
     "fs.extra": "1.2.x",
     "findit": "2.0.x",
     "slasp": "0.0.4",
-    "nijs": "git://github.com/svanderburg/nijs.git"
+    "nijs": "0.0.18"
   },
   "repository": {
     "type": "git",
