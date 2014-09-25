@@ -246,7 +246,7 @@ let
           fi
         '';
         
-        shellHook = stdenv.lib.optionalString (requiredDependencies != []) ''
+        shellHook = ''
           export NODE_PATH=${nodeDependencies}/lib/node_modules
         '';
       };
