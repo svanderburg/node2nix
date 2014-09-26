@@ -88,8 +88,8 @@ For example, the following command should work without any trouble:
 
     $ node bin/npm2nix.js --help
 
-Deploying a collection NPM packages from the NPM registry
----------------------------------------------------------
+Deploying a collection of NPM packages from the NPM registry
+------------------------------------------------------------
 The secondary use of `npm2nix` is deploying existing NPM packages from the NPM
 registry.
 

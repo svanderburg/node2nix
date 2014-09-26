@@ -172,7 +172,7 @@ let
         
           # Copy the required dependencies
           
-          mkdir node_modules
+          mkdir -p node_modules
           
           ${stdenv.lib.optionalString (requiredDependencies != []) ''
             cp -a ${nodeDependencies}/lib/node_modules/* node_modules
