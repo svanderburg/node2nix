@@ -131,6 +131,15 @@ Advanced options
 ================
 `npm2nix` also has a number of advanced options.
 
+Development mode
+----------------
+By default, NPM packages are deployed in production mode, meaning that the
+development dependencies are not installed by default. By adding the
+`--development` command line option, you can also deploy the development
+dependencies:
+
+    $ npm2nix --development
+
 Specifying paths
 ----------------
 If no options are specified, `npm2nix` makes implicit assumptions on the
