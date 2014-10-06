@@ -42,7 +42,7 @@ Running the following command generates a collection of Nix expressions from
 
 The above command generates three files `registry.nix` containing Nix expressions
 for all package dependencies and the packge itself, `node-env.nix` contains the
-build logical and `default.nix` is a composition expression allowing users to
+build logic and `default.nix` is a composition expression allowing users to
 deploy the package.
 
 By running the following Nix command with these expressions, the project can be
@@ -79,7 +79,7 @@ the project's dependencies and spawning a shell session in which they can be
 found.
 
 The following command-line instruction uses the earlier generated expressions
-to deploys and opens a development environment:
+to deploy all the dependencies and opens a development environment:
 
     $ nix-shell -A build
 

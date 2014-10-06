@@ -1,6 +1,7 @@
 { stdenv, fetchurl, nodejs, python, utillinux, runCommand }:
 
 let
+  # Function that generates a TGZ file from a NPM project
   buildNodeSourceDist =
     { name, version, src }:
     
@@ -20,6 +21,7 @@ let
       '';
     };
 
+  # We must run semver to determine whether a provided dependency conforms to a certain version range
   semver = buildNodePackage {
     name = "semver";
     version = "3.0.1";
@@ -29,6 +31,7 @@ let
     };
   } {};
   
+  # Function that produces a deployed NPM package in the Nix store
   buildNodePackage =
     { name, version, src, dependencies ? {}, buildInputs ? [], production ? true, npmFlags ? "", meta ? {}, linkDependencies ? false }:
     { providedDependencies ? {} }:
@@ -125,7 +128,9 @@ let
         providedDependencies //
         { "${name}"."${version}" = true; };
         
-    
+      # Create a node_modules folder containing all required dependencies of the
+      # package
+      
       nodeDependencies = stdenv.mkDerivation {
         name = "node-dependencies-${name}-${version}";
         inherit src;
