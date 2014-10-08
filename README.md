@@ -105,7 +105,7 @@ looks as follows:
       { "npm2nix": "git://github.com/NixOS/npm2nix.git" }
     ]
 
-To above specification is basically an array of objects. For each element that
+The above specification is basically an array of objects. For each element that
 is a string, the `latest` version is obtained from the registry.
 
 To obtain a specific version of a package, an object must defined in which the
@@ -119,7 +119,7 @@ Nix expressions can be generated from this JSON specification as follows:
 
     $ npm2nix -i node-packages.json
 
-And using the generated Nix expressions, we can install NiJS through Nix as
+And by using the generated Nix expressions, we can install NiJS through Nix as
 follows:
 
     $ nix-env -f default.nix -iA '"nijs-0.0.18"'
