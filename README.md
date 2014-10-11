@@ -167,6 +167,14 @@ the `--registry` option:
 
     $ npm2nix -i node-packages.json --registry http://private.registry.local
 
+API documentation
+=================
+This package includes API documentation, which can be generated with
+[JSDuck](https://github.com/senchalabs/jsduck). The Makefile in this package
+contains a `duck` target to generate it and produces the HTML files in `build/`:
+
+    $ make duck
+
 License
 =======
 The contents of this package is available under the [MIT license](http://opensource.org/licenses/MIT)
