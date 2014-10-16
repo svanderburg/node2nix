@@ -126,6 +126,9 @@ let
         { "${name}"."${version}" = true; };
         
     
+      # Compose a derivation containing all required dependencies. We compose it
+      # seperately, so that it can also be provided as a shell hook for development environments.
+      
       nodeDependencies = stdenv.mkDerivation {
         name = "node-dependencies-${name}-${version}";
         inherit src;
@@ -154,7 +157,7 @@ let
       };
     
       # Deploy the Node package with some tricks
-      self = stdenv.mkDerivation {
+      self = stdenv.lib.makeOverridable stdenv.mkDerivation {
         inherit src meta;
       
         name = "node-${name}-${version}";
