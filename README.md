@@ -120,10 +120,10 @@ Nix expressions can be generated from this JSON specification as follows:
 
     $ npm2nix -i node-packages.json
 
-And by using the generated Nix expressions, we can install NiJS through Nix as
+And by using the generated Nix expressions, we can install `async` through Nix as
 follows:
     
-    $ nix-env -f default.nix -iA nijs
+    $ nix-env -f default.nix -iA async
 
 For every package for which the latest version has been requested, we can
 directly refer to the name of the package to deploy it.
