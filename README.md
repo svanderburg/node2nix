@@ -101,6 +101,7 @@ looks as follows:
       "underscore",
       "slasp",
       { "mocha" : "1.21.x" },
+      { "mocha" : "1.20.x" },
       { "nijs": "0.0.18" },
       { "npm2nix": "git://github.com/NixOS/npm2nix.git" }
     ]
@@ -121,11 +122,37 @@ Nix expressions can be generated from this JSON specification as follows:
 
 And by using the generated Nix expressions, we can install NiJS through Nix as
 follows:
+    
+    $ nix-env -f default.nix -iA nijs
 
+For every package for which the latest version has been requested, we can
+directly refer to the name of the package to deploy it.
+
+For packages for which a specific version has been specified, we must refer to
+it using an attribute that name that is composed of its name and version
+specifier.
+
+The following command can be used to deploy the first specific version of `mocha`
+declared in the JSON configuration:
+
+    $ nix-env -f default.nix -iA '"mocha-1.21.x"'
+
+`npm2nix` can be referenced as follows:
+
+    $ nix-env -f default.nix -iA '"npm2nix-git://github.com/NixOS/npm2nix.git"'
+
+Since every NPM package resolves to a package name and version number we can also
+deploy any package by using an attribute consisting of its name and resolved
+version number.
+
+This command deploys NiJS version 0.0.18:
+    
     $ nix-env -f default.nix -iA '"nijs-0.0.18"'
 
-In principle, every attribute in the generated registry expression consists of
-the package name and a version number.
+The above command also works with dependencies of any package that are not
+declared in the JSON configuration file, e.g.:
+
+    $ nix-env -f default.nix -iA '"slasp-0.0.4"'
 
 Advanced options
 ================
