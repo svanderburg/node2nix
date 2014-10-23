@@ -197,13 +197,61 @@ let
             ''
           ) shimmedDependencies}
         
-          # Some version specifiers (latest, unstable, URLs) force NPM to make remote connections. Replace these by * to prevent that
+          # Some version specifiers (latest, unstable, URLs, file paths) force NPM to make remote connections or consult paths outside the Nix store.
+          # The following JavaScript replaces these by * to prevent that:
           
-          sed -i -e "s/:\s*\"latest\"/:  \"*\"/" \
-              -e "s/:\s*\"unstable\"/:  \"*\"/" \
-              -e "s/:\s*\"\(https\?\|git\(\+\(ssh\|http\|https\)\)\?\):\/\/[^\"]*\"/: \"*\"/" \
-              package.json
-        
+          (
+          cat <<EOF
+          var fs = require('fs');
+          var url = require('url');
+          
+          /*
+           * Replaces an impure version specification by *
+           */
+          function replaceImpureVersionSpec(versionSpec) {
+              var parsedUrl = url.parse(versionSpec);
+              
+              if(versionSpec == "latest" || versionSpec == "unstable" ||
+                  versionSpec.substr(0, 2) == ".." || dependency.substr(0, 2) == "./" || dependency.substr(0, 2) == "~/" || dependency.substr(0, 1) == '/')
+                  return '*';
+              else if(parsedUrl.protocol == "git:" || parsedUrl.protocol == "git+ssh:" || parsedUrl.protocol == "git+http:" || parsedUrl.protocol == "git+https:" ||
+                  parsedUrl.protocol == "http:" || parsedUrl.protocol == "https:")
+                  return '*';
+              else
+                  return versionSpec;
+          }
+          
+          var packageObj = JSON.parse(fs.readFileSync('./package.json'));
+          
+          /* Replace dependencies */
+          if(packageObj.dependencies !== undefined) {
+              for(var dependency in packageObj.dependencies) {
+                  var versionSpec = packageObj.dependencies[dependency];
+                  packageObj.dependencies[dependency] = replaceImpureVersionSpec(versionSpec);
+              }
+          }
+          
+          /* Replace development dependencies */
+          if(packageObj.devDependencies !== undefined) {
+              for(var dependency in packageObj.devDependencies) {
+                  var versionSpec = packageObj.devDependencies[dependency];
+                  packageObj.devDependencies[dependency] = replaceImpureVersionSpec(versionSpec);
+              }
+          }
+          
+          /* Replace optional dependencies */
+          if(packageObj.optionalDependencies !== undefined) {
+              for(var dependency in packageObj.optionalDependencies) {
+                  var versionSpec = packageObj.optionalDependencies[dependency];
+                  packageObj.optionalDependencies[dependency] = replaceImpureVersionSpec(versionSpec);
+              }
+          }
+          
+          /* Write the fixed JSON file */
+          fs.writeFileSync("package.json", JSON.stringify(packageObj));
+          EOF
+          ) | node
+          
           # Deploy the Node.js package by running npm install. Since the dependencies have been symlinked, it should not attempt to install them again,
           # which is good, because we want to make it Nix's responsibility. If it needs to install any dependencies anyway (e.g. because the dependency
           # parameters are incomplete/incorrect), it fails.
