@@ -37,19 +37,21 @@ let
     { providedDependencies ? {} }:
 
     let
-      # Generate and import a Nix expression that contains a list of dependencies
-      # that we actually need to include privately in this package folder. The
-      # ones that have been provided by any parent package, must be excluded.
+      # Generate and import a Nix expression that determines which dependencies
+      # are required and which are not required (and must be shimmed).
+      #
+      # It uses the semver utility to check whether a version range matches any
+      # of the provided dependencies.
   
-      requiredDependencies = 
-        if dependencies == {} then []
+      analysedDependencies = 
+        if dependencies == {} then {}
         else
           import (stdenv.mkDerivation {
-            name = "${name}-${version}-requiredDependencies.nix";
+            name = "${name}-${version}-analysedDependencies.nix";
             buildInputs = [ semver ];
             buildCommand = ''
               cat > $out <<EOF
-              [
+              {
               ${stdenv.lib.concatMapStrings (dependencyName:
                 let
                   dependency = builtins.getAttr dependencyName dependencies;
@@ -61,51 +63,32 @@ let
                     let
                       providedDependency = builtins.getAttr dependencyName providedDependencies;
                       versions = builtins.attrNames providedDependency;
-                    in
-                    "$(if ! semver -r '${versionSpec}' ${toString versions} >/dev/null; then echo '{ name = \"${dependencyName}\"; versionSpec = \"${versionSpec}\"; }'; fi)"
-                  else # If a dependency is not provided by an includer, we must always include it ourselves
-                    "{ name = \"${dependencyName}\"; versionSpec = \"${versionSpec}\"; }\n"
-                ) versionSpecs
-              ) (builtins.attrNames dependencies)}
-              ]
-              EOF
-            '';
-          });
-  
-      # Generate and import a Nix expression that specifies a list of dependencies
-      # for which we need to generate shims to allow the deployment to succeed
-      # which correspond to the dependencies that have been provided by any of the
-      # package's parents.
-  
-      shimmedDependencies =
-        if dependencies == {} then []
-        else
-          import (stdenv.mkDerivation {
-            name = "${name}-${version}-shimmedDependencies.nix";
-            buildInputs = [ semver ];
-            buildCommand = ''
-              cat > $out <<EOF
-              [
-              ${stdenv.lib.concatMapStrings (dependencyName:
-                let
-                  dependency = builtins.getAttr dependencyName dependencies;
-                  versionSpecs = builtins.attrNames dependency;
-                in
-                stdenv.lib.concatMapStrings (versionSpec:
-                  stdenv.lib.optionalString (builtins.hasAttr dependencyName providedDependencies)
-                    (let
-                      providedDependency = builtins.getAttr dependencyName providedDependencies;
-                      versions = builtins.attrNames providedDependency;
+                      
+                      # If there is a version range match, add the dependency to
+                      # the set of shimmed dependencies.
+                      # Otherwise, it is a required dependency.
                     in
                     ''
-                      $(if semver -r '${versionSpec}' ${toString versions} >/dev/null; then echo "{ name = \"${dependencyName}\"; version = \"$(semver -r '${versionSpec}' ${toString versions} | tail -1 | tr -d '\n')\"; }"; fi)
-                    '')
+                      $(latestVersion=$(semver -r '${versionSpec}' ${stdenv.lib.concatMapStrings (version: " '${version}'") versions} | tail -1 | tr -d '\n')
+                      
+                      if semver -r '${versionSpec}' ${stdenv.lib.concatMapStrings (version: " '${version}'") versions} >/dev/null
+                      then
+                          echo "shimmedDependencies.\"${dependencyName}\".\"$latestVersion\" = true;"
+                      else
+                          echo 'requiredDependencies."${dependencyName}"."${versionSpec}" = true;'
+                      fi)
+                    ''
+                  else # If a dependency is not provided by an includer, we must always include it ourselves
+                    "requiredDependencies.\"${dependencyName}\".\"${versionSpec}\" = true;\n"
                 ) versionSpecs
               ) (builtins.attrNames dependencies)}
-              ]
+              }
               EOF
             '';
           });
+    
+      requiredDependencies = analysedDependencies.requiredDependencies or {};
+      shimmedDependencies = analysedDependencies.shimmedDependencies or {};
 
       # Extract the Node.js source code which is used to compile packages with native bindings
       nodeSources = runCommand "node-sources" {} ''
@@ -141,20 +124,24 @@ let
           # Create copies of (or symlinks to) the dependencies that must be deployed in this package's private node_modules folder.
           # This package's private dependencies are NPM packages that have not been provided by any of the includers.
           
-          ${stdenv.lib.concatMapStrings (requiredDependency:
-            ''
-              depPath=$(echo ${dependencies."${requiredDependency.name}"."${requiredDependency.versionSpec}".pkg { providedDependencies = propagatedProvidedDependencies; }}/lib/node_modules/*)
-             
-              if [ ! -x "node_modules/$(basename $depPath)" ]
-              then
+          ${stdenv.lib.concatMapStrings (requiredDependencyName:
+            stdenv.lib.concatMapStrings (versionSpec:
+              let
+                dependency = dependencies."${requiredDependencyName}"."${versionSpec}".pkg {
+                  providedDependencies = propagatedProvidedDependencies;
+                };
+              in
+              ''
+                depPath=$(echo ${dependency}/lib/node_modules/*)
+                
                 ${if linkDependencies then ''
                   ln -s $depPath .
                 '' else ''
                   cp -r $depPath .
                 ''}
-            fi
-            ''
-          ) requiredDependencies}
+              ''
+            ) (builtins.attrNames (requiredDependencies."${requiredDependencyName}"))
+          ) (builtins.attrNames requiredDependencies)}
         '';
       };
     
@@ -170,33 +157,40 @@ let
           # Move the contents of the tarball into the output folder
           mkdir -p "$out/lib/node_modules/${name}"
           mv * "$out/lib/node_modules/${name}"
-      
-          # Enter the target directory
-        
-          cd "$out/lib/node_modules/${name}"
-        
-          # Copy the required dependencies
           
+          # Enter the target directory
+          
+          cd "$out/lib/node_modules/${name}"
+          
+          # Copy the required dependencies
           mkdir -p node_modules
           
-          ${stdenv.lib.optionalString (requiredDependencies != []) ''
-            cp -a ${nodeDependencies}/lib/node_modules/* node_modules
+          ${stdenv.lib.optionalString (requiredDependencies != {}) ''
+            for i in ${nodeDependencies}/lib/node_modules/*
+            do
+                if [ ! -d "node_modules/$(basename $i)" ]
+                then
+                    cp -a $i node_modules
+                fi
+            done
           ''}
           
           # Create shims for the packages that have been provided by earlier includers to allow the NPM install operation to still succeed
-      
-          ${stdenv.lib.concatMapStrings (shimmedDependency:
-            ''
-              mkdir -p node_modules/${shimmedDependency.name}
-              cat > node_modules/${shimmedDependency.name}/package.json <<EOF
-              {
-                  "name": "${shimmedDependency.name}",
-                  "version": "${shimmedDependency.version}"
-              }
-              EOF
-            ''
-          ) shimmedDependencies}
-        
+          
+          ${stdenv.lib.concatMapStrings (shimmedDependencyName:
+            stdenv.lib.concatMapStrings (versionSpec:
+              ''
+                mkdir -p node_modules/${shimmedDependencyName}
+                cat > node_modules/${shimmedDependencyName}/package.json <<EOF
+                {
+                    "name": "${shimmedDependencyName}",
+                    "version": "${versionSpec}"
+                }
+                EOF
+              ''
+            ) (builtins.attrNames (shimmedDependencies."${shimmedDependencyName}"))
+          ) (builtins.attrNames shimmedDependencies)}
+          
           # Some version specifiers (latest, unstable, URLs, file paths) force NPM to make remote connections or consult paths outside the Nix store.
           # The following JavaScript replaces these by * to prevent that:
           
@@ -255,7 +249,7 @@ let
           # Deploy the Node.js package by running npm install. Since the dependencies have been symlinked, it should not attempt to install them again,
           # which is good, because we want to make it Nix's responsibility. If it needs to install any dependencies anyway (e.g. because the dependency
           # parameters are incomplete/incorrect), it fails.
-  
+          
           export HOME=$TMPDIR
           npm --registry http://www.example.com --nodedir=${nodeSources} ${npmFlags} ${stdenv.lib.optionalString production "--production --ignore-scripts"} install
           
@@ -265,19 +259,19 @@ let
           ''}
         
           # After deployment of the NPM package, we must remove the shims again
-          ${stdenv.lib.concatMapStrings (shimmedDependency:
+          ${stdenv.lib.concatMapStrings (shimmedDependencyName:
             ''
-              rm node_modules/${shimmedDependency.name}/package.json
-              rmdir node_modules/${shimmedDependency.name}
+              rm node_modules/${shimmedDependencyName}/package.json
+              rmdir node_modules/${shimmedDependencyName}
             ''
-          ) shimmedDependencies}
+          ) (builtins.attrNames shimmedDependencies)}
           
           # It makes no sense to keep an empty node_modules folder around, so delete it if this is the case
           if [ -d node_modules ]
           then
               rmdir --ignore-fail-on-non-empty node_modules
           fi
-        
+          
           # Create symlink to the deployed executable folder, if applicable
           if [ -d "$out/lib/node_modules/.bin" ]
           then
@@ -299,7 +293,7 @@ let
           fi
         '';
         
-        shellHook = stdenv.lib.optionalString (requiredDependencies != []) ''
+        shellHook = stdenv.lib.optionalString (requiredDependencies != {}) ''
           export NODE_PATH=${nodeDependencies}/lib/node_modules
         '';
       };
