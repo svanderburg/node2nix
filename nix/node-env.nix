@@ -159,8 +159,15 @@ let
           mv * "$out/lib/node_modules/${name}"
           
           # Enter the target directory
-          
           cd "$out/lib/node_modules/${name}"
+          
+          # Patch the shebangs of the bundled modules. For "regular" dependencies
+          # this is already done by the generic builder.
+          
+          if [ -d node_modules ]
+          then
+              patchShebangs node_modules
+          fi
           
           # Copy the required dependencies
           mkdir -p node_modules
