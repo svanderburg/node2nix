@@ -146,7 +146,7 @@ let
       };
     
       # Deploy the Node package with some tricks
-      self = stdenv.mkDerivation {
+      self = stdenv.lib.makeOverridable stdenv.mkDerivation {
         inherit src meta;
       
         name = "node-${name}-${version}";
