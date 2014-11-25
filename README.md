@@ -194,6 +194,71 @@ the `--registry` option:
 
     $ npm2nix -i node-packages.json --registry http://private.registry.local
 
+Adding unspecified dependencies
+===============================
+A few exotic NPM package may have dependencies on native libraries that reside
+somewhere on the user's host system. Unfortunately, NPM's metadata does not
+specify them, and as a consequence, it may result in failing Nix builds due to
+missing dependencies.
+
+As a solution, the generated expressions by `npm2nix` are made overridable. The
+override mechanism can be used to manually inject additional unspecified
+dependencies.
+
+The easiest way to do this is to create a wrapper Nix expression that imports
+the generated composition expression from `npm2nix` and injects additional
+dependencies.
+
+Consider the following package collection file (named: `node-packages.json`)
+that installs one NPM package named `floomatic`:
+
+    [
+      "floomatic"
+    ]
+
+We can generate Nix expressions from the above specification, by running:
+
+    $ npm2nix -i node-packages.json
+
+One of floomatic's dependencies is an NPM package named `native-diff-match-patch`
+that requires the Qt 4.x library and pkgconfig, which are native dependencies not
+detected by the `npm2nix` generator.
+
+With the following wrapper expression (named: `override.nix`), we can inject
+these dependencies ourselves:
+
+    { pkgs ? import <nixpkgs> { inherit system; }
+    , system ? builtins.currentSystem
+    }:
+
+    let
+      registry = import ./default.nix {
+        inherit system pkgs;
+      };
+      
+      overrides = {
+        "native-diff-match-patch-0.1.2" = { providedDependencies ? {} }:
+          (registry."native-diff-match-patch-0.1.2" { inherit providedDependencies; }).override (oldAttrs: {
+            buildInputs = oldAttrs.buildInputs ++ [ pkgs.pkgconfig pkgs.qt4 ];
+          });
+        };
+      
+      newRegistry = import ./default.nix {
+        inherit system pkgs overrides;
+      };
+    in
+    newRegistry
+
+The expression does the following:
+
+* We import the registry from the generated composition expression (`default.nix`) by `npm2nix` without any overrides.
+* We define an override for the broken package (named: `native-diff-match-patch-0.1.2`). We take the old derivation as is, and we add the missing native dependencies as build inputs.
+* We compose a new registry in which we apply the overrides.
+
+With the above wrapper expression, we can correctly deploy floomatic, by running:
+
+    $ nix-build override.nix -A floomatic
+
 API documentation
 =================
 This package includes API documentation, which can be generated with
