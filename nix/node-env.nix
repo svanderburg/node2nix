@@ -198,6 +198,9 @@ let
             ) (builtins.attrNames (shimmedDependencies."${shimmedDependencyName}"))
           ) (builtins.attrNames shimmedDependencies)}
           
+          # Ignore npm-shrinkwrap.json for now. Ideally, it should be supported as well
+          rm -f npm-shrinkwrap.json
+          
           # Some version specifiers (latest, unstable, URLs, file paths) force NPM to make remote connections or consult paths outside the Nix store.
           # The following JavaScript replaces these by * to prevent that:
           
