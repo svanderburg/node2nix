@@ -24,10 +24,10 @@ let
   # We must run semver to determine whether a provided dependency conforms to a certain version range
   semver = buildNodePackage {
     name = "semver";
-    version = "3.0.1";
+    version = "4.3.1";
     src = fetchurl {
-      url = http://registry.npmjs.org/semver/-/semver-3.0.1.tgz;
-      sha1 = "720ac012515a252f91fb0dd2e99a56a70d6cf078";
+      url = http://registry.npmjs.org/semver/-/semver-4.3.1.tgz;
+      sha1 = "beb0129575b95f76110b29af08d370fd9eeb34bf";
     };
   } {};
   
@@ -261,13 +261,8 @@ let
           # parameters are incomplete/incorrect), it fails.
           
           export HOME=$TMPDIR
-          npm --registry http://www.example.com --nodedir=${nodeSources} ${npmFlags} ${stdenv.lib.optionalString production "--production --ignore-scripts"} install
+          npm --registry http://www.example.com --nodedir=${nodeSources} ${npmFlags} ${stdenv.lib.optionalString production "--production"} install
           
-          ${stdenv.lib.optionalString production ''
-            # Run the install script explicitly, because script execution has been disabled to prevent the prepublish step from being executed
-            npm run install --registry http://www.example.com --nodedir=${nodeSources} ${npmFlags} ${stdenv.lib.optionalString production "--production"}
-          ''}
-        
           # After deployment of the NPM package, we must remove the shims again
           ${stdenv.lib.concatMapStrings (shimmedDependencyName:
             ''
