@@ -33,8 +33,8 @@ let
         };
         tar = {
           "1.0.x" = {
-            version = "1.0.2";
-            pkg = self."tar-1.0.2";
+            version = "1.0.3";
+            pkg = self."tar-1.0.3";
           };
         };
         temp = {
@@ -62,9 +62,9 @@ let
           };
         };
         nijs = {
-          "0.0.22" = {
-            version = "0.0.22";
-            pkg = self."nijs-0.0.22";
+          "0.0.23" = {
+            version = "0.0.23";
+            pkg = self."nijs-0.0.23";
           };
         };
       };
@@ -139,8 +139,8 @@ let
         };
         request = {
           "2 >=2.25.0" = {
-            version = "2.48.0";
-            pkg = self."request-2.48.0";
+            version = "2.55.0";
+            pkg = self."request-2.55.0";
           };
         };
         retry = {
@@ -151,8 +151,8 @@ let
         };
         rimraf = {
           "~2" = {
-            version = "2.2.8";
-            pkg = self."rimraf-2.2.8";
+            version = "2.3.3";
+            pkg = self."rimraf-2.3.3";
           };
         };
         semver = {
@@ -169,8 +169,8 @@ let
         };
         npmlog = {
           "" = {
-            version = "0.1.1";
-            pkg = self."npmlog-0.1.1";
+            version = "1.2.0";
+            pkg = self."npmlog-1.2.0";
           };
         };
       };
@@ -246,36 +246,36 @@ let
       linkDependencies = false;
     };
     "npm-cache-filename-^1.0.0" = self."npm-cache-filename-1.0.1";
-    "request-2.48.0" = buildNodePackage {
+    "request-2.55.0" = buildNodePackage {
       name = "request";
-      version = "2.48.0";
+      version = "2.55.0";
       src = fetchurl {
-        url = "http://registry.npmjs.org/request/-/request-2.48.0.tgz";
-        sha1 = "3ae2e091c9698282d58a0e6989ece2638f0f1f28";
+        url = "http://registry.npmjs.org/request/-/request-2.55.0.tgz";
+        sha1 = "d75c1cdf679d76bb100f9bffe1fe551b5c24e93d";
       };
       dependencies = {
         bl = {
           "~0.9.0" = {
-            version = "0.9.3";
-            pkg = self."bl-0.9.3";
+            version = "0.9.4";
+            pkg = self."bl-0.9.4";
           };
         };
         caseless = {
-          "~0.7.0" = {
-            version = "0.7.0";
-            pkg = self."caseless-0.7.0";
+          "~0.9.0" = {
+            version = "0.9.0";
+            pkg = self."caseless-0.9.0";
           };
         };
         forever-agent = {
-          "~0.5.0" = {
-            version = "0.5.2";
-            pkg = self."forever-agent-0.5.2";
+          "~0.6.0" = {
+            version = "0.6.1";
+            pkg = self."forever-agent-0.6.1";
           };
         };
         form-data = {
-          "~0.1.0" = {
-            version = "0.1.4";
-            pkg = self."form-data-0.1.4";
+          "~0.2.0" = {
+            version = "0.2.0";
+            pkg = self."form-data-0.2.0";
           };
         };
         json-stringify-safe = {
@@ -285,21 +285,21 @@ let
           };
         };
         mime-types = {
-          "~1.0.1" = {
-            version = "1.0.2";
-            pkg = self."mime-types-1.0.2";
+          "~2.0.1" = {
+            version = "2.0.11";
+            pkg = self."mime-types-2.0.11";
           };
         };
         node-uuid = {
           "~1.4.0" = {
-            version = "1.4.1";
-            pkg = self."node-uuid-1.4.1";
+            version = "1.4.3";
+            pkg = self."node-uuid-1.4.3";
           };
         };
         qs = {
-          "~2.3.1" = {
-            version = "2.3.3";
-            pkg = self."qs-2.3.3";
+          "~2.4.0" = {
+            version = "2.4.2";
+            pkg = self."qs-2.4.2";
           };
         };
         tunnel-agent = {
@@ -310,26 +310,26 @@ let
         };
         tough-cookie = {
           ">=0.12.0" = {
-            version = "0.12.1";
-            pkg = self."tough-cookie-0.12.1";
+            version = "1.1.0";
+            pkg = self."tough-cookie-1.1.0";
           };
         };
         http-signature = {
           "~0.10.0" = {
-            version = "0.10.0";
-            pkg = self."http-signature-0.10.0";
+            version = "0.10.1";
+            pkg = self."http-signature-0.10.1";
           };
         };
         oauth-sign = {
-          "~0.5.0" = {
-            version = "0.5.0";
-            pkg = self."oauth-sign-0.5.0";
+          "~0.6.0" = {
+            version = "0.6.0";
+            pkg = self."oauth-sign-0.6.0";
           };
         };
         hawk = {
-          "1.1.1" = {
-            version = "1.1.1";
-            pkg = self."hawk-1.1.1";
+          "~2.3.0" = {
+            version = "2.3.1";
+            pkg = self."hawk-2.3.1";
           };
         };
         aws-sign2 = {
@@ -350,6 +350,18 @@ let
             pkg = self."combined-stream-0.0.7";
           };
         };
+        isstream = {
+          "~0.1.1" = {
+            version = "0.1.2";
+            pkg = self."isstream-0.1.2";
+          };
+        };
+        har-validator = {
+          "^1.4.0" = {
+            version = "1.7.0";
+            pkg = self."har-validator-1.7.0";
+          };
+        };
       };
       meta = {
         description = "Simplified HTTP request client.";
@@ -359,12 +371,12 @@ let
       production = true;
       linkDependencies = false;
     };
-    "bl-0.9.3" = buildNodePackage {
+    "bl-0.9.4" = buildNodePackage {
       name = "bl";
-      version = "0.9.3";
+      version = "0.9.4";
       src = fetchurl {
-        url = "http://registry.npmjs.org/bl/-/bl-0.9.3.tgz";
-        sha1 = "c41eff3e7cb31bde107c8f10076d274eff7f7d44";
+        url = "http://registry.npmjs.org/bl/-/bl-0.9.4.tgz";
+        sha1 = "4702ddf72fbe0ecd82787c00c113aea1935ad0e7";
       };
       dependencies = {
         readable-stream = {
@@ -488,13 +500,13 @@ let
     };
     "inherits-~2.0.1" = self."inherits-2.0.1";
     "readable-stream-~1.0.26" = self."readable-stream-1.0.33";
-    "bl-~0.9.0" = self."bl-0.9.3";
-    "caseless-0.7.0" = buildNodePackage {
+    "bl-~0.9.0" = self."bl-0.9.4";
+    "caseless-0.9.0" = buildNodePackage {
       name = "caseless";
-      version = "0.7.0";
+      version = "0.9.0";
       src = fetchurl {
-        url = "http://registry.npmjs.org/caseless/-/caseless-0.7.0.tgz";
-        sha1 = "cbd705ae6229158bb0bc971bf7d7a04bdbd51ff8";
+        url = "http://registry.npmjs.org/caseless/-/caseless-0.9.0.tgz";
+        sha1 = "b7b65ce6bf1413886539cfd533f0b30effa9cf88";
       };
       meta = {
         description = "Caseless object set/get/has, very useful when working with HTTP headers.";
@@ -504,47 +516,48 @@ let
       production = true;
       linkDependencies = false;
     };
-    "caseless-~0.7.0" = self."caseless-0.7.0";
-    "forever-agent-0.5.2" = buildNodePackage {
+    "caseless-~0.9.0" = self."caseless-0.9.0";
+    "forever-agent-0.6.1" = buildNodePackage {
       name = "forever-agent";
-      version = "0.5.2";
+      version = "0.6.1";
       src = fetchurl {
-        url = "http://registry.npmjs.org/forever-agent/-/forever-agent-0.5.2.tgz";
-        sha1 = "6d0e09c4921f94a27f63d3b49c5feff1ea4c5130";
+        url = "http://registry.npmjs.org/forever-agent/-/forever-agent-0.6.1.tgz";
+        sha1 = "fbc71f0c41adeb37f96c577ad1ed42d8fdacca91";
       };
       dependencies = {};
       meta = {
         description = "HTTP Agent that keeps socket connections alive between keep-alive requests. Formerly part of mikeal/request, now a standalone module.";
         homepage = https://github.com/mikeal/forever-agent;
+        license = "Apache-2.0";
       };
       production = true;
       linkDependencies = false;
     };
-    "forever-agent-~0.5.0" = self."forever-agent-0.5.2";
-    "form-data-0.1.4" = buildNodePackage {
+    "forever-agent-~0.6.0" = self."forever-agent-0.6.1";
+    "form-data-0.2.0" = buildNodePackage {
       name = "form-data";
-      version = "0.1.4";
+      version = "0.2.0";
       src = fetchurl {
-        url = "http://registry.npmjs.org/form-data/-/form-data-0.1.4.tgz";
-        sha1 = "91abd788aba9702b1aabfa8bc01031a2ac9e3b12";
+        url = "http://registry.npmjs.org/form-data/-/form-data-0.2.0.tgz";
+        sha1 = "26f8bc26da6440e299cbdcfb69035c4f77a6e466";
       };
       dependencies = {
+        async = {
+          "~0.9.0" = {
+            version = "0.9.0";
+            pkg = self."async-0.9.0";
+          };
+        };
         combined-stream = {
           "~0.0.4" = {
             version = "0.0.7";
             pkg = self."combined-stream-0.0.7";
           };
         };
-        mime = {
-          "~1.2.11" = {
-            version = "1.2.11";
-            pkg = self."mime-1.2.11";
-          };
-        };
-        async = {
-          "~0.9.0" = {
-            version = "0.9.0";
-            pkg = self."async-0.9.0";
+        mime-types = {
+          "~2.0.3" = {
+            version = "2.0.11";
+            pkg = self."mime-types-2.0.11";
           };
         };
       };
@@ -555,6 +568,21 @@ let
       production = true;
       linkDependencies = false;
     };
+    "async-0.9.0" = buildNodePackage {
+      name = "async";
+      version = "0.9.0";
+      src = fetchurl {
+        url = "http://registry.npmjs.org/async/-/async-0.9.0.tgz";
+        sha1 = "ac3613b1da9bed1b47510bb4651b8931e47146c7";
+      };
+      meta = {
+        description = "Higher-order functions and common patterns for asynchronous code";
+        homepage = https://github.com/caolan/async;
+      };
+      production = true;
+      linkDependencies = false;
+    };
+    "async-~0.9.0" = self."async-0.9.0";
     "combined-stream-0.0.7" = buildNodePackage {
       name = "combined-stream";
       version = "0.0.7";
@@ -593,37 +621,47 @@ let
       linkDependencies = false;
     };
     "combined-stream-~0.0.4" = self."combined-stream-0.0.7";
-    "mime-1.2.11" = buildNodePackage {
-      name = "mime";
-      version = "1.2.11";
+    "mime-types-2.0.11" = buildNodePackage {
+      name = "mime-types";
+      version = "2.0.11";
       src = fetchurl {
-        url = "http://registry.npmjs.org/mime/-/mime-1.2.11.tgz";
-        sha1 = "58203eed86e3a5ef17aed2b7d9ebd47f0a60dd10";
+        url = "http://registry.npmjs.org/mime-types/-/mime-types-2.0.11.tgz";
+        sha1 = "bf3449042799d877c815c29929d1e74760e72007";
       };
-      dependencies = {};
+      dependencies = {
+        mime-db = {
+          "~1.9.1" = {
+            version = "1.9.1";
+            pkg = self."mime-db-1.9.1";
+          };
+        };
+      };
       meta = {
-        description = "A comprehensive library for mime-type mapping";
+        description = "The ultimate javascript content-type utility.";
+        homepage = https://github.com/jshttp/mime-types;
+        license = "MIT";
       };
       production = true;
       linkDependencies = false;
     };
-    "mime-~1.2.11" = self."mime-1.2.11";
-    "async-0.9.0" = buildNodePackage {
-      name = "async";
-      version = "0.9.0";
+    "mime-db-1.9.1" = buildNodePackage {
+      name = "mime-db";
+      version = "1.9.1";
       src = fetchurl {
-        url = "http://registry.npmjs.org/async/-/async-0.9.0.tgz";
-        sha1 = "ac3613b1da9bed1b47510bb4651b8931e47146c7";
+        url = "http://registry.npmjs.org/mime-db/-/mime-db-1.9.1.tgz";
+        sha1 = "1431049a71791482c29f37bafc8ea2cb3a6dd3e8";
       };
       meta = {
-        description = "Higher-order functions and common patterns for asynchronous code";
-        homepage = https://github.com/caolan/async;
+        description = "Media Type Database";
+        homepage = https://github.com/jshttp/mime-db;
+        license = "MIT";
       };
       production = true;
       linkDependencies = false;
     };
-    "async-~0.9.0" = self."async-0.9.0";
-    "form-data-~0.1.0" = self."form-data-0.1.4";
+    "mime-db-~1.9.1" = self."mime-db-1.9.1";
+    "mime-types-~2.0.3" = self."mime-types-2.0.11";
+    "form-data-~0.2.0" = self."form-data-0.2.0";
     "json-stringify-safe-5.0.0" = buildNodePackage {
       name = "json-stringify-safe";
       version = "5.0.0";
@@ -639,42 +677,28 @@ let
       linkDependencies = false;
     };
     "json-stringify-safe-~5.0.0" = self."json-stringify-safe-5.0.0";
-    "mime-types-1.0.2" = buildNodePackage {
-      name = "mime-types";
-      version = "1.0.2";
-      src = fetchurl {
-        url = "http://registry.npmjs.org/mime-types/-/mime-types-1.0.2.tgz";
-        sha1 = "995ae1392ab8affcbfcb2641dd054e943c0d5dce";
-      };
-      meta = {
-        description = "The ultimate javascript content-type utility.";
-        homepage = https://github.com/expressjs/mime-types;
-        license = "MIT";
-      };
-      production = true;
-      linkDependencies = false;
-    };
-    "mime-types-~1.0.1" = self."mime-types-1.0.2";
-    "node-uuid-1.4.1" = buildNodePackage {
+    "mime-types-~2.0.1" = self."mime-types-2.0.11";
+    "node-uuid-1.4.3" = buildNodePackage {
       name = "node-uuid";
-      version = "1.4.1";
+      version = "1.4.3";
       src = fetchurl {
-        url = "http://registry.npmjs.org/node-uuid/-/node-uuid-1.4.1.tgz";
-        sha1 = "39aef510e5889a3dca9c895b506c73aae1bac048";
+        url = "http://registry.npmjs.org/node-uuid/-/node-uuid-1.4.3.tgz";
+        sha1 = "319bb7a56e7cb63f00b5c0cd7851cd4b4ddf1df9";
       };
       meta = {
         description = "Rigorous implementation of RFC4122 (v1 and v4) UUIDs.";
+        homepage = https://github.com/broofa/node-uuid;
       };
       production = true;
       linkDependencies = false;
     };
-    "node-uuid-~1.4.0" = self."node-uuid-1.4.1";
-    "qs-2.3.3" = buildNodePackage {
+    "node-uuid-~1.4.0" = self."node-uuid-1.4.3";
+    "qs-2.4.2" = buildNodePackage {
       name = "qs";
-      version = "2.3.3";
+      version = "2.4.2";
       src = fetchurl {
-        url = "http://registry.npmjs.org/qs/-/qs-2.3.3.tgz";
-        sha1 = "e9e85adbe75da0bbe4c8e0476a086290f863b404";
+        url = "http://registry.npmjs.org/qs/-/qs-2.4.2.tgz";
+        sha1 = "f7ce788e5777df0b5010da7f7c4e73ba32470f5a";
       };
       dependencies = {};
       meta = {
@@ -684,7 +708,7 @@ let
       production = true;
       linkDependencies = false;
     };
-    "qs-~2.3.1" = self."qs-2.3.3";
+    "qs-~2.4.0" = self."qs-2.4.2";
     "tunnel-agent-0.4.0" = buildNodePackage {
       name = "tunnel-agent";
       version = "0.4.0";
@@ -701,58 +725,34 @@ let
       linkDependencies = false;
     };
     "tunnel-agent-~0.4.0" = self."tunnel-agent-0.4.0";
-    "tough-cookie-0.12.1" = buildNodePackage {
+    "tough-cookie-1.1.0" = buildNodePackage {
       name = "tough-cookie";
-      version = "0.12.1";
+      version = "1.1.0";
       src = fetchurl {
-        url = "http://registry.npmjs.org/tough-cookie/-/tough-cookie-0.12.1.tgz";
-        sha1 = "8220c7e21abd5b13d96804254bd5a81ebf2c7d62";
-      };
-      dependencies = {
-        punycode = {
-          ">=0.2.0" = {
-            version = "1.3.2";
-            pkg = self."punycode-1.3.2";
-          };
-        };
+        url = "http://registry.npmjs.org/tough-cookie/-/tough-cookie-1.1.0.tgz";
+        sha1 = "126d2490e66ae5286b6863debd4a341076915954";
       };
       meta = {
         description = "RFC6265 Cookies and Cookie Jar for node.js";
-        homepage = https://github.com/goinstant/tough-cookie;
-        license = "MIT";
+        homepage = https://github.com/SalesforceEng/tough-cookie;
+        license = "BSD-3-Clause";
       };
       production = true;
       linkDependencies = false;
     };
-    "punycode-1.3.2" = buildNodePackage {
-      name = "punycode";
-      version = "1.3.2";
-      src = fetchurl {
-        url = "http://registry.npmjs.org/punycode/-/punycode-1.3.2.tgz";
-        sha1 = "9653a036fb7c1ee42342f2325cceefea3926c48d";
-      };
-      meta = {
-        description = "A robust Punycode converter that fully complies to RFC 3492 and RFC 5891, and works on nearly all JavaScript platforms.";
-        homepage = https://mths.be/punycode;
-        license = "MIT";
-      };
-      production = true;
-      linkDependencies = false;
-    };
-    "punycode->=0.2.0" = self."punycode-1.3.2";
-    "tough-cookie->=0.12.0" = self."tough-cookie-0.12.1";
-    "http-signature-0.10.0" = buildNodePackage {
+    "tough-cookie->=0.12.0" = self."tough-cookie-1.1.0";
+    "http-signature-0.10.1" = buildNodePackage {
       name = "http-signature";
-      version = "0.10.0";
+      version = "0.10.1";
       src = fetchurl {
-        url = "http://registry.npmjs.org/http-signature/-/http-signature-0.10.0.tgz";
-        sha1 = "1494e4f5000a83c0f11bcc12d6007c530cb99582";
+        url = "http://registry.npmjs.org/http-signature/-/http-signature-0.10.1.tgz";
+        sha1 = "4fbdac132559aa8323121e540779c0a012b27e66";
       };
       dependencies = {
         assert-plus = {
-          "0.1.2" = {
-            version = "0.1.2";
-            pkg = self."assert-plus-0.1.2";
+          "^0.1.5" = {
+            version = "0.1.5";
+            pkg = self."assert-plus-0.1.5";
           };
         };
         asn1 = {
@@ -762,24 +762,26 @@ let
           };
         };
         ctype = {
-          "0.5.2" = {
-            version = "0.5.2";
-            pkg = self."ctype-0.5.2";
+          "0.5.3" = {
+            version = "0.5.3";
+            pkg = self."ctype-0.5.3";
           };
         };
       };
       meta = {
-        description = "Reference implementation of Joyent's HTTP Signature Scheme";
+        description = "Reference implementation of Joyent's HTTP Signature scheme.";
+        homepage = https://github.com/joyent/node-http-signature/;
+        license = "MIT";
       };
       production = true;
       linkDependencies = false;
     };
-    "assert-plus-0.1.2" = buildNodePackage {
+    "assert-plus-0.1.5" = buildNodePackage {
       name = "assert-plus";
-      version = "0.1.2";
+      version = "0.1.5";
       src = fetchurl {
-        url = "http://registry.npmjs.org/assert-plus/-/assert-plus-0.1.2.tgz";
-        sha1 = "d93ffdbb67ac5507779be316a7d65146417beef8";
+        url = "http://registry.npmjs.org/assert-plus/-/assert-plus-0.1.5.tgz";
+        sha1 = "ee74009413002d84cec7219c6ac811812e723160";
       };
       dependencies = {};
       meta = {
@@ -788,6 +790,7 @@ let
       production = true;
       linkDependencies = false;
     };
+    "assert-plus-^0.1.5" = self."assert-plus-0.1.5";
     "asn1-0.1.11" = buildNodePackage {
       name = "asn1";
       version = "0.1.11";
@@ -802,12 +805,12 @@ let
       production = true;
       linkDependencies = false;
     };
-    "ctype-0.5.2" = buildNodePackage {
+    "ctype-0.5.3" = buildNodePackage {
       name = "ctype";
-      version = "0.5.2";
+      version = "0.5.3";
       src = fetchurl {
-        url = "http://registry.npmjs.org/ctype/-/ctype-0.5.2.tgz";
-        sha1 = "fe8091d468a373a0b0c9ff8bbfb3425c00973a1d";
+        url = "http://registry.npmjs.org/ctype/-/ctype-0.5.3.tgz";
+        sha1 = "82c18c2461f74114ef16c135224ad0b9144ca12f";
       };
       meta = {
         description = "read and write binary structures and data types";
@@ -816,13 +819,13 @@ let
       production = true;
       linkDependencies = false;
     };
-    "http-signature-~0.10.0" = self."http-signature-0.10.0";
-    "oauth-sign-0.5.0" = buildNodePackage {
+    "http-signature-~0.10.0" = self."http-signature-0.10.1";
+    "oauth-sign-0.6.0" = buildNodePackage {
       name = "oauth-sign";
-      version = "0.5.0";
+      version = "0.6.0";
       src = fetchurl {
-        url = "http://registry.npmjs.org/oauth-sign/-/oauth-sign-0.5.0.tgz";
-        sha1 = "d767f5169325620eab2e087ef0c472e773db6461";
+        url = "http://registry.npmjs.org/oauth-sign/-/oauth-sign-0.6.0.tgz";
+        sha1 = "7dbeae44f6ca454e1f168451d630746735813ce3";
       };
       dependencies = {};
       meta = {
@@ -832,127 +835,133 @@ let
       production = true;
       linkDependencies = false;
     };
-    "oauth-sign-~0.5.0" = self."oauth-sign-0.5.0";
-    "hawk-1.1.1" = buildNodePackage {
+    "oauth-sign-~0.6.0" = self."oauth-sign-0.6.0";
+    "hawk-2.3.1" = buildNodePackage {
       name = "hawk";
-      version = "1.1.1";
+      version = "2.3.1";
       src = fetchurl {
-        url = "http://registry.npmjs.org/hawk/-/hawk-1.1.1.tgz";
-        sha1 = "87cd491f9b46e4e2aeaca335416766885d2d1ed9";
+        url = "http://registry.npmjs.org/hawk/-/hawk-2.3.1.tgz";
+        sha1 = "1e731ce39447fa1d0f6d707f7bceebec0fd1ec1f";
       };
       dependencies = {
         hoek = {
-          "0.9.x" = {
-            version = "0.9.1";
-            pkg = self."hoek-0.9.1";
+          "2.x.x" = {
+            version = "2.13.0";
+            pkg = self."hoek-2.13.0";
           };
         };
         boom = {
-          "0.4.x" = {
-            version = "0.4.2";
-            pkg = self."boom-0.4.2";
+          "2.x.x" = {
+            version = "2.7.1";
+            pkg = self."boom-2.7.1";
           };
         };
         cryptiles = {
-          "0.2.x" = {
-            version = "0.2.2";
-            pkg = self."cryptiles-0.2.2";
+          "2.x.x" = {
+            version = "2.0.4";
+            pkg = self."cryptiles-2.0.4";
           };
         };
         sntp = {
-          "0.2.x" = {
-            version = "0.2.4";
-            pkg = self."sntp-0.2.4";
+          "1.x.x" = {
+            version = "1.0.9";
+            pkg = self."sntp-1.0.9";
           };
         };
       };
       meta = {
         description = "HTTP Hawk Authentication Scheme";
+        homepage = https://github.com/hueniverse/hawk;
       };
       production = true;
       linkDependencies = false;
     };
-    "hoek-0.9.1" = buildNodePackage {
+    "hoek-2.13.0" = buildNodePackage {
       name = "hoek";
-      version = "0.9.1";
+      version = "2.13.0";
       src = fetchurl {
-        url = "http://registry.npmjs.org/hoek/-/hoek-0.9.1.tgz";
-        sha1 = "3d322462badf07716ea7eb85baf88079cddce505";
+        url = "http://registry.npmjs.org/hoek/-/hoek-2.13.0.tgz";
+        sha1 = "cc86b5c1c344b41a7271be449e232fac8d6f450c";
       };
       dependencies = {};
       meta = {
         description = "General purpose node utilities";
+        homepage = "https://github.com/hapijs/hoek#readme";
       };
       production = true;
       linkDependencies = false;
     };
-    "hoek-0.9.x" = self."hoek-0.9.1";
-    "boom-0.4.2" = buildNodePackage {
+    "hoek-2.x.x" = self."hoek-2.13.0";
+    "boom-2.7.1" = buildNodePackage {
       name = "boom";
-      version = "0.4.2";
+      version = "2.7.1";
       src = fetchurl {
-        url = "http://registry.npmjs.org/boom/-/boom-0.4.2.tgz";
-        sha1 = "7a636e9ded4efcefb19cef4947a3c67dfaee911b";
+        url = "http://registry.npmjs.org/boom/-/boom-2.7.1.tgz";
+        sha1 = "fb165c348d337977c61d4363c21e9e1abf526705";
       };
       dependencies = {
         hoek = {
-          "0.9.x" = {
-            version = "0.9.1";
-            pkg = self."hoek-0.9.1";
+          "2.x.x" = {
+            version = "2.13.0";
+            pkg = self."hoek-2.13.0";
           };
         };
       };
       meta = {
         description = "HTTP-friendly error objects";
+        homepage = https://github.com/hapijs/boom;
       };
       production = true;
       linkDependencies = false;
     };
-    "boom-0.4.x" = self."boom-0.4.2";
-    "cryptiles-0.2.2" = buildNodePackage {
+    "boom-2.x.x" = self."boom-2.7.1";
+    "cryptiles-2.0.4" = buildNodePackage {
       name = "cryptiles";
-      version = "0.2.2";
+      version = "2.0.4";
       src = fetchurl {
-        url = "http://registry.npmjs.org/cryptiles/-/cryptiles-0.2.2.tgz";
-        sha1 = "ed91ff1f17ad13d3748288594f8a48a0d26f325c";
+        url = "http://registry.npmjs.org/cryptiles/-/cryptiles-2.0.4.tgz";
+        sha1 = "09ea1775b9e1c7de7e60a99d42ab6f08ce1a1285";
       };
       dependencies = {
         boom = {
-          "0.4.x" = {
-            version = "0.4.2";
-            pkg = self."boom-0.4.2";
+          "2.x.x" = {
+            version = "2.7.1";
+            pkg = self."boom-2.7.1";
           };
         };
       };
       meta = {
         description = "General purpose crypto utilities";
+        homepage = https://github.com/hapijs/cryptiles;
       };
       production = true;
       linkDependencies = false;
     };
-    "cryptiles-0.2.x" = self."cryptiles-0.2.2";
-    "sntp-0.2.4" = buildNodePackage {
+    "cryptiles-2.x.x" = self."cryptiles-2.0.4";
+    "sntp-1.0.9" = buildNodePackage {
       name = "sntp";
-      version = "0.2.4";
+      version = "1.0.9";
       src = fetchurl {
-        url = "http://registry.npmjs.org/sntp/-/sntp-0.2.4.tgz";
-        sha1 = "fb885f18b0f3aad189f824862536bceeec750900";
+        url = "http://registry.npmjs.org/sntp/-/sntp-1.0.9.tgz";
+        sha1 = "6541184cc90aeea6c6e7b35e2659082443c66198";
       };
       dependencies = {
         hoek = {
-          "0.9.x" = {
-            version = "0.9.1";
-            pkg = self."hoek-0.9.1";
+          "2.x.x" = {
+            version = "2.13.0";
+            pkg = self."hoek-2.13.0";
           };
         };
       };
       meta = {
         description = "SNTP Client";
+        homepage = https://github.com/hueniverse/sntp;
       };
       production = true;
       linkDependencies = false;
     };
-    "sntp-0.2.x" = self."sntp-0.2.4";
+    "sntp-1.x.x" = self."sntp-1.0.9";
+    "hawk-~2.3.0" = self."hawk-2.3.1";
     "aws-sign2-0.5.0" = buildNodePackage {
       name = "aws-sign2";
       version = "0.5.0";
@@ -984,7 +993,433 @@ let
     };
     "stringstream-~0.0.4" = self."stringstream-0.0.4";
     "combined-stream-~0.0.5" = self."combined-stream-0.0.7";
-    "request-2 >=2.25.0" = self."request-2.48.0";
+    "isstream-0.1.2" = buildNodePackage {
+      name = "isstream";
+      version = "0.1.2";
+      src = fetchurl {
+        url = "http://registry.npmjs.org/isstream/-/isstream-0.1.2.tgz";
+        sha1 = "47e63f7af55afa6f92e1500e690eb8b8529c099a";
+      };
+      meta = {
+        description = "Determine if an object is a Stream";
+        homepage = https://github.com/rvagg/isstream;
+        license = "MIT";
+      };
+      production = true;
+      linkDependencies = false;
+    };
+    "isstream-~0.1.1" = self."isstream-0.1.2";
+    "har-validator-1.7.0" = buildNodePackage {
+      name = "har-validator";
+      version = "1.7.0";
+      src = fetchurl {
+        url = "http://registry.npmjs.org/har-validator/-/har-validator-1.7.0.tgz";
+        sha1 = "563f8c58edca6410e2e408b0e540161da580dc46";
+      };
+      dependencies = {
+        bluebird = {
+          "^2.9.25" = {
+            version = "2.9.25";
+            pkg = self."bluebird-2.9.25";
+          };
+        };
+        chalk = {
+          "^1.0.0" = {
+            version = "1.0.0";
+            pkg = self."chalk-1.0.0";
+          };
+        };
+        commander = {
+          "^2.8.1" = {
+            version = "2.8.1";
+            pkg = self."commander-2.8.1";
+          };
+        };
+        is-my-json-valid = {
+          "^2.10.1" = {
+            version = "2.11.0";
+            pkg = self."is-my-json-valid-2.11.0";
+          };
+        };
+      };
+      meta = {
+        description = "Extremely fast HTTP Archive (HAR) validator using JSON Schema";
+        homepage = https://github.com/ahmadnassri/har-validator;
+        license = "MIT";
+      };
+      production = true;
+      linkDependencies = false;
+    };
+    "bluebird-2.9.25" = buildNodePackage {
+      name = "bluebird";
+      version = "2.9.25";
+      src = fetchurl {
+        url = "http://registry.npmjs.org/bluebird/-/bluebird-2.9.25.tgz";
+        sha1 = "6e36bd04064d9534c07160b9f7f26c5a738fe16a";
+      };
+      meta = {
+        description = "Full featured Promises/A+ implementation with exceptionally good performance";
+        homepage = https://github.com/petkaantonov/bluebird;
+        license = "MIT";
+      };
+      production = true;
+      linkDependencies = false;
+    };
+    "bluebird-^2.9.25" = self."bluebird-2.9.25";
+    "chalk-1.0.0" = buildNodePackage {
+      name = "chalk";
+      version = "1.0.0";
+      src = fetchurl {
+        url = "http://registry.npmjs.org/chalk/-/chalk-1.0.0.tgz";
+        sha1 = "b3cf4ed0ff5397c99c75b8f679db2f52831f96dc";
+      };
+      dependencies = {
+        ansi-styles = {
+          "^2.0.1" = {
+            version = "2.0.1";
+            pkg = self."ansi-styles-2.0.1";
+          };
+        };
+        escape-string-regexp = {
+          "^1.0.2" = {
+            version = "1.0.3";
+            pkg = self."escape-string-regexp-1.0.3";
+          };
+        };
+        has-ansi = {
+          "^1.0.3" = {
+            version = "1.0.3";
+            pkg = self."has-ansi-1.0.3";
+          };
+        };
+        strip-ansi = {
+          "^2.0.1" = {
+            version = "2.0.1";
+            pkg = self."strip-ansi-2.0.1";
+          };
+        };
+        supports-color = {
+          "^1.3.0" = {
+            version = "1.3.1";
+            pkg = self."supports-color-1.3.1";
+          };
+        };
+      };
+      meta = {
+        description = "Terminal string styling done right. Much color.";
+        homepage = https://github.com/sindresorhus/chalk;
+        license = "MIT";
+      };
+      production = true;
+      linkDependencies = false;
+    };
+    "ansi-styles-2.0.1" = buildNodePackage {
+      name = "ansi-styles";
+      version = "2.0.1";
+      src = fetchurl {
+        url = "http://registry.npmjs.org/ansi-styles/-/ansi-styles-2.0.1.tgz";
+        sha1 = "b033f57f93e2d28adeb8bc11138fa13da0fd20a3";
+      };
+      meta = {
+        description = "ANSI escape codes for styling strings in the terminal";
+        homepage = https://github.com/sindresorhus/ansi-styles;
+        license = "MIT";
+      };
+      production = true;
+      linkDependencies = false;
+    };
+    "ansi-styles-^2.0.1" = self."ansi-styles-2.0.1";
+    "escape-string-regexp-1.0.3" = buildNodePackage {
+      name = "escape-string-regexp";
+      version = "1.0.3";
+      src = fetchurl {
+        url = "http://registry.npmjs.org/escape-string-regexp/-/escape-string-regexp-1.0.3.tgz";
+        sha1 = "9e2d8b25bc2555c3336723750e03f099c2735bb5";
+      };
+      meta = {
+        description = "Escape RegExp special characters";
+        homepage = https://github.com/sindresorhus/escape-string-regexp;
+        license = "MIT";
+      };
+      production = true;
+      linkDependencies = false;
+    };
+    "escape-string-regexp-^1.0.2" = self."escape-string-regexp-1.0.3";
+    "has-ansi-1.0.3" = buildNodePackage {
+      name = "has-ansi";
+      version = "1.0.3";
+      src = fetchurl {
+        url = "http://registry.npmjs.org/has-ansi/-/has-ansi-1.0.3.tgz";
+        sha1 = "c0b5b1615d9e382b0ff67169d967b425e48ca538";
+      };
+      dependencies = {
+        ansi-regex = {
+          "^1.1.0" = {
+            version = "1.1.1";
+            pkg = self."ansi-regex-1.1.1";
+          };
+        };
+        get-stdin = {
+          "^4.0.1" = {
+            version = "4.0.1";
+            pkg = self."get-stdin-4.0.1";
+          };
+        };
+      };
+      meta = {
+        description = "Check if a string has ANSI escape codes";
+        homepage = https://github.com/sindresorhus/has-ansi;
+        license = "MIT";
+      };
+      production = true;
+      linkDependencies = false;
+    };
+    "ansi-regex-1.1.1" = buildNodePackage {
+      name = "ansi-regex";
+      version = "1.1.1";
+      src = fetchurl {
+        url = "http://registry.npmjs.org/ansi-regex/-/ansi-regex-1.1.1.tgz";
+        sha1 = "41c847194646375e6a1a5d10c3ca054ef9fc980d";
+      };
+      meta = {
+        description = "Regular expression for matching ANSI escape codes";
+        homepage = https://github.com/sindresorhus/ansi-regex;
+        license = "MIT";
+      };
+      production = true;
+      linkDependencies = false;
+    };
+    "ansi-regex-^1.1.0" = self."ansi-regex-1.1.1";
+    "get-stdin-4.0.1" = buildNodePackage {
+      name = "get-stdin";
+      version = "4.0.1";
+      src = fetchurl {
+        url = "http://registry.npmjs.org/get-stdin/-/get-stdin-4.0.1.tgz";
+        sha1 = "b968c6b0a04384324902e8bf1a5df32579a450fe";
+      };
+      meta = {
+        description = "Easier stdin";
+        homepage = https://github.com/sindresorhus/get-stdin;
+        license = "MIT";
+      };
+      production = true;
+      linkDependencies = false;
+    };
+    "get-stdin-^4.0.1" = self."get-stdin-4.0.1";
+    "has-ansi-^1.0.3" = self."has-ansi-1.0.3";
+    "strip-ansi-2.0.1" = buildNodePackage {
+      name = "strip-ansi";
+      version = "2.0.1";
+      src = fetchurl {
+        url = "http://registry.npmjs.org/strip-ansi/-/strip-ansi-2.0.1.tgz";
+        sha1 = "df62c1aa94ed2f114e1d0f21fd1d50482b79a60e";
+      };
+      dependencies = {
+        ansi-regex = {
+          "^1.0.0" = {
+            version = "1.1.1";
+            pkg = self."ansi-regex-1.1.1";
+          };
+        };
+      };
+      meta = {
+        description = "Strip ANSI escape codes";
+        homepage = https://github.com/sindresorhus/strip-ansi;
+        license = "MIT";
+      };
+      production = true;
+      linkDependencies = false;
+    };
+    "ansi-regex-^1.0.0" = self."ansi-regex-1.1.1";
+    "strip-ansi-^2.0.1" = self."strip-ansi-2.0.1";
+    "supports-color-1.3.1" = buildNodePackage {
+      name = "supports-color";
+      version = "1.3.1";
+      src = fetchurl {
+        url = "http://registry.npmjs.org/supports-color/-/supports-color-1.3.1.tgz";
+        sha1 = "15758df09d8ff3b4acc307539fabe27095e1042d";
+      };
+      meta = {
+        description = "Detect whether a terminal supports color";
+        homepage = https://github.com/sindresorhus/supports-color;
+        license = "MIT";
+      };
+      production = true;
+      linkDependencies = false;
+    };
+    "supports-color-^1.3.0" = self."supports-color-1.3.1";
+    "chalk-^1.0.0" = self."chalk-1.0.0";
+    "commander-2.8.1" = buildNodePackage {
+      name = "commander";
+      version = "2.8.1";
+      src = fetchurl {
+        url = "http://registry.npmjs.org/commander/-/commander-2.8.1.tgz";
+        sha1 = "06be367febfda0c330aa1e2a072d3dc9762425d4";
+      };
+      dependencies = {
+        graceful-readlink = {
+          ">= 1.0.0" = {
+            version = "1.0.1";
+            pkg = self."graceful-readlink-1.0.1";
+          };
+        };
+      };
+      meta = {
+        description = "the complete solution for node.js command-line programs";
+        homepage = https://github.com/tj/commander.js;
+        license = "MIT";
+      };
+      production = true;
+      linkDependencies = false;
+    };
+    "graceful-readlink-1.0.1" = buildNodePackage {
+      name = "graceful-readlink";
+      version = "1.0.1";
+      src = fetchurl {
+        url = "http://registry.npmjs.org/graceful-readlink/-/graceful-readlink-1.0.1.tgz";
+        sha1 = "4cafad76bc62f02fa039b2f94e9a3dd3a391a725";
+      };
+      meta = {
+        description = "graceful fs.readlink";
+        homepage = https://github.com/zhiyelee/graceful-readlink;
+        license = "MIT";
+      };
+      production = true;
+      linkDependencies = false;
+    };
+    "graceful-readlink->= 1.0.0" = self."graceful-readlink-1.0.1";
+    "commander-^2.8.1" = self."commander-2.8.1";
+    "is-my-json-valid-2.11.0" = buildNodePackage {
+      name = "is-my-json-valid";
+      version = "2.11.0";
+      src = fetchurl {
+        url = "http://registry.npmjs.org/is-my-json-valid/-/is-my-json-valid-2.11.0.tgz";
+        sha1 = "11f130d52c6c0b2ee132a72feb8e3e4c61a2c54f";
+      };
+      dependencies = {
+        generate-function = {
+          "^2.0.0" = {
+            version = "2.0.0";
+            pkg = self."generate-function-2.0.0";
+          };
+        };
+        generate-object-property = {
+          "^1.1.0" = {
+            version = "1.1.1";
+            pkg = self."generate-object-property-1.1.1";
+          };
+        };
+        jsonpointer = {
+          "^1.1.0" = {
+            version = "1.1.0";
+            pkg = self."jsonpointer-1.1.0";
+          };
+        };
+        xtend = {
+          "^4.0.0" = {
+            version = "4.0.0";
+            pkg = self."xtend-4.0.0";
+          };
+        };
+      };
+      meta = {
+        description = "A JSONSchema validator that uses code generation to be extremely fast";
+        homepage = https://github.com/mafintosh/is-my-json-valid;
+        license = "MIT";
+      };
+      production = true;
+      linkDependencies = false;
+    };
+    "generate-function-2.0.0" = buildNodePackage {
+      name = "generate-function";
+      version = "2.0.0";
+      src = fetchurl {
+        url = "http://registry.npmjs.org/generate-function/-/generate-function-2.0.0.tgz";
+        sha1 = "6858fe7c0969b7d4e9093337647ac79f60dfbe74";
+      };
+      meta = {
+        description = "Module that helps you write generated functions in Node";
+        homepage = https://github.com/mafintosh/generate-function;
+        license = "MIT";
+      };
+      production = true;
+      linkDependencies = false;
+    };
+    "generate-function-^2.0.0" = self."generate-function-2.0.0";
+    "generate-object-property-1.1.1" = buildNodePackage {
+      name = "generate-object-property";
+      version = "1.1.1";
+      src = fetchurl {
+        url = "http://registry.npmjs.org/generate-object-property/-/generate-object-property-1.1.1.tgz";
+        sha1 = "8fda6b4cb69b34a189a6cebee7c4c268af47cc93";
+      };
+      dependencies = {
+        is-property = {
+          "^1.0.0" = {
+            version = "1.0.2";
+            pkg = self."is-property-1.0.2";
+          };
+        };
+      };
+      meta = {
+        description = "Generate safe JS code that can used to reference a object property";
+        homepage = https://github.com/mafintosh/generate-object-property;
+        license = "MIT";
+      };
+      production = true;
+      linkDependencies = false;
+    };
+    "is-property-1.0.2" = buildNodePackage {
+      name = "is-property";
+      version = "1.0.2";
+      src = fetchurl {
+        url = "http://registry.npmjs.org/is-property/-/is-property-1.0.2.tgz";
+        sha1 = "57fe1c4e48474edd65b09911f26b1cd4095dda84";
+      };
+      dependencies = {};
+      meta = {
+        description = "Tests if a JSON property can be accessed using . syntax";
+        homepage = https://github.com/mikolalysenko/is-property;
+        license = "MIT";
+      };
+      production = true;
+      linkDependencies = false;
+    };
+    "is-property-^1.0.0" = self."is-property-1.0.2";
+    "generate-object-property-^1.1.0" = self."generate-object-property-1.1.1";
+    "jsonpointer-1.1.0" = buildNodePackage {
+      name = "jsonpointer";
+      version = "1.1.0";
+      src = fetchurl {
+        url = "http://registry.npmjs.org/jsonpointer/-/jsonpointer-1.1.0.tgz";
+        sha1 = "c3c72efaed3b97154163dc01dd349e1cfe0f80fc";
+      };
+      meta = {
+        description = "Simple JSON Addressing.";
+      };
+      production = true;
+      linkDependencies = false;
+    };
+    "jsonpointer-^1.1.0" = self."jsonpointer-1.1.0";
+    "xtend-4.0.0" = buildNodePackage {
+      name = "xtend";
+      version = "4.0.0";
+      src = fetchurl {
+        url = "http://registry.npmjs.org/xtend/-/xtend-4.0.0.tgz";
+        sha1 = "8bc36ff87aedbe7ce9eaf0bca36b2354a743840f";
+      };
+      dependencies = {};
+      meta = {
+        description = "extend like a boss";
+        homepage = https://github.com/Raynos/xtend;
+      };
+      production = true;
+      linkDependencies = false;
+    };
+    "xtend-^4.0.0" = self."xtend-4.0.0";
+    "is-my-json-valid-^2.10.1" = self."is-my-json-valid-2.11.0";
+    "har-validator-^1.4.0" = self."har-validator-1.7.0";
+    "request-2 >=2.25.0" = self."request-2.55.0";
     "retry-0.6.0" = buildNodePackage {
       name = "retry";
       version = "0.6.0";
@@ -1000,12 +1435,20 @@ let
       production = true;
       linkDependencies = false;
     };
-    "rimraf-2.2.8" = buildNodePackage {
+    "rimraf-2.3.3" = buildNodePackage {
       name = "rimraf";
-      version = "2.2.8";
+      version = "2.3.3";
       src = fetchurl {
-        url = "http://registry.npmjs.org/rimraf/-/rimraf-2.2.8.tgz";
-        sha1 = "e439be2aaee327321952730f99a8929e4fc50582";
+        url = "http://registry.npmjs.org/rimraf/-/rimraf-2.3.3.tgz";
+        sha1 = "d0073d8b3010611e8f3ad377b08e9a3c18b98f06";
+      };
+      dependencies = {
+        glob = {
+          "^4.4.2" = {
+            version = "4.5.3";
+            pkg = self."glob-4.5.3";
+          };
+        };
       };
       meta = {
         description = "A deep deletion module for node (like `rm -rf`)";
@@ -1018,7 +1461,210 @@ let
       production = true;
       linkDependencies = false;
     };
-    "rimraf-~2" = self."rimraf-2.2.8";
+    "glob-4.5.3" = buildNodePackage {
+      name = "glob";
+      version = "4.5.3";
+      src = fetchurl {
+        url = "http://registry.npmjs.org/glob/-/glob-4.5.3.tgz";
+        sha1 = "c6cb73d3226c1efef04de3c56d012f03377ee15f";
+      };
+      dependencies = {
+        inflight = {
+          "^1.0.4" = {
+            version = "1.0.4";
+            pkg = self."inflight-1.0.4";
+          };
+        };
+        inherits = {
+          "2" = {
+            version = "2.0.1";
+            pkg = self."inherits-2.0.1";
+          };
+        };
+        minimatch = {
+          "^2.0.1" = {
+            version = "2.0.7";
+            pkg = self."minimatch-2.0.7";
+          };
+        };
+        once = {
+          "^1.3.0" = {
+            version = "1.3.2";
+            pkg = self."once-1.3.2";
+          };
+        };
+      };
+      meta = {
+        description = "a little globber";
+        homepage = https://github.com/isaacs/node-glob;
+        license = "ISC";
+      };
+      production = true;
+      linkDependencies = false;
+    };
+    "inflight-1.0.4" = buildNodePackage {
+      name = "inflight";
+      version = "1.0.4";
+      src = fetchurl {
+        url = "http://registry.npmjs.org/inflight/-/inflight-1.0.4.tgz";
+        sha1 = "6cbb4521ebd51ce0ec0a936bfd7657ef7e9b172a";
+      };
+      dependencies = {
+        once = {
+          "^1.3.0" = {
+            version = "1.3.2";
+            pkg = self."once-1.3.2";
+          };
+        };
+        wrappy = {
+          "1" = {
+            version = "1.0.1";
+            pkg = self."wrappy-1.0.1";
+          };
+        };
+      };
+      meta = {
+        description = "Add callbacks to requests in flight to avoid async duplication";
+        homepage = https://github.com/isaacs/inflight;
+        license = "ISC";
+      };
+      production = true;
+      linkDependencies = false;
+    };
+    "once-1.3.2" = buildNodePackage {
+      name = "once";
+      version = "1.3.2";
+      src = fetchurl {
+        url = "http://registry.npmjs.org/once/-/once-1.3.2.tgz";
+        sha1 = "d8feeca93b039ec1dcdee7741c92bdac5e28081b";
+      };
+      dependencies = {
+        wrappy = {
+          "1" = {
+            version = "1.0.1";
+            pkg = self."wrappy-1.0.1";
+          };
+        };
+      };
+      meta = {
+        description = "Run a function exactly one time";
+        homepage = "https://github.com/isaacs/once#readme";
+        license = "ISC";
+      };
+      production = true;
+      linkDependencies = false;
+    };
+    "wrappy-1.0.1" = buildNodePackage {
+      name = "wrappy";
+      version = "1.0.1";
+      src = fetchurl {
+        url = "http://registry.npmjs.org/wrappy/-/wrappy-1.0.1.tgz";
+        sha1 = "1e65969965ccbc2db4548c6b84a6f2c5aedd4739";
+      };
+      dependencies = {};
+      meta = {
+        description = "Callback wrapping utility";
+        homepage = https://github.com/npm/wrappy;
+        license = "ISC";
+      };
+      production = true;
+      linkDependencies = false;
+    };
+    wrappy-1 = self."wrappy-1.0.1";
+    "once-^1.3.0" = self."once-1.3.2";
+    "inflight-^1.0.4" = self."inflight-1.0.4";
+    inherits-2 = self."inherits-2.0.1";
+    "minimatch-2.0.7" = buildNodePackage {
+      name = "minimatch";
+      version = "2.0.7";
+      src = fetchurl {
+        url = "http://registry.npmjs.org/minimatch/-/minimatch-2.0.7.tgz";
+        sha1 = "d23652ab10e663e7d914602e920e21f9f66492be";
+      };
+      dependencies = {
+        brace-expansion = {
+          "^1.0.0" = {
+            version = "1.1.0";
+            pkg = self."brace-expansion-1.1.0";
+          };
+        };
+      };
+      meta = {
+        description = "a glob matcher in javascript";
+        homepage = https://github.com/isaacs/minimatch;
+        license = {
+          type = "MIT";
+          url = "http://github.com/isaacs/minimatch/raw/master/LICENSE";
+        };
+      };
+      production = true;
+      linkDependencies = false;
+    };
+    "brace-expansion-1.1.0" = buildNodePackage {
+      name = "brace-expansion";
+      version = "1.1.0";
+      src = fetchurl {
+        url = "http://registry.npmjs.org/brace-expansion/-/brace-expansion-1.1.0.tgz";
+        sha1 = "c9b7d03c03f37bc704be100e522b40db8f6cfcd9";
+      };
+      dependencies = {
+        balanced-match = {
+          "^0.2.0" = {
+            version = "0.2.0";
+            pkg = self."balanced-match-0.2.0";
+          };
+        };
+        concat-map = {
+          "0.0.1" = {
+            version = "0.0.1";
+            pkg = self."concat-map-0.0.1";
+          };
+        };
+      };
+      meta = {
+        description = "Brace expansion as known from sh/bash";
+        homepage = https://github.com/juliangruber/brace-expansion;
+        license = "MIT";
+      };
+      production = true;
+      linkDependencies = false;
+    };
+    "balanced-match-0.2.0" = buildNodePackage {
+      name = "balanced-match";
+      version = "0.2.0";
+      src = fetchurl {
+        url = "http://registry.npmjs.org/balanced-match/-/balanced-match-0.2.0.tgz";
+        sha1 = "38f6730c03aab6d5edbb52bd934885e756d71674";
+      };
+      dependencies = {};
+      meta = {
+        description = "Match balanced character pairs, like \"{\" and \"}\"";
+        homepage = https://github.com/juliangruber/balanced-match;
+        license = "MIT";
+      };
+      production = true;
+      linkDependencies = false;
+    };
+    "balanced-match-^0.2.0" = self."balanced-match-0.2.0";
+    "concat-map-0.0.1" = buildNodePackage {
+      name = "concat-map";
+      version = "0.0.1";
+      src = fetchurl {
+        url = "http://registry.npmjs.org/concat-map/-/concat-map-0.0.1.tgz";
+        sha1 = "d8a96bd77fd68df7793a73036a3ba0d5405d477b";
+      };
+      meta = {
+        description = "concatenative mapdashery";
+        homepage = https://github.com/substack/node-concat-map;
+        license = "MIT";
+      };
+      production = true;
+      linkDependencies = false;
+    };
+    "brace-expansion-^1.0.0" = self."brace-expansion-1.1.0";
+    "minimatch-^2.0.1" = self."minimatch-2.0.7";
+    "glob-^4.4.2" = self."glob-4.5.3";
+    "rimraf-~2" = self."rimraf-2.3.3";
     "semver-2.3.2" = buildNodePackage {
       name = "semver";
       version = "2.3.2";
@@ -1052,18 +1698,30 @@ let
       linkDependencies = false;
     };
     "slide-~1.1.3" = self."slide-1.1.6";
-    "npmlog-0.1.1" = buildNodePackage {
+    "npmlog-1.2.0" = buildNodePackage {
       name = "npmlog";
-      version = "0.1.1";
+      version = "1.2.0";
       src = fetchurl {
-        url = "http://registry.npmjs.org/npmlog/-/npmlog-0.1.1.tgz";
-        sha1 = "8b9b9e4405d7ec48c31c2346965aadc7abaecaa5";
+        url = "http://registry.npmjs.org/npmlog/-/npmlog-1.2.0.tgz";
+        sha1 = "b512f18ae8696a0192ada78ba00c06dbbd91bafb";
       };
       dependencies = {
         ansi = {
           "~0.3.0" = {
             version = "0.3.0";
             pkg = self."ansi-0.3.0";
+          };
+        };
+        are-we-there-yet = {
+          "~1.0.0" = {
+            version = "1.0.4";
+            pkg = self."are-we-there-yet-1.0.4";
+          };
+        };
+        gauge = {
+          "~1.2.0" = {
+            version = "1.2.0";
+            pkg = self."gauge-1.2.0";
           };
         };
       };
@@ -1090,7 +1748,315 @@ let
       linkDependencies = false;
     };
     "ansi-~0.3.0" = self."ansi-0.3.0";
-    npmlog = self."npmlog-0.1.1";
+    "are-we-there-yet-1.0.4" = buildNodePackage {
+      name = "are-we-there-yet";
+      version = "1.0.4";
+      src = fetchurl {
+        url = "http://registry.npmjs.org/are-we-there-yet/-/are-we-there-yet-1.0.4.tgz";
+        sha1 = "527fe389f7bcba90806106b99244eaa07e886f85";
+      };
+      dependencies = {
+        delegates = {
+          "^0.1.0" = {
+            version = "0.1.0";
+            pkg = self."delegates-0.1.0";
+          };
+        };
+        readable-stream = {
+          "^1.1.13" = {
+            version = "1.1.13";
+            pkg = self."readable-stream-1.1.13";
+          };
+        };
+      };
+      meta = {
+        description = "Keep track of the overall completion of many dispirate processes";
+        homepage = https://github.com/iarna/are-we-there-yet;
+        license = "ISC";
+      };
+      production = true;
+      linkDependencies = false;
+    };
+    "delegates-0.1.0" = buildNodePackage {
+      name = "delegates";
+      version = "0.1.0";
+      src = fetchurl {
+        url = "http://registry.npmjs.org/delegates/-/delegates-0.1.0.tgz";
+        sha1 = "b4b57be11a1653517a04b27f0949bdc327dfe390";
+      };
+      dependencies = {};
+      meta = {
+        description = "delegate methods and accessors to another property";
+        homepage = https://github.com/visionmedia/node-delegates;
+        license = "MIT";
+      };
+      production = true;
+      linkDependencies = false;
+    };
+    "delegates-^0.1.0" = self."delegates-0.1.0";
+    "readable-stream-1.1.13" = buildNodePackage {
+      name = "readable-stream";
+      version = "1.1.13";
+      src = fetchurl {
+        url = "http://registry.npmjs.org/readable-stream/-/readable-stream-1.1.13.tgz";
+        sha1 = "f6eef764f514c89e2b9e23146a75ba106756d23e";
+      };
+      dependencies = {
+        core-util-is = {
+          "~1.0.0" = {
+            version = "1.0.1";
+            pkg = self."core-util-is-1.0.1";
+          };
+        };
+        isarray = {
+          "0.0.1" = {
+            version = "0.0.1";
+            pkg = self."isarray-0.0.1";
+          };
+        };
+        string_decoder = {
+          "~0.10.x" = {
+            version = "0.10.31";
+            pkg = self."string_decoder-0.10.31";
+          };
+        };
+        inherits = {
+          "~2.0.1" = {
+            version = "2.0.1";
+            pkg = self."inherits-2.0.1";
+          };
+        };
+      };
+      meta = {
+        description = "Streams3, a user-land copy of the stream library from Node.js v0.11.x";
+        homepage = https://github.com/isaacs/readable-stream;
+        license = "MIT";
+      };
+      production = true;
+      linkDependencies = false;
+    };
+    "readable-stream-^1.1.13" = self."readable-stream-1.1.13";
+    "are-we-there-yet-~1.0.0" = self."are-we-there-yet-1.0.4";
+    "gauge-1.2.0" = buildNodePackage {
+      name = "gauge";
+      version = "1.2.0";
+      src = fetchurl {
+        url = "http://registry.npmjs.org/gauge/-/gauge-1.2.0.tgz";
+        sha1 = "3094ab1285633f799814388fc8f2de67b4c012c5";
+      };
+      dependencies = {
+        ansi = {
+          "^0.3.0" = {
+            version = "0.3.0";
+            pkg = self."ansi-0.3.0";
+          };
+        };
+        has-unicode = {
+          "^1.0.0" = {
+            version = "1.0.0";
+            pkg = self."has-unicode-1.0.0";
+          };
+        };
+        "lodash.pad" = {
+          "^3.0.0" = {
+            version = "3.1.0";
+            pkg = self."lodash.pad-3.1.0";
+          };
+        };
+        "lodash.padleft" = {
+          "^3.0.0" = {
+            version = "3.1.1";
+            pkg = self."lodash.padleft-3.1.1";
+          };
+        };
+        "lodash.padright" = {
+          "^3.0.0" = {
+            version = "3.1.1";
+            pkg = self."lodash.padright-3.1.1";
+          };
+        };
+      };
+      meta = {
+        description = "A terminal based horizontal guage";
+        homepage = https://github.com/iarna/gauge;
+        license = "ISC";
+      };
+      production = true;
+      linkDependencies = false;
+    };
+    "ansi-^0.3.0" = self."ansi-0.3.0";
+    "has-unicode-1.0.0" = buildNodePackage {
+      name = "has-unicode";
+      version = "1.0.0";
+      src = fetchurl {
+        url = "http://registry.npmjs.org/has-unicode/-/has-unicode-1.0.0.tgz";
+        sha1 = "bac5c44e064c2ffc3b8fcbd8c71afe08f9afc8cc";
+      };
+      meta = {
+        description = "Try to guess if your terminal supports unicode";
+        homepage = https://github.com/iarna/has-unicode;
+        license = "ISC";
+      };
+      production = true;
+      linkDependencies = false;
+    };
+    "has-unicode-^1.0.0" = self."has-unicode-1.0.0";
+    "lodash.pad-3.1.0" = buildNodePackage {
+      name = "lodash.pad";
+      version = "3.1.0";
+      src = fetchurl {
+        url = "http://registry.npmjs.org/lodash.pad/-/lodash.pad-3.1.0.tgz";
+        sha1 = "9f18b1f3749a95e197b5ff2ae752ea9851ada965";
+      };
+      dependencies = {
+        "lodash._basetostring" = {
+          "^3.0.0" = {
+            version = "3.0.0";
+            pkg = self."lodash._basetostring-3.0.0";
+          };
+        };
+        "lodash._createpadding" = {
+          "^3.0.0" = {
+            version = "3.6.0";
+            pkg = self."lodash._createpadding-3.6.0";
+          };
+        };
+      };
+      meta = {
+        description = "The modern build of lodash’s `_.pad` as a module.";
+        homepage = https://lodash.com/;
+        license = "MIT";
+      };
+      production = true;
+      linkDependencies = false;
+    };
+    "lodash._basetostring-3.0.0" = buildNodePackage {
+      name = "lodash._basetostring";
+      version = "3.0.0";
+      src = fetchurl {
+        url = "http://registry.npmjs.org/lodash._basetostring/-/lodash._basetostring-3.0.0.tgz";
+        sha1 = "75a9a4aaaa2b2a8761111ff5431e7d83c1daf0e2";
+      };
+      meta = {
+        description = "The modern build of lodash’s internal `baseToString` as a module.";
+        homepage = https://lodash.com/;
+        license = "MIT";
+      };
+      production = true;
+      linkDependencies = false;
+    };
+    "lodash._basetostring-^3.0.0" = self."lodash._basetostring-3.0.0";
+    "lodash._createpadding-3.6.0" = buildNodePackage {
+      name = "lodash._createpadding";
+      version = "3.6.0";
+      src = fetchurl {
+        url = "http://registry.npmjs.org/lodash._createpadding/-/lodash._createpadding-3.6.0.tgz";
+        sha1 = "c466850dd1a05e6bfec54fd0cf0db28b68332d5e";
+      };
+      dependencies = {
+        "lodash.repeat" = {
+          "^3.0.0" = {
+            version = "3.0.0";
+            pkg = self."lodash.repeat-3.0.0";
+          };
+        };
+      };
+      meta = {
+        description = "The modern build of lodash’s internal `createPadding` as a module.";
+        homepage = https://lodash.com/;
+        license = "MIT";
+      };
+      production = true;
+      linkDependencies = false;
+    };
+    "lodash.repeat-3.0.0" = buildNodePackage {
+      name = "lodash.repeat";
+      version = "3.0.0";
+      src = fetchurl {
+        url = "http://registry.npmjs.org/lodash.repeat/-/lodash.repeat-3.0.0.tgz";
+        sha1 = "c340f4136c99dc5b2e397b3fd50cffbd172a94b0";
+      };
+      dependencies = {
+        "lodash._basetostring" = {
+          "^3.0.0" = {
+            version = "3.0.0";
+            pkg = self."lodash._basetostring-3.0.0";
+          };
+        };
+      };
+      meta = {
+        description = "The modern build of lodash’s `_.repeat` as a module.";
+        homepage = https://lodash.com/;
+        license = "MIT";
+      };
+      production = true;
+      linkDependencies = false;
+    };
+    "lodash.repeat-^3.0.0" = self."lodash.repeat-3.0.0";
+    "lodash._createpadding-^3.0.0" = self."lodash._createpadding-3.6.0";
+    "lodash.pad-^3.0.0" = self."lodash.pad-3.1.0";
+    "lodash.padleft-3.1.1" = buildNodePackage {
+      name = "lodash.padleft";
+      version = "3.1.1";
+      src = fetchurl {
+        url = "http://registry.npmjs.org/lodash.padleft/-/lodash.padleft-3.1.1.tgz";
+        sha1 = "150151f1e0245edba15d50af2d71f1d5cff46530";
+      };
+      dependencies = {
+        "lodash._basetostring" = {
+          "^3.0.0" = {
+            version = "3.0.0";
+            pkg = self."lodash._basetostring-3.0.0";
+          };
+        };
+        "lodash._createpadding" = {
+          "^3.0.0" = {
+            version = "3.6.0";
+            pkg = self."lodash._createpadding-3.6.0";
+          };
+        };
+      };
+      meta = {
+        description = "The modern build of lodash’s `_.padLeft` as a module.";
+        homepage = https://lodash.com/;
+        license = "MIT";
+      };
+      production = true;
+      linkDependencies = false;
+    };
+    "lodash.padleft-^3.0.0" = self."lodash.padleft-3.1.1";
+    "lodash.padright-3.1.1" = buildNodePackage {
+      name = "lodash.padright";
+      version = "3.1.1";
+      src = fetchurl {
+        url = "http://registry.npmjs.org/lodash.padright/-/lodash.padright-3.1.1.tgz";
+        sha1 = "79f7770baaa39738c040aeb5465e8d88f2aacec0";
+      };
+      dependencies = {
+        "lodash._basetostring" = {
+          "^3.0.0" = {
+            version = "3.0.0";
+            pkg = self."lodash._basetostring-3.0.0";
+          };
+        };
+        "lodash._createpadding" = {
+          "^3.0.0" = {
+            version = "3.6.0";
+            pkg = self."lodash._createpadding-3.6.0";
+          };
+        };
+      };
+      meta = {
+        description = "The modern build of lodash’s `_.padRight` as a module.";
+        homepage = https://lodash.com/;
+        license = "MIT";
+      };
+      production = true;
+      linkDependencies = false;
+    };
+    "lodash.padright-^3.0.0" = self."lodash.padright-3.1.1";
+    "gauge-~1.2.0" = self."gauge-1.2.0";
+    npmlog = self."npmlog-1.2.0";
     "npm-registry-client-1.0.x" = self."npm-registry-client-1.0.1";
     "npmconf-2.0.9" = buildNodePackage {
       name = "npmconf";
@@ -1114,8 +2080,8 @@ let
         };
         ini = {
           "^1.2.0" = {
-            version = "1.3.2";
-            pkg = self."ini-1.3.2";
+            version = "1.3.3";
+            pkg = self."ini-1.3.3";
           };
         };
         mkdirp = {
@@ -1132,8 +2098,8 @@ let
         };
         once = {
           "~1.3.0" = {
-            version = "1.3.1";
-            pkg = self."once-1.3.1";
+            version = "1.3.2";
+            pkg = self."once-1.3.2";
           };
         };
         osenv = {
@@ -1144,8 +2110,8 @@ let
         };
         semver = {
           "2 || 3 || 4" = {
-            version = "4.1.0";
-            pkg = self."semver-4.1.0";
+            version = "4.3.4";
+            pkg = self."semver-4.3.4";
           };
         };
         uid-number = {
@@ -1179,8 +2145,8 @@ let
         };
         ini = {
           "1" = {
-            version = "1.3.2";
-            pkg = self."ini-1.3.2";
+            version = "1.3.3";
+            pkg = self."ini-1.3.3";
           };
         };
       };
@@ -1210,12 +2176,12 @@ let
       linkDependencies = false;
     };
     "proto-list-~1.2.1" = self."proto-list-1.2.3";
-    "ini-1.3.2" = buildNodePackage {
+    "ini-1.3.3" = buildNodePackage {
       name = "ini";
-      version = "1.3.2";
+      version = "1.3.3";
       src = fetchurl {
-        url = "http://registry.npmjs.org/ini/-/ini-1.3.2.tgz";
-        sha1 = "9ebf4a44daf9d89acd07aab9f89a083d887f6dec";
+        url = "http://registry.npmjs.org/ini/-/ini-1.3.3.tgz";
+        sha1 = "c07e34aef1de06aff21d413b458e52b21533a11e";
       };
       dependencies = {};
       meta = {
@@ -1226,10 +2192,10 @@ let
       production = true;
       linkDependencies = false;
     };
-    ini-1 = self."ini-1.3.2";
+    ini-1 = self."ini-1.3.3";
     "config-chain-~1.1.8" = self."config-chain-1.1.8";
     "inherits-~2.0.0" = self."inherits-2.0.1";
-    "ini-^1.2.0" = self."ini-1.3.2";
+    "ini-^1.2.0" = self."ini-1.3.3";
     "mkdirp-0.5.0" = buildNodePackage {
       name = "mkdirp";
       version = "0.5.0";
@@ -1315,47 +2281,7 @@ let
     };
     abbrev-1 = self."abbrev-1.0.5";
     "nopt-~3.0.1" = self."nopt-3.0.1";
-    "once-1.3.1" = buildNodePackage {
-      name = "once";
-      version = "1.3.1";
-      src = fetchurl {
-        url = "http://registry.npmjs.org/once/-/once-1.3.1.tgz";
-        sha1 = "f3f3e4da5b7d27b5c732969ee3e67e729457b31f";
-      };
-      dependencies = {
-        wrappy = {
-          "1" = {
-            version = "1.0.1";
-            pkg = self."wrappy-1.0.1";
-          };
-        };
-      };
-      meta = {
-        description = "Run a function exactly one time";
-        homepage = https://github.com/isaacs/once;
-        license = "BSD";
-      };
-      production = true;
-      linkDependencies = false;
-    };
-    "wrappy-1.0.1" = buildNodePackage {
-      name = "wrappy";
-      version = "1.0.1";
-      src = fetchurl {
-        url = "http://registry.npmjs.org/wrappy/-/wrappy-1.0.1.tgz";
-        sha1 = "1e65969965ccbc2db4548c6b84a6f2c5aedd4739";
-      };
-      dependencies = {};
-      meta = {
-        description = "Callback wrapping utility";
-        homepage = https://github.com/npm/wrappy;
-        license = "ISC";
-      };
-      production = true;
-      linkDependencies = false;
-    };
-    wrappy-1 = self."wrappy-1.0.1";
-    "once-~1.3.0" = self."once-1.3.1";
+    "once-~1.3.0" = self."once-1.3.2";
     "osenv-0.1.0" = buildNodePackage {
       name = "osenv";
       version = "0.1.0";
@@ -1373,22 +2299,22 @@ let
       linkDependencies = false;
     };
     "osenv-^0.1.0" = self."osenv-0.1.0";
-    "semver-4.1.0" = buildNodePackage {
+    "semver-4.3.4" = buildNodePackage {
       name = "semver";
-      version = "4.1.0";
+      version = "4.3.4";
       src = fetchurl {
-        url = "http://registry.npmjs.org/semver/-/semver-4.1.0.tgz";
-        sha1 = "bc80a9ff68532814362cc3cfda3c7b75ed9c321c";
+        url = "http://registry.npmjs.org/semver/-/semver-4.3.4.tgz";
+        sha1 = "bf43a1aae304de040e12a13f84200ca7aeab7589";
       };
       meta = {
         description = "The semantic version parser used by npm.";
-        homepage = https://github.com/isaacs/node-semver;
-        license = "BSD";
+        homepage = "https://github.com/npm/node-semver#readme";
+        license = "ISC";
       };
       production = true;
       linkDependencies = false;
     };
-    "semver-2 || 3 || 4" = self."semver-4.1.0";
+    "semver-2 || 3 || 4" = self."semver-4.3.4";
     "uid-number-0.0.5" = buildNodePackage {
       name = "uid-number";
       version = "0.0.5";
@@ -1406,12 +2332,12 @@ let
       linkDependencies = false;
     };
     "npmconf-2.0.x" = self."npmconf-2.0.9";
-    "tar-1.0.2" = buildNodePackage {
+    "tar-1.0.3" = buildNodePackage {
       name = "tar";
-      version = "1.0.2";
+      version = "1.0.3";
       src = fetchurl {
-        url = "http://registry.npmjs.org/tar/-/tar-1.0.2.tgz";
-        sha1 = "8b0f6740f9946259de26a3ed9c9a22890dff023f";
+        url = "http://registry.npmjs.org/tar/-/tar-1.0.3.tgz";
+        sha1 = "15bcdab244fa4add44e4244a0176edb8aa9a2b44";
       };
       dependencies = {
         block-stream = {
@@ -1422,8 +2348,8 @@ let
         };
         fstream = {
           "^1.0.2" = {
-            version = "1.0.2";
-            pkg = self."fstream-1.0.2";
+            version = "1.0.6";
+            pkg = self."fstream-1.0.6";
           };
         };
         inherits = {
@@ -1464,18 +2390,18 @@ let
       linkDependencies = false;
     };
     block-stream = self."block-stream-0.0.7";
-    "fstream-1.0.2" = buildNodePackage {
+    "fstream-1.0.6" = buildNodePackage {
       name = "fstream";
-      version = "1.0.2";
+      version = "1.0.6";
       src = fetchurl {
-        url = "http://registry.npmjs.org/fstream/-/fstream-1.0.2.tgz";
-        sha1 = "56930ff1b4d4d7b1a689c8656b3a11e744ab92c6";
+        url = "http://registry.npmjs.org/fstream/-/fstream-1.0.6.tgz";
+        sha1 = "817e50312fb4ed90da865c8eb5ecd1d1d7aed0ec";
       };
       dependencies = {
         graceful-fs = {
           "3" = {
-            version = "3.0.4";
-            pkg = self."graceful-fs-3.0.4";
+            version = "3.0.6";
+            pkg = self."graceful-fs-3.0.6";
           };
         };
         inherits = {
@@ -1492,25 +2418,25 @@ let
         };
         rimraf = {
           "2" = {
-            version = "2.2.8";
-            pkg = self."rimraf-2.2.8";
+            version = "2.3.3";
+            pkg = self."rimraf-2.3.3";
           };
         };
       };
       meta = {
         description = "Advanced file system stream things";
-        homepage = https://github.com/isaacs/fstream;
-        license = "BSD";
+        homepage = "https://github.com/isaacs/fstream#readme";
+        license = "ISC";
       };
       production = true;
       linkDependencies = false;
     };
-    "graceful-fs-3.0.4" = buildNodePackage {
+    "graceful-fs-3.0.6" = buildNodePackage {
       name = "graceful-fs";
-      version = "3.0.4";
+      version = "3.0.6";
       src = fetchurl {
-        url = "http://registry.npmjs.org/graceful-fs/-/graceful-fs-3.0.4.tgz";
-        sha1 = "a0306d9b0940e0fc512d33b5df1014e88e0637a3";
+        url = "http://registry.npmjs.org/graceful-fs/-/graceful-fs-3.0.6.tgz";
+        sha1 = "dce3a18351cb94cdc82e688b2e3dd2842d1b09bb";
       };
       meta = {
         description = "A drop-in replacement for fs, making various improvements.";
@@ -1520,12 +2446,11 @@ let
       production = true;
       linkDependencies = false;
     };
-    graceful-fs-3 = self."graceful-fs-3.0.4";
+    graceful-fs-3 = self."graceful-fs-3.0.6";
     "mkdirp->=0.5 0" = self."mkdirp-0.5.0";
-    rimraf-2 = self."rimraf-2.2.8";
-    "fstream-^1.0.2" = self."fstream-1.0.2";
-    inherits-2 = self."inherits-2.0.1";
-    "tar-1.0.x" = self."tar-1.0.2";
+    rimraf-2 = self."rimraf-2.3.3";
+    "fstream-^1.0.2" = self."fstream-1.0.6";
+    "tar-1.0.x" = self."tar-1.0.3";
     "temp-0.8.1" = buildNodePackage {
       name = "temp";
       version = "0.8.1";
@@ -1543,6 +2468,24 @@ let
       };
       meta = {
         description = "Temporary files and directories";
+      };
+      production = true;
+      linkDependencies = false;
+    };
+    "rimraf-2.2.8" = buildNodePackage {
+      name = "rimraf";
+      version = "2.2.8";
+      src = fetchurl {
+        url = "http://registry.npmjs.org/rimraf/-/rimraf-2.2.8.tgz";
+        sha1 = "e439be2aaee327321952730f99a8929e4fc50582";
+      };
+      meta = {
+        description = "A deep deletion module for node (like `rm -rf`)";
+        homepage = https://github.com/isaacs/rimraf;
+        license = {
+          type = "MIT";
+          url = "https://github.com/isaacs/rimraf/raw/master/LICENSE";
+        };
       };
       production = true;
       linkDependencies = false;
@@ -1749,12 +2692,12 @@ let
       production = true;
       linkDependencies = false;
     };
-    "nijs-0.0.22" = buildNodePackage {
+    "nijs-0.0.23" = buildNodePackage {
       name = "nijs";
-      version = "0.0.22";
+      version = "0.0.23";
       src = fetchurl {
-        url = "http://registry.npmjs.org/nijs/-/nijs-0.0.22.tgz";
-        sha1 = "41f162cfd4b8e99b56da26b3170307381916718a";
+        url = "http://registry.npmjs.org/nijs/-/nijs-0.0.23.tgz";
+        sha1 = "dbf8f4a0acafbe3b8d9b71c24cbd1d851de6c31a";
       };
       dependencies = {
         optparse = {
