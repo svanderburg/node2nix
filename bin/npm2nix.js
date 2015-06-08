@@ -7,6 +7,7 @@ var npm2nix = require('../lib/npm2nix.js');
 
 var switches = [
     ['-h', '--help', 'Shows help sections'],
+    ['-v', '--version', 'Shows version'],
     ['-i', '--input FILE', 'Specifies a path to a JSON file containing an object with package settings or an array of dependencies (defaults to: package.json)'],
     ['-o', '--output FILE', 'Path to a Nix expression representing a registry of Node.js packages (defaults to: registry.nix)'],
     ['-c', '--composition FILE', 'Path to a Nix composition expression allowing someone to deploy the generated Nix packages from the command-line (defaults to: default.nix)'],
@@ -21,6 +22,7 @@ var parser = new optparse.OptionParser(switches);
 /* Set some variables and their default values */
 
 var help = false;
+var version = false;
 var production = true;
 var inputJSON = "package.json";
 var outputNix = "registry.nix";
@@ -34,6 +36,10 @@ var executable;
 
 parser.on('help', function(arg, value) {
     help = true;
+});
+
+parser.on('version', function(arg, value) {
+    version = true;
 });
 
 parser.on('input', function(arg, value) {
@@ -83,15 +89,22 @@ if(help) {
         }
     }
 
-    process.stdout.write("Usage:\n\n");
-    process.stdout.write(executable + " [options]\n\n");
-    process.stdout.write("Options:\n\n");
+    process.stdout.write("Usage: " + executable + " [OPTION]\n\n");
+    
+    process.stdout.write("Generates a set of Nix expressions from a NPM package's package.json\n");
+    process.stdout.write("configuration or a collection.json configuration containing a set of NPM\n");
+    process.stdout.write("dependency specifiers so that the packages can be deployed with Nix instead\n");
+    process.stdout.write("of NPM.\n\n");
+    
+    process.stdout.write("Options:\n");
     
     var maxlen = 25;
     
     for(var i = 0; i < switches.length; i++) {
     
         var currentSwitch = switches[i];
+        
+        process.stdout.write("  ");
         
         if(currentSwitch.length == 3) {
             process.stdout.write(currentSwitch[0] + ", "+currentSwitch[1]);
@@ -106,6 +119,13 @@ if(help) {
         process.stdout.write("\n");
     }
     
+    process.exit(0);
+}
+
+/* Display the version, if it has been requested */
+
+if(version) {
+    process.stdout.write("npm2nix 6.0.0\n");
     process.exit(0);
 }
 
