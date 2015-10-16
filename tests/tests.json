@@ -1,0 +1,9 @@
+[
+  "async",
+  { "fs-walk": "file:/home/sander/Development/fs-walk" },
+  { "underscore": "latest" },
+  { "nijs": "svanderburg/nijs" },
+  { "semver": "http://registry.npmjs.org/semver/-/semver-5.0.3.tgz" },
+  { "npm2nix": "/home/sander/Development/npm2nix" },
+  { "lodash": "github:lodash/lodash" }
+]
