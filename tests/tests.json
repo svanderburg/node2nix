@@ -1,9 +1,14 @@
 [
   "async",
-  { "fs-walk": "file:/home/sander/Development/fs-walk" },
+  { "nijs": "0.0.4" },
+  { "commander": "2.9.x" },
   { "underscore": "latest" },
-  { "nijs": "svanderburg/nijs" },
+  { "fs-walk": "file:/home/sander/Development/fs-walk" },
   { "semver": "http://registry.npmjs.org/semver/-/semver-5.0.3.tgz" },
   { "npm2nix": "/home/sander/Development/npm2nix" },
+  { "express": "git+https://github.com/strongloop/express.git" },
+  { "express": "git+https://github.com/strongloop/express.git#ef7ad68" },
+  { "express": "git+https://github.com/strongloop/express.git#master" },
+  { "nijs": "svanderburg/nijs" },
   { "lodash": "github:lodash/lodash" }
 ]
