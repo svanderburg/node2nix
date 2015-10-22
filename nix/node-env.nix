@@ -24,10 +24,10 @@ let
   # We must run semver to determine whether a provided dependency conforms to a certain version range
   semver = buildNodePackage {
     name = "semver";
-    version = "4.3.1";
+    version = "5.0.3";
     src = fetchurl {
-      url = http://registry.npmjs.org/semver/-/semver-4.3.1.tgz;
-      sha1 = "beb0129575b95f76110b29af08d370fd9eeb34bf";
+      url = http://registry.npmjs.org/semver/-/semver-5.0.3.tgz;
+      sha1 = "77466de589cd5d3c95f138aa78bc569a3cb5d27a";
     };
   } {};
   
