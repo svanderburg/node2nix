@@ -162,7 +162,7 @@ let
           cd "$out/lib/node_modules/${name}"
           
           # Patch the shebangs of the bundled modules. For "regular" dependencies
-          # this is already done by the generic builder.
+          # this is step is not required, because it has already been done by the generic builder.
           
           if [ -d node_modules ]
           then

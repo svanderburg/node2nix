@@ -13,7 +13,7 @@
   "main": "./lib/npm2nix",
   "dependencies": {
     "optparse": "1.0.x",
-    "semver": "3.0.x",
+    "semver": "5.0.x",
     "npm-registry-client": "1.0.x",
     "npmconf": "2.0.x",
     "tar": "1.0.x",
