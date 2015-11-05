@@ -148,6 +148,7 @@ let
       # Deploy the Node package with some tricks
       self = stdenv.lib.makeOverridable stdenv.mkDerivation {
         inherit src meta;
+        dontStrip = true;
       
         name = "node-${name}-${version}";
         buildInputs = [ nodejs python ] ++ stdenv.lib.optional (stdenv.isLinux) utillinux ++ buildInputs;
