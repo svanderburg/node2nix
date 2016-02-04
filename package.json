@@ -1,0 +1,34 @@
+{
+  "name": "npm2nix",
+  "version": "6.0.0",
+  "description": "Generate Nix expressions to build NPM packages",
+  "homepage": "https://github.com/NixOS/npm2nix",
+  "author": {
+    "name": "Shea Levy",
+    "email": "shea@shealevy.com"
+  },
+  "bin": {
+    "npm2nix": "bin/npm2nix.js"
+  },
+  "main": "./lib/npm2nix",
+  "dependencies": {
+    "optparse": "1.0.x",
+    "semver": "5.0.x",
+    "npm-registry-client": "1.0.x",
+    "npmconf": "2.0.x",
+    "tar": "1.0.x",
+    "temp": "0.8.x",
+    "fs.extra": "1.2.x",
+    "findit": "2.0.x",
+    "slasp": "0.0.4",
+    "nijs": "0.0.23"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NixOS/npm2nix"
+  },
+  "licenses": [ {
+    "type": "MIT",
+    "url": "https://github.com/NixOS/npm2nix/blob/master/LICENSE"
+  } ]
+}
