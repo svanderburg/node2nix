@@ -1,4 +1,4 @@
-{stdenv, python, nodejs, utillinux, runCommand}:
+{stdenv, python, nodejs, utillinux, runCommand, writeTextFile}:
 
 let
   # Function that generates a TGZ file from a NPM project
@@ -41,20 +41,91 @@ let
 
   # Recursively composes the dependencies of a package
   composePackage = { name, src, dependencies ? [], ... }@args:
+    let
+      fixImpureDependencies = writeTextFile {
+        name = "fixDependencies.js";
+        text = ''
+          var fs = require('fs');
+          var url = require('url');
+          
+          /*
+           * Replaces an impure version specification by *
+           */
+          function replaceImpureVersionSpec(versionSpec) {
+              var parsedUrl = url.parse(versionSpec);
+              
+              if(versionSpec == "latest" || versionSpec == "unstable" ||
+                  versionSpec.substr(0, 2) == ".." || dependency.substr(0, 2) == "./" || dependency.substr(0, 2) == "~/" || dependency.substr(0, 1) == '/')
+                  return '*';
+              else if(parsedUrl.protocol == "git:" || parsedUrl.protocol == "git+ssh:" || parsedUrl.protocol == "git+http:" || parsedUrl.protocol == "git+https:" ||
+                  parsedUrl.protocol == "http:" || parsedUrl.protocol == "https:")
+                  return '*';
+              else
+                  return versionSpec;
+          }
+      
+          var packageObj = JSON.parse(fs.readFileSync('./package.json'));
+      
+          /* Replace dependencies */
+          if(packageObj.dependencies !== undefined) {
+              for(var dependency in packageObj.dependencies) {
+                  var versionSpec = packageObj.dependencies[dependency];
+                  packageObj.dependencies[dependency] = replaceImpureVersionSpec(versionSpec);
+              }
+          }
+          
+          /* Replace development dependencies */
+          if(packageObj.devDependencies !== undefined) {
+              for(var dependency in packageObj.devDependencies) {
+                  var versionSpec = packageObj.devDependencies[dependency];
+                  packageObj.devDependencies[dependency] = replaceImpureVersionSpec(versionSpec);
+              }
+          }
+          
+          /* Replace optional dependencies */
+          if(packageObj.optionalDependencies !== undefined) {
+              for(var dependency in packageObj.optionalDependencies) {
+                  var versionSpec = packageObj.optionalDependencies[dependency];
+                  packageObj.optionalDependencies[dependency] = replaceImpureVersionSpec(versionSpec);
+              }
+          }
+          
+          /* Write the fixed JSON file */
+          fs.writeFileSync("package.json", JSON.stringify(packageObj));
+        '';
+      };
+    in
     ''
+      DIR=$(pwd)
+      cd $TMPDIR
+      
       unpackFile ${src}
 
-      if [ "$strippedName" != "${name}" ]
+      if [ -f "${src}" ]
       then
-          # Rename the unpacked result to the package name if it does not match
-          mv $strippedName ${name}
+          # Restore write permissions to make building work
+          chmod -R u+w package
+          
+          # Move the extracted tarball into the output folder
+          mv package "$DIR/${name}"
+      elif [ "$strippedName" != "${name}" ]
+      then
+          # Restore write permissions to make building work
+          chmod -R u+w $strippedName
+          
+          # Move the extracted directory into the output folder
+          mv $strippedName "$DIR/${name}"
       fi
       
-      # Restore write permissions to make building work
-      chmod -R u+w ${name}
+      # Unset the stripped name to not confuse the next unpack step
+      unset strippedName
+      
+      # Some version specifiers (latest, unstable, URLs, file paths) force NPM to make remote connections or consult paths outside the Nix store.
+      # The following JavaScript replaces these by * to prevent that
+      cd $DIR/${name}
+      node ${fixImpureDependencies}
       
       # Include the dependencies of the package
-      cd ${name}
       ${includeDependencies { inherit dependencies; }}
       cd ..
     '';
@@ -78,13 +149,16 @@ let
       
       buildPhase = args.buildPhase or "true";
       
+      compositionScript = composePackage args;
+      passAsFile = [ "compositionScript" ];
+      
       installPhase = args.installPhase or ''
         # Create and enter a root node_modules/ folder
         mkdir -p $out/lib/node_modules
         cd $out/lib/node_modules
           
         # Compose the package and all its dependencies
-        ${composePackage args}
+        source $compositionScriptPath
         
         # Patch the shebangs of the bundled modules to prevent them from
         # calling executables outside the Nix store as much as possible
@@ -100,8 +174,9 @@ let
         # The other responsibilities of NPM are kept -- version checks, build
         # steps, postprocessing etc.
         
-        cd ${name}
         export HOME=$TMPDIR
+        cd ${name}
+        npm --registry http://www.example.com --nodedir=${nodeSources} ${npmFlags} ${stdenv.lib.optionalString production "--production"} rebuild
         npm --registry http://www.example.com --nodedir=${nodeSources} ${npmFlags} ${stdenv.lib.optionalString production "--production"} install
         
         # Create symlink to the deployed executable folder, if applicable
@@ -127,20 +202,38 @@ let
     });
 
   # Builds a development shell
-  buildNodeShell = { name, version, src, dependencies ? [], ... }@args:
+  buildNodeShell = { name, version, src, dependencies ? [], production ? true, npmFlags ? "", ... }@args:
     let
       nodeDependencies = stdenv.mkDerivation {
         name = "node-dependencies-${name}-${version}";
+        
+        buildInputs = [ python nodejs ] ++ stdenv.lib.optional (stdenv.isLinux) utillinux ++ args.buildInputs or [];
+        
+        includeScript = includeDependencies { inherit dependencies; };
+        passAsFile = [ "includeScript" ];
+        
         buildCommand = ''
           mkdir -p $out/lib
           cd $out/lib
-          ${includeDependencies { inherit dependencies; }}
+          source $includeScriptPath
+          
+          # Create fake package.json to make the npm commands work properly
+          cat > package.json <<EOF
+          {
+              "name": "${name}",
+              "version": "${version}"
+          }
+          EOF
+          
+          npm --registry http://www.example.com --nodedir=${nodeSources} ${npmFlags} ${stdenv.lib.optionalString production "--production"} rebuild
+          npm --registry http://www.example.com --nodedir=${nodeSources} ${npmFlags} ${stdenv.lib.optionalString production "--production"} install
         '';
       };
     in
     stdenv.mkDerivation {
       name = "node-shell-${name}-${version}";
-    
+      
+      buildInputs = [ python nodejs ] ++ stdenv.lib.optional (stdenv.isLinux) utillinux ++ args.buildInputs or [];
       buildCommand = "true";
       
       # Provide the dependencies in a development shell through the NODE_PATH environment variable
