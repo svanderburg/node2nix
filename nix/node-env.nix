@@ -225,6 +225,11 @@ let
           }
           EOF
           
+          # Patch the shebangs of the bundled modules to prevent them from
+          # calling executables outside the Nix store as much as possible
+          patchShebangs .
+          
+          export HOME=$TMPDIR
           npm --registry http://www.example.com --nodedir=${nodeSources} ${npmFlags} ${stdenv.lib.optionalString production "--production"} rebuild
           npm --registry http://www.example.com --nodedir=${nodeSources} ${npmFlags} ${stdenv.lib.optionalString production "--production"} install
         '';
