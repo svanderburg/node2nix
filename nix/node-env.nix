@@ -3,7 +3,7 @@
 let
   # Function that generates a TGZ file from a NPM project
   buildNodeSourceDist =
-    { name, version, src }:
+    { name, version, src, ... }:
     
     stdenv.mkDerivation {
       name = "node-tarball-${name}-${version}";
