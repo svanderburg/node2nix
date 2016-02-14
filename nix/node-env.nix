@@ -140,7 +140,7 @@ let
   # Builds and composes an NPM package including all its dependencies
   buildNodePackage = { name, version, dependencies ? [], production ? true, npmFlags ? "", ... }@args:
     
-    stdenv.mkDerivation (builtins.removeAttrs args [ "dependencies" ] // {
+    stdenv.lib.makeOverridable stdenv.mkDerivation (builtins.removeAttrs args [ "dependencies" ] // {
       name = "node-${name}-${version}";
       buildInputs = [ python nodejs ] ++ stdenv.lib.optional (stdenv.isLinux) utillinux ++ args.buildInputs or [];
       dontStrip = args.dontStrip or true; # Striping may fail a build for some package deployments
