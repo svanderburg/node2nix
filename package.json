@@ -4,8 +4,8 @@
   "description": "Generate Nix expressions to build NPM packages",
   "homepage": "https://github.com/NixOS/npm2nix",
   "author": {
-    "name": "Shea Levy",
-    "email": "shea@shealevy.com"
+    "name": "Sander van der Burg",
+    "email": "svanderburg@gmail.com"
   },
   "bin": {
     "npm2nix": "bin/npm2nix.js"
