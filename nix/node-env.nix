@@ -108,13 +108,13 @@ let
           
           # Move the extracted tarball into the output folder
           mv package "$DIR/${name}"
-      elif [ "$strippedName" != "${name}" ]
+      elif [ -d "${src}" ]
       then
           # Restore write permissions to make building work
-          chmod -R u+w $strippedName
-          
-          # Move the extracted directory into the output folder
-          mv $strippedName "$DIR/${name}"
+           chmod -R u+w $strippedName
+           
+           # Move the extracted directory into the output folder
+           mv $strippedName "$DIR/${name}"
       fi
       
       # Unset the stripped name to not confuse the next unpack step
