@@ -14,6 +14,7 @@ var switches = [
     ['-e', '--node-env FILE', 'Path to the Nix expression implementing functions that build NPM packages (defaults to: node-env.nix)'],
     ['-d', '--development', 'Specifies whether to do a development (non-production) deployment for a package.json deployment (false by default)'],
     ['--include-peer-dependencies', 'Specifies whether to include peer dependencies. In npm 2.x, this is the default. (false by default)'],
+    ['--flatten', 'Simulate npm 3.x flat dependency structure. (false by default)'],
     ['--registry NAME', 'URL referring to the NPM packages registry. It defaults to the official NPM one, but can be overridden to support private registries']
 ];
 
@@ -25,6 +26,7 @@ var help = false;
 var version = false;
 var production = true;
 var includePeerDependencies = false;
+var flatten = false;
 var inputJSON = "package.json";
 var outputNix = "node-packages.nix";
 var compositionNix = "default.nix";
@@ -64,6 +66,10 @@ parser.on('development', function(arg, value) {
 
 parser.on('include-peer-dependencies', function(arg, value) {
     includePeerDependencies = true;
+});
+
+parser.on('flatten', function(arg, value) {
+    flatten = true;
 });
 
 parser.on('registry', function(arg, value) {
@@ -130,7 +136,7 @@ if(version) {
 }
 
 /* Perform the NPM to Nix conversion */
-npm2nix.npmToNix(inputJSON, outputNix, compositionNix, nodeEnvNix, production, includePeerDependencies, registryURL, function(err) {
+npm2nix.npmToNix(inputJSON, outputNix, compositionNix, nodeEnvNix, production, includePeerDependencies, flatten, registryURL, function(err) {
     if(err) {
         process.stderr.write(err + "\n");
         process.exit(1);
