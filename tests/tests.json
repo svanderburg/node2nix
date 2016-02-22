@@ -8,5 +8,10 @@
   { "express": "git+https://github.com/strongloop/express.git#ef7ad68" },
   { "express": "git+https://github.com/strongloop/express.git#master" },
   { "nijs": "svanderburg/nijs" },
-  { "lodash": "github:lodash/lodash" }
+  { "lodash": "github:lodash/lodash" },
+  "es5-ext",
+  "grunt-cli",
+  "bower",
+  "coffee-script",
+  "floomatic"
 ]
