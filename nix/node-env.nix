@@ -138,7 +138,7 @@ let
   '';
   
   # Builds and composes an NPM package including all its dependencies
-  buildNodePackage = { name, version, dependencies ? [], production ? true, npmFlags ? "", ... }@args:
+  buildNodePackage = { name, version, dependencies ? [], production ? true, npmFlags ? "", dontNpmInstall ? false, ... }@args:
     
     stdenv.lib.makeOverridable stdenv.mkDerivation (builtins.removeAttrs args [ "dependencies" ] // {
       name = "node-${name}-${version}";
@@ -177,7 +177,10 @@ let
         export HOME=$TMPDIR
         cd ${name}
         npm --registry http://www.example.com --nodedir=${nodeSources} ${npmFlags} ${stdenv.lib.optionalString production "--production"} rebuild
-        npm --registry http://www.example.com --nodedir=${nodeSources} ${npmFlags} ${stdenv.lib.optionalString production "--production"} install
+        
+        ${stdenv.lib.optionalString (!dontNpmInstall) ''
+          npm --registry http://www.example.com --nodedir=${nodeSources} ${npmFlags} ${stdenv.lib.optionalString production "--production"} install
+        ''}
         
         # Create symlink to the deployed executable folder, if applicable
         if [ -d "$out/lib/node_modules/.bin" ]
@@ -202,7 +205,7 @@ let
     });
 
   # Builds a development shell
-  buildNodeShell = { name, version, src, dependencies ? [], production ? true, npmFlags ? "", ... }@args:
+  buildNodeShell = { name, version, src, dependencies ? [], production ? true, npmFlags ? "", dontNpmInstall ? false, ... }@args:
     let
       nodeDependencies = stdenv.mkDerivation {
         name = "node-dependencies-${name}-${version}";
@@ -231,7 +234,10 @@ let
           
           export HOME=$TMPDIR
           npm --registry http://www.example.com --nodedir=${nodeSources} ${npmFlags} ${stdenv.lib.optionalString production "--production"} rebuild
-          npm --registry http://www.example.com --nodedir=${nodeSources} ${npmFlags} ${stdenv.lib.optionalString production "--production"} install
+          
+          ${stdenv.lib.optionalString (!dontNpmInstall) ''
+            npm --registry http://www.example.com --nodedir=${nodeSources} ${npmFlags} ${stdenv.lib.optionalString production "--production"} install
+          ''}
         '';
       };
     in
@@ -239,7 +245,15 @@ let
       name = "node-shell-${name}-${version}";
       
       buildInputs = [ python nodejs ] ++ stdenv.lib.optional (stdenv.isLinux) utillinux ++ args.buildInputs or [];
-      buildCommand = "true";
+      buildCommand = ''
+        mkdir -p $out/bin
+        cat > $out/bin/shell <<EOF
+        #! ${stdenv.shell} -e
+        $shellHook
+        exec ${stdenv.shell}
+        EOF
+        chmod +x $out/bin/shell
+      '';
       
       # Provide the dependencies in a development shell through the NODE_PATH environment variable
       shellHook = stdenv.lib.optionalString (dependencies != []) ''
