@@ -197,7 +197,7 @@ the `--registry` option:
     $ npm2nix -i node-packages.json --registry http://private.registry.local
 
 Adding unspecified dependencies
-===============================
+-------------------------------
 A few exotic NPM packages may have dependencies on native libraries that reside
 somewhere on the user's host system. Unfortunately, NPM's metadata does not
 specify them, and as a consequence, it may result in failing Nix builds due to
@@ -254,7 +254,7 @@ With the above wrapper expression, we can correctly deploy floomatic, by running
     $ nix-build override.nix -A floomatic
 
 Disabling running NPM install
-=============================
+-----------------------------
 `npm2nix` tries to mimic npm's dependency resolver as closely as possible.
 However, it may happen that there is a small difference and the deployment fails
 a result.
