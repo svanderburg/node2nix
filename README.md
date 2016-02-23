@@ -149,11 +149,6 @@ This command deploys NiJS version 0.0.18:
     
     $ nix-env -f default.nix -iA '"nijs-0.0.18"'
 
-The above command also works with dependencies of any package that are not
-declared in the JSON configuration file, e.g.:
-
-    $ nix-env -f default.nix -iA '"slasp-0.0.4"'
-
 Generating packages for Node.js 5.x
 -----------------------------------
 By default, `npm2nix` generates Nix expressions that should be used in
@@ -162,14 +157,14 @@ conjuction with Node.js 4.x, the current LTS release. The feature branch (Node.j
 structure.
 
 The flat structure can be simulated by adding the `--flatten` parameter.
-Additionally, to enable all flags to make generation for Node.js work, add the
-`-5` parameter. For example, running the following command generates expressions
-that can be used with Node.js 5.x:
+Additionally, to enable all flags to make generation for Node.js 5.x work, add
+the `-5` parameter. For example, running the following command generates
+expressions that can be used with Node.js 5.x:
 
     $ npm2nix -5 -i node-package.json
 
-Running the following command, deploys NiJS version 0.0.18 using Node.js 5.x and
-npm 3.x:
+By running the following command, Nix deploys NiJS version 0.0.18 using Node.js
+5.x and npm 3.x:
 
     $ nix-env -f default.nix -iA '"nijs-0.0.18"'
 
