@@ -40,7 +40,7 @@ let
       ) dependencies);
 
   # Recursively composes the dependencies of a package
-  composePackage = { name, src, dependencies ? [], ... }@args:
+  composePackage = { name, packageName, src, dependencies ? [], ... }@args:
     let
       fixImpureDependencies = writeTextFile {
         name = "fixDependencies.js";
@@ -100,6 +100,9 @@ let
       cd $TMPDIR
       
       unpackFile ${src}
+      
+      # Make the base dir in which the target dependency resides first
+      mkdir -p "$(dirname "$DIR/${packageName}")"
 
       if [ -f "${src}" ]
       then
@@ -107,14 +110,14 @@ let
           chmod -R u+w package
           
           # Move the extracted tarball into the output folder
-          mv package "$DIR/${name}"
+          mv package "$DIR/${packageName}"
       elif [ -d "${src}" ]
       then
           # Restore write permissions to make building work
            chmod -R u+w $strippedName
            
            # Move the extracted directory into the output folder
-           mv $strippedName "$DIR/${name}"
+           mv $strippedName "$DIR/${packageName}"
       fi
       
       # Unset the stripped name to not confuse the next unpack step
@@ -122,12 +125,13 @@ let
       
       # Some version specifiers (latest, unstable, URLs, file paths) force NPM to make remote connections or consult paths outside the Nix store.
       # The following JavaScript replaces these by * to prevent that
-      cd $DIR/${name}
+      cd "$DIR/${packageName}"
       node ${fixImpureDependencies}
       
       # Include the dependencies of the package
       ${includeDependencies { inherit dependencies; }}
       cd ..
+      ${stdenv.lib.optionalString (builtins.substring 0 1 packageName == "@") "cd .."}
     '';
 
   # Extract the Node.js source code which is used to compile packages with
@@ -138,7 +142,7 @@ let
   '';
   
   # Builds and composes an NPM package including all its dependencies
-  buildNodePackage = { name, version, dependencies ? [], production ? true, npmFlags ? "", dontNpmInstall ? false, ... }@args:
+  buildNodePackage = { name, packageName, version, dependencies ? [], production ? true, npmFlags ? "", dontNpmInstall ? false, ... }@args:
     
     stdenv.lib.makeOverridable stdenv.mkDerivation (builtins.removeAttrs args [ "dependencies" ] // {
       name = "node-${name}-${version}";
@@ -175,7 +179,7 @@ let
         # steps, postprocessing etc.
         
         export HOME=$TMPDIR
-        cd ${name}
+        cd "${packageName}"
         npm --registry http://www.example.com --nodedir=${nodeSources} ${npmFlags} ${stdenv.lib.optionalString production "--production"} rebuild
         
         ${stdenv.lib.optionalString (!dontNpmInstall) ''
@@ -189,10 +193,10 @@ let
         fi
         
         # Create symlinks to the deployed manual page folders, if applicable
-        if [ -d "$out/lib/node_modules/${name}/man" ]
+        if [ -d "$out/lib/node_modules/${packageName}/man" ]
         then
             mkdir -p $out/share
-            for dir in "$out/lib/node_modules/${name}/man/"*
+            for dir in "$out/lib/node_modules/${packageName}/man/"*
             do
                 mkdir -p $out/share/man/$(basename "$dir")
                 for page in "$dir"/*
@@ -205,7 +209,7 @@ let
     });
 
   # Builds a development shell
-  buildNodeShell = { name, version, src, dependencies ? [], production ? true, npmFlags ? "", dontNpmInstall ? false, ... }@args:
+  buildNodeShell = { name, packageName, version, src, dependencies ? [], production ? true, npmFlags ? "", dontNpmInstall ? false, ... }@args:
     let
       nodeDependencies = stdenv.mkDerivation {
         name = "node-dependencies-${name}-${version}";
@@ -223,7 +227,7 @@ let
           # Create fake package.json to make the npm commands work properly
           cat > package.json <<EOF
           {
-              "name": "${name}",
+              "name": "${packageName}",
               "version": "${version}"
           }
           EOF
