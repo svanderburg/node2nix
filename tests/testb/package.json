@@ -1,0 +1,11 @@
+{
+  "name": "testb",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "testa": "../testa"
+  },
+  "bin": {
+    "b": "./b.js"
+  }
+}
