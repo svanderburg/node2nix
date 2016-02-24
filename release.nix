@@ -21,11 +21,11 @@ in
   
   tests = pkgs.lib.genAttrs systems (system:
     {
-      v4 = import ./tests/default-v4.nix {
+      v4 = import ./tests/override-v4.nix {
         pkgs = import nixpkgs { inherit system; };
         inherit system;
       };
-      v5 = import ./tests/default-v5.nix {
+      v5 = import ./tests/override-v5.nix {
         pkgs = import nixpkgs { inherit system; };
         inherit system;
       };

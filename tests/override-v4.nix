@@ -3,7 +3,7 @@
 }, system ? builtins.currentSystem}:
 
 let
-  nodePackages = import ./default.nix {
+  nodePackages = import ./default-v4.nix {
     inherit pkgs system;
   };
 in
