@@ -106,11 +106,14 @@ let
 
       if [ -f "${src}" ]
       then
+          # Figure out what directory has been unpacked
+          packageDir=$(find . -type d -maxdepth 1 | tail -1)
+          
           # Restore write permissions to make building work
-          chmod -R u+w package
+          chmod -R u+w "$packageDir"
           
           # Move the extracted tarball into the output folder
-          mv package "$DIR/${packageName}"
+          mv "$packageDir" "$DIR/${packageName}"
       elif [ -d "${src}" ]
       then
           # Restore write permissions to make building work
