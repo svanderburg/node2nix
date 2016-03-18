@@ -152,6 +152,8 @@ let
       buildInputs = [ python nodejs ] ++ stdenv.lib.optional (stdenv.isLinux) utillinux ++ args.buildInputs or [];
       dontStrip = args.dontStrip or true; # Striping may fail a build for some package deployments
       
+      inherit dontNpmInstall;
+      
       unpackPhase = args.unpackPhase or "true";
       
       buildPhase = args.buildPhase or "true";
@@ -185,9 +187,10 @@ let
         cd "${packageName}"
         npm --registry http://www.example.com --nodedir=${nodeSources} ${npmFlags} ${stdenv.lib.optionalString production "--production"} rebuild
         
-        ${stdenv.lib.optionalString (!dontNpmInstall) ''
-          npm --registry http://www.example.com --nodedir=${nodeSources} ${npmFlags} ${stdenv.lib.optionalString production "--production"} install
-        ''}
+        if [ "$dontNpmInstall" != "1" ]
+        then
+            npm --registry http://www.example.com --nodedir=${nodeSources} ${npmFlags} ${stdenv.lib.optionalString production "--production"} install
+        fi
         
         # Create symlink to the deployed executable folder, if applicable
         if [ -d "$out/lib/node_modules/.bin" ]
