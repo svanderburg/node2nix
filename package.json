@@ -14,7 +14,7 @@
   "dependencies": {
     "optparse": "1.0.x",
     "semver": "5.0.x",
-    "npm-registry-client": "1.0.x",
+    "npm-registry-client": "7.1.x",
     "npmconf": "2.0.x",
     "tar": "1.0.x",
     "temp": "0.8.x",
