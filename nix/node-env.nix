@@ -248,6 +248,8 @@ let
           ${stdenv.lib.optionalString (!dontNpmInstall) ''
             npm --registry http://www.example.com --nodedir=${nodeSources} ${npmFlags} ${stdenv.lib.optionalString production "--production"} install
           ''}
+
+          ln -s $out/lib/node_modules/.bin $out/bin
         '';
       };
     in
@@ -266,8 +268,9 @@ let
       '';
       
       # Provide the dependencies in a development shell through the NODE_PATH environment variable
+      inherit nodeDependencies;
       shellHook = stdenv.lib.optionalString (dependencies != []) ''
-        export NODE_PATH=${nodeDependencies}/lib/node_modules
+        export NODE_PATH=$nodeDependencies/lib/node_modules
       '';
     };
 in
