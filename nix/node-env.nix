@@ -145,14 +145,14 @@ let
   '';
   
   # Builds and composes an NPM package including all its dependencies
-  buildNodePackage = { name, packageName, version, dependencies ? [], production ? true, npmFlags ? "", dontNpmInstall ? false, ... }@args:
+  buildNodePackage = { name, packageName, version, dependencies ? [], production ? true, npmFlags ? "", dontNpmInstall ? false, preRebuild ? "", ... }@args:
     
     stdenv.lib.makeOverridable stdenv.mkDerivation (builtins.removeAttrs args [ "dependencies" ] // {
       name = "node-${name}-${version}";
       buildInputs = [ python nodejs ] ++ stdenv.lib.optional (stdenv.isLinux) utillinux ++ args.buildInputs or [];
       dontStrip = args.dontStrip or true; # Striping may fail a build for some package deployments
       
-      inherit dontNpmInstall;
+      inherit dontNpmInstall preRebuild;
       
       unpackPhase = args.unpackPhase or "true";
       
@@ -185,6 +185,7 @@ let
         
         export HOME=$TMPDIR
         cd "${packageName}"
+        runHook preRebuild
         npm --registry http://www.example.com --nodedir=${nodeSources} ${npmFlags} ${stdenv.lib.optionalString production "--production"} rebuild
         
         if [ "$dontNpmInstall" != "1" ]

@@ -9,7 +9,7 @@ var switches = [
     ['-h', '--help', 'Shows help sections'],
     ['-v', '--version', 'Shows version'],
     ['-i', '--input FILE', 'Specifies a path to a JSON file containing an object with package settings or an array of dependencies (defaults to: package.json)'],
-    ['-o', '--output FILE', 'Path to a Nix expression representing a registry of Node.js packages (defaults to: registry.nix)'],
+    ['-o', '--output FILE', 'Path to a Nix expression representing a registry of Node.js packages (defaults to: node-packages.nix)'],
     ['-c', '--composition FILE', 'Path to a Nix composition expression allowing someone to deploy the generated Nix packages from the command-line (defaults to: default.nix)'],
     ['-e', '--node-env FILE', 'Path to the Nix expression implementing functions that build NPM packages (defaults to: node-env.nix)'],
     ['-d', '--development', 'Specifies whether to do a development (non-production) deployment for a package.json deployment (false by default)'],
