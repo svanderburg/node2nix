@@ -1,6 +1,18 @@
 {stdenv, python, nodejs, utillinux, runCommand, writeTextFile}:
 
 let
+  # Create a tar wrapper that filters all the 'Ignoring unknown extended header keyword' noise
+  tarWrapper = runCommand "tarWrapper" {} ''
+    mkdir -p $out/bin
+    
+    cat > $out/bin/tar <<EOF
+    #! ${stdenv.shell} -e
+    $(type -p tar) "\$@" --warning=no-unknown-keyword
+    EOF
+    
+    chmod +x $out/bin/tar
+  '';
+  
   # Function that generates a TGZ file from a NPM project
   buildNodeSourceDist =
     { name, version, src, ... }:
@@ -149,7 +161,7 @@ let
     
     stdenv.lib.makeOverridable stdenv.mkDerivation (builtins.removeAttrs args [ "dependencies" ] // {
       name = "node-${name}-${version}";
-      buildInputs = [ python nodejs ] ++ stdenv.lib.optional (stdenv.isLinux) utillinux ++ args.buildInputs or [];
+      buildInputs = [ tarWrapper python nodejs ] ++ stdenv.lib.optional (stdenv.isLinux) utillinux ++ args.buildInputs or [];
       dontStrip = args.dontStrip or true; # Striping may fail a build for some package deployments
       
       inherit dontNpmInstall preRebuild;
@@ -221,7 +233,7 @@ let
       nodeDependencies = stdenv.mkDerivation {
         name = "node-dependencies-${name}-${version}";
         
-        buildInputs = [ python nodejs ] ++ stdenv.lib.optional (stdenv.isLinux) utillinux ++ args.buildInputs or [];
+        buildInputs = [ tarWrapper python nodejs ] ++ stdenv.lib.optional (stdenv.isLinux) utillinux ++ args.buildInputs or [];
         
         includeScript = includeDependencies { inherit dependencies; };
         passAsFile = [ "includeScript" ];

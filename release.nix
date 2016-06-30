@@ -4,12 +4,15 @@
 
 let
   pkgs = import nixpkgs {};
+  
+  version = (builtins.fromJSON (builtins.readFile ./package.json)).version;
+  
   jobset = import ./default.nix {
     inherit pkgs;
     system = builtins.currentSystem;
   };
 in
-{
+rec {
   inherit (jobset) tarball;
   
   package = pkgs.lib.genAttrs systems (system:
@@ -30,4 +33,24 @@ in
         inherit system;
       };
     });
+  
+  release = pkgs.releaseTools.aggregate {
+    name = "npm2nix-${version}";
+    constituents = [
+      tarball
+    ]
+    ++ map (system: builtins.getAttr system package) systems
+    ++ pkgs.lib.flatten (map (system:
+      let
+        tests_ = tests."${system}".v4;
+      in
+      map (name: builtins.getAttr name tests_) (builtins.attrNames tests_)
+      ) systems)
+    ++ pkgs.lib.flatten (map (system:
+      let
+        tests_ = tests."${system}".v5;
+      in
+      map (name: builtins.getAttr name tests_) (builtins.attrNames tests_)
+      ) systems);
+  };
 }
