@@ -1,3 +1,5 @@
+# This file originates from npm2nix
+
 {stdenv, python, nodejs, utillinux, runCommand, writeTextFile}:
 
 let
