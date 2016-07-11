@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 var optparse = require('optparse');
-var npm2nix = require('../lib/npm2nix.js');
+var node2nix = require('../lib/node2nix.js');
 
 /* Define command-line options */
 
@@ -143,12 +143,12 @@ if(help) {
 /* Display the version, if it has been requested */
 
 if(version) {
-    process.stdout.write("npm2nix 6.0.0\n");
+    process.stdout.write("node2nix 1.0.0\n");
     process.exit(0);
 }
 
 /* Perform the NPM to Nix conversion */
-npm2nix.npmToNix(inputJSON, outputNix, compositionNix, nodeEnvNix, production, includePeerDependencies, flatten, nodePackage, registryURL, function(err) {
+node2nix.npmToNix(inputJSON, outputNix, compositionNix, nodeEnvNix, production, includePeerDependencies, flatten, nodePackage, registryURL, function(err) {
     if(err) {
         process.stderr.write(err + "\n");
         process.exit(1);

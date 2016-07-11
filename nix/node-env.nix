@@ -1,4 +1,4 @@
-# This file originates from npm2nix
+# This file originates from node2nix
 
 {stdenv, python, nodejs, utillinux, runCommand, writeTextFile}:
 

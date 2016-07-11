@@ -35,7 +35,7 @@ rec {
     });
   
   release = pkgs.releaseTools.aggregate {
-    name = "npm2nix-${version}";
+    name = "node2nix-${version}";
     constituents = [
       tarball
     ]
