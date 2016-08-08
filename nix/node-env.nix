@@ -286,6 +286,7 @@ let
       inherit nodeDependencies;
       shellHook = stdenv.lib.optionalString (dependencies != []) ''
         export NODE_PATH=$nodeDependencies/lib/node_modules
+        ln -sfT $NODE_PATH node_modules
       '';
     };
 in
