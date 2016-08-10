@@ -268,7 +268,7 @@ let
         '';
       };
     in
-    stdenv.mkDerivation {
+    stdenv.lib.makeOverridable stdenv.mkDerivation {
       name = "node-shell-${name}-${version}";
       
       buildInputs = [ python nodejs ] ++ stdenv.lib.optional (stdenv.isLinux) utillinux ++ args.buildInputs or [];
