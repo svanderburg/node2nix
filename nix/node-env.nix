@@ -124,6 +124,7 @@ let
           packageDir=$(find . -type d -maxdepth 1 | tail -1)
           
           # Restore write permissions to make building work
+          find "$packageDir" -type d | xargs chmod u+x
           chmod -R u+w "$packageDir"
           
           # Move the extracted tarball into the output folder
@@ -131,10 +132,11 @@ let
       elif [ -d "${src}" ]
       then
           # Restore write permissions to make building work
-           chmod -R u+w $strippedName
-           
-           # Move the extracted directory into the output folder
-           mv $strippedName "$DIR/${packageName}"
+          find "$packageDir" -type d | xargs chmod u+x
+          chmod -R u+w $strippedName
+          
+          # Move the extracted directory into the output folder
+          mv $strippedName "$DIR/${packageName}"
       fi
       
       # Unset the stripped name to not confuse the next unpack step
