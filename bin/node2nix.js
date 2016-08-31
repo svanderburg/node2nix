@@ -143,7 +143,7 @@ if(help) {
 /* Display the version, if it has been requested */
 
 if(version) {
-    process.stdout.write("node2nix 1.0.0\n");
+    process.stdout.write("node2nix 1.0.1\n");
     process.exit(0);
 }
 

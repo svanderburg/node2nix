@@ -66,11 +66,11 @@ used to generate a tarball from the project:
 The above command-line instruction produces a tarball that can is placed in the
 following location:
 
-    $ ls result/tarballs/node2nix-1.0.0.tgz
+    $ ls result/tarballs/node2nix-1.0.1.tgz
 
 The above tarball can be distributed to others and installed with NPM by running:
 
-    $ npm install node2nix-1.0.0.tgz
+    $ npm install node2nix-1.0.1.tgz
 
 Deploying a development environment of a Node.js development project
 --------------------------------------------------------------------
