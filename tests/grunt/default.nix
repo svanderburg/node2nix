@@ -9,12 +9,12 @@ let
     inherit nodeEnv;
     inherit (pkgs) fetchurl fetchgit;
   });
-  nodeEnv = import ../nix/node-env.nix {
+  nodeEnv = import ../../nix/node-env.nix {
     inherit (pkgs) stdenv python utillinux runCommand writeTextFile;
     inherit nodejs;
   };
 in
-import ./node-packages-v4.nix {
+import ./node-packages.nix {
   inherit (pkgs) fetchurl fetchgit;
   inherit nodeEnv globalBuildInputs;
 }

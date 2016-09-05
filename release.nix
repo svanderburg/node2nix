@@ -32,6 +32,10 @@ rec {
         pkgs = import nixpkgs { inherit system; };
         inherit system;
       };
+      grunt = import ./tests/grunt/override.nix {
+        pkgs = import nixpkgs { inherit system; };
+        inherit system;
+      };
     });
   
   release = pkgs.releaseTools.aggregate {
@@ -49,6 +53,12 @@ rec {
     ++ pkgs.lib.flatten (map (system:
       let
         tests_ = tests."${system}".v5;
+      in
+      map (name: builtins.getAttr name tests_) (builtins.attrNames tests_)
+      ) systems)
+    ++ pkgs.lib.flatten (map (system:
+      let
+        tests_ = tests."${system}".grunt;
       in
       map (name: builtins.getAttr name tests_) (builtins.attrNames tests_)
       ) systems);

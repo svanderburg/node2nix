@@ -1,0 +1,10 @@
+{
+  "name": "grunt-test",
+  "version": "0.0.1",
+  "private": "true",
+  "devDependencies": {
+    "grunt": "*",
+    "grunt-contrib-jshint": "*",
+    "grunt-contrib-watch": "*"
+  }
+}

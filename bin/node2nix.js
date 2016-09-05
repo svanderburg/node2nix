@@ -14,6 +14,8 @@ var switches = [
     ['-e', '--node-env FILE', 'Path to the Nix expression implementing functions that build NPM packages (defaults to: node-env.nix)'],
     ['-d', '--development', 'Specifies whether to do a development (non-production) deployment for a package.json deployment (false by default)'],
     ['-5', '--nodejs-5', 'Provides all settings to generate expression for usage with Node.js 5.x (default is: Node.js 4.x)'],
+    ['--supplement-input FILE', 'A supplement package JSON file that are passed as build inputs to all packages defined in the input JSON file'],
+    ['--supplement-output FILE', 'Path to a Nix expression representing a supplementing set of Nix packages provided as inputs to a project (defaults to: supplement.nix)'],
     ['--include-peer-dependencies', 'Specifies whether to include peer dependencies. In npm 2.x, this is the default. (false by default)'],
     ['--flatten', 'Simulate npm 3.x flat dependency structure. (false by default)'],
     ['--pkg-name NAME', 'Specifies the name of the Node.js package to use from Nixpkgs (defaults to: nodejs)'],
@@ -32,6 +34,8 @@ var flatten = false;
 var inputJSON = "package.json";
 var outputNix = "node-packages.nix";
 var compositionNix = "default.nix";
+var supplementJSON;
+var supplementNix = "supplement.nix";
 var nodeEnvNix = "node-env.nix";
 var registryURL = "http://registry.npmjs.org";
 var nodePackage = "nodejs";
@@ -57,6 +61,14 @@ parser.on('output', function(arg, value) {
 
 parser.on('composition', function(arg, value) {
     compositionNix = value;
+});
+
+parser.on('supplement-input', function(arg, value) {
+    supplementJSON = value;
+});
+
+parser.on('supplement-output', function(arg, value) {
+    supplementNix = value;
 });
 
 parser.on('node-env', function(arg, value) {
@@ -143,12 +155,12 @@ if(help) {
 /* Display the version, if it has been requested */
 
 if(version) {
-    process.stdout.write("node2nix 1.0.1\n");
+    process.stdout.write("node2nix 1.1.0\n");
     process.exit(0);
 }
 
 /* Perform the NPM to Nix conversion */
-node2nix.npmToNix(inputJSON, outputNix, compositionNix, nodeEnvNix, production, includePeerDependencies, flatten, nodePackage, registryURL, function(err) {
+node2nix.npmToNix(inputJSON, outputNix, compositionNix, nodeEnvNix, supplementJSON, supplementNix, production, includePeerDependencies, flatten, nodePackage, registryURL, function(err) {
     if(err) {
         process.stderr.write(err + "\n");
         process.exit(1);
