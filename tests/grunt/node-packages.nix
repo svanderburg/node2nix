@@ -580,13 +580,13 @@ let
         sha1 = "db3204cd5a9de2e6cd890b85c6e2f66bcf4f620a";
       };
     };
-    "inherits-2.0.1" = {
+    "inherits-2.0.2" = {
       name = "inherits";
       packageName = "inherits";
-      version = "2.0.1";
+      version = "2.0.2";
       src = fetchurl {
-        url = "https://registry.npmjs.org/inherits/-/inherits-2.0.1.tgz";
-        sha1 = "b17d08d326b4423e568eff719f91b0b1cbdf69f1";
+        url = "https://registry.npmjs.org/inherits/-/inherits-2.0.2.tgz";
+        sha1 = "7880e686ae72d327c3e7cdb406c3b71ad12b36b8";
       };
     };
     "once-1.4.0" = {
@@ -1407,7 +1407,7 @@ let
                       sources."wrappy-1.0.2"
                     ];
                   })
-                  sources."inherits-2.0.1"
+                  sources."inherits-2.0.2"
                   (sources."once-1.4.0" // {
                     dependencies = [
                       sources."wrappy-1.0.2"
@@ -1425,7 +1425,7 @@ let
                   sources."wrappy-1.0.2"
                 ];
               })
-              sources."inherits-2.0.1"
+              sources."inherits-2.0.2"
               (sources."once-1.4.0" // {
                 dependencies = [
                   sources."wrappy-1.0.2"
@@ -1545,7 +1545,7 @@ let
                           sources."wrappy-1.0.2"
                         ];
                       })
-                      sources."inherits-2.0.1"
+                      sources."inherits-2.0.2"
                       (sources."once-1.4.0" // {
                         dependencies = [
                           sources."wrappy-1.0.2"
@@ -1581,7 +1581,7 @@ let
                       sources."core-util-is-1.0.2"
                       sources."isarray-0.0.1"
                       sources."string_decoder-0.10.31"
-                      sources."inherits-2.0.1"
+                      sources."inherits-2.0.2"
                     ];
                   })
                   sources."entities-1.0.0"
@@ -1619,7 +1619,7 @@ let
                           sources."wrappy-1.0.2"
                         ];
                       })
-                      sources."inherits-2.0.1"
+                      sources."inherits-2.0.2"
                       (sources."once-1.4.0" // {
                         dependencies = [
                           sources."wrappy-1.0.2"
@@ -1653,7 +1653,7 @@ let
                   sources."depd-1.1.0"
                   (sources."http-errors-1.3.1" // {
                     dependencies = [
-                      sources."inherits-2.0.1"
+                      sources."inherits-2.0.2"
                       sources."statuses-1.3.0"
                     ];
                   })

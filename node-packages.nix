@@ -202,13 +202,13 @@ let
         sha1 = "2d46fa874337af9498a2f12bb43d8d0be4a36873";
       };
     };
-    "inherits-2.0.1" = {
+    "inherits-2.0.2" = {
       name = "inherits";
       packageName = "inherits";
-      version = "2.0.1";
+      version = "2.0.2";
       src = fetchurl {
-        url = "https://registry.npmjs.org/inherits/-/inherits-2.0.1.tgz";
-        sha1 = "b17d08d326b4423e568eff719f91b0b1cbdf69f1";
+        url = "https://registry.npmjs.org/inherits/-/inherits-2.0.2.tgz";
+        sha1 = "7880e686ae72d327c3e7cdb406c3b71ad12b36b8";
       };
     };
     "typedarray-0.0.6" = {
@@ -1350,7 +1350,7 @@ let
           sources."chownr-1.0.1"
           (sources."concat-stream-1.5.2" // {
             dependencies = [
-              sources."inherits-2.0.1"
+              sources."inherits-2.0.2"
               sources."typedarray-0.0.6"
               (sources."readable-stream-2.0.6" // {
                 dependencies = [
@@ -1409,7 +1409,7 @@ let
                   (sources."readable-stream-2.0.6" // {
                     dependencies = [
                       sources."core-util-is-1.0.2"
-                      sources."inherits-2.0.1"
+                      sources."inherits-2.0.2"
                       sources."isarray-1.0.0"
                       sources."process-nextick-args-1.0.7"
                       sources."string_decoder-0.10.31"
@@ -1542,7 +1542,7 @@ let
                       sources."wrappy-1.0.2"
                     ];
                   })
-                  sources."inherits-2.0.1"
+                  sources."inherits-2.0.2"
                   (sources."minimatch-3.0.3" // {
                     dependencies = [
                       (sources."brace-expansion-1.1.6" // {
@@ -1568,7 +1568,7 @@ let
                     dependencies = [
                       sources."buffer-shims-1.0.0"
                       sources."core-util-is-1.0.2"
-                      sources."inherits-2.0.1"
+                      sources."inherits-2.0.2"
                       sources."isarray-1.0.0"
                       sources."process-nextick-args-1.0.7"
                       sources."string_decoder-0.10.31"
@@ -1619,7 +1619,7 @@ let
               sources."proto-list-1.2.4"
             ];
           })
-          sources."inherits-2.0.1"
+          sources."inherits-2.0.2"
           sources."ini-1.3.4"
           (sources."mkdirp-0.5.1" // {
             dependencies = [
@@ -1689,7 +1689,7 @@ let
               })
             ];
           })
-          sources."inherits-2.0.1"
+          sources."inherits-2.0.2"
         ];
       })
       (sources."temp-0.8.3" // {

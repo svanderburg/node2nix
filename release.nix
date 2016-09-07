@@ -56,11 +56,6 @@ rec {
       in
       map (name: builtins.getAttr name tests_) (builtins.attrNames tests_)
       ) systems)
-    ++ pkgs.lib.flatten (map (system:
-      let
-        tests_ = tests."${system}".grunt;
-      in
-      map (name: builtins.getAttr name tests_) (builtins.attrNames tests_)
-      ) systems);
+    ++ map (system: tests."${system}".grunt) systems;
   };
 }

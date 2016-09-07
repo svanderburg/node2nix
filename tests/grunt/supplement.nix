@@ -580,13 +580,13 @@ let
         sha1 = "db3204cd5a9de2e6cd890b85c6e2f66bcf4f620a";
       };
     };
-    "inherits-2.0.1" = {
+    "inherits-2.0.2" = {
       name = "inherits";
       packageName = "inherits";
-      version = "2.0.1";
+      version = "2.0.2";
       src = fetchurl {
-        url = "https://registry.npmjs.org/inherits/-/inherits-2.0.1.tgz";
-        sha1 = "b17d08d326b4423e568eff719f91b0b1cbdf69f1";
+        url = "https://registry.npmjs.org/inherits/-/inherits-2.0.2.tgz";
+        sha1 = "7880e686ae72d327c3e7cdb406c3b71ad12b36b8";
       };
     };
     "once-1.4.0" = {
@@ -1285,7 +1285,7 @@ in
                   sources."wrappy-1.0.2"
                 ];
               })
-              sources."inherits-2.0.1"
+              sources."inherits-2.0.2"
               (sources."minimatch-3.0.3" // {
                 dependencies = [
                   (sources."brace-expansion-1.1.6" // {

@@ -571,6 +571,15 @@ let
         sha1 = "dded45cc18256d51ed40aec142489d5c61026d28";
       };
     };
+    "inherits-2.0.2" = {
+      name = "inherits";
+      packageName = "inherits";
+      version = "2.0.2";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/inherits/-/inherits-2.0.2.tgz";
+        sha1 = "7880e686ae72d327c3e7cdb406c3b71ad12b36b8";
+      };
+    };
     "send-0.13.2" = {
       name = "send";
       packageName = "send";
@@ -2062,7 +2071,7 @@ in
       sources."http-errors-1.3.1"
       sources."mime-1.3.4"
       sources."statuses-1.2.1"
-      sources."inherits-2.0.1"
+      sources."inherits-2.0.2"
       sources."media-typer-0.3.0"
     ];
     buildInputs = globalBuildInputs;
@@ -2218,7 +2227,7 @@ in
       sources."resolve-1.1.7"
       sources."glob-5.0.15"
       sources."inflight-1.0.5"
-      sources."inherits-2.0.1"
+      sources."inherits-2.0.2"
       sources."minimatch-3.0.3"
       sources."once-1.4.0"
       sources."path-is-absolute-1.0.0"
@@ -2321,7 +2330,7 @@ in
       sources."tunnel-agent-0.4.3"
       sources."readable-stream-2.0.6"
       sources."core-util-is-1.0.2"
-      sources."inherits-2.0.1"
+      sources."inherits-2.0.2"
       sources."isarray-1.0.0"
       sources."process-nextick-args-1.0.7"
       sources."string_decoder-0.10.31"

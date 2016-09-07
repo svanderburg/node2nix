@@ -571,6 +571,15 @@ let
         sha1 = "dded45cc18256d51ed40aec142489d5c61026d28";
       };
     };
+    "inherits-2.0.2" = {
+      name = "inherits";
+      packageName = "inherits";
+      version = "2.0.2";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/inherits/-/inherits-2.0.2.tgz";
+        sha1 = "7880e686ae72d327c3e7cdb406c3b71ad12b36b8";
+      };
+    };
     "send-0.13.2" = {
       name = "send";
       packageName = "send";
@@ -2112,7 +2121,7 @@ in
           sources."destroy-1.0.3"
           (sources."http-errors-1.3.1" // {
             dependencies = [
-              sources."inherits-2.0.1"
+              sources."inherits-2.0.2"
             ];
           })
           sources."mime-1.3.4"
@@ -2129,7 +2138,7 @@ in
               sources."destroy-1.0.4"
               (sources."http-errors-1.3.1" // {
                 dependencies = [
-                  sources."inherits-2.0.1"
+                  sources."inherits-2.0.2"
                 ];
               })
               sources."mime-1.3.4"
@@ -2350,7 +2359,7 @@ in
                   sources."wrappy-1.0.2"
                 ];
               })
-              sources."inherits-2.0.1"
+              sources."inherits-2.0.2"
               (sources."minimatch-3.0.3" // {
                 dependencies = [
                   (sources."brace-expansion-1.1.6" // {
@@ -2467,7 +2476,7 @@ in
               (sources."readable-stream-2.0.6" // {
                 dependencies = [
                   sources."core-util-is-1.0.2"
-                  sources."inherits-2.0.1"
+                  sources."inherits-2.0.2"
                   sources."isarray-1.0.0"
                   sources."process-nextick-args-1.0.7"
                   sources."string_decoder-0.10.31"
@@ -2604,7 +2613,7 @@ in
                         dependencies = [
                           sources."buffer-shims-1.0.0"
                           sources."core-util-is-1.0.2"
-                          sources."inherits-2.0.1"
+                          sources."inherits-2.0.2"
                           sources."isarray-1.0.0"
                           sources."process-nextick-args-1.0.7"
                           sources."string_decoder-0.10.31"
@@ -2664,7 +2673,7 @@ in
                           sources."wrappy-1.0.2"
                         ];
                       })
-                      sources."inherits-2.0.1"
+                      sources."inherits-2.0.2"
                       (sources."once-1.4.0" // {
                         dependencies = [
                           sources."wrappy-1.0.2"
@@ -2684,7 +2693,7 @@ in
                       sources."graceful-fs-4.1.6"
                     ];
                   })
-                  sources."inherits-2.0.1"
+                  sources."inherits-2.0.2"
                 ];
               })
               (sources."tar-pack-3.1.4" // {
@@ -2697,12 +2706,12 @@ in
                   (sources."fstream-1.0.10" // {
                     dependencies = [
                       sources."graceful-fs-4.1.6"
-                      sources."inherits-2.0.1"
+                      sources."inherits-2.0.2"
                     ];
                   })
                   (sources."fstream-ignore-1.0.5" // {
                     dependencies = [
-                      sources."inherits-2.0.1"
+                      sources."inherits-2.0.2"
                     ];
                   })
                   (sources."once-1.3.3" // {
@@ -2714,7 +2723,7 @@ in
                     dependencies = [
                       sources."buffer-shims-1.0.0"
                       sources."core-util-is-1.0.2"
-                      sources."inherits-2.0.1"
+                      sources."inherits-2.0.2"
                       sources."isarray-1.0.0"
                       sources."process-nextick-args-1.0.7"
                       sources."string_decoder-0.10.31"
