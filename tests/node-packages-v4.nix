@@ -685,13 +685,13 @@ let
         sha1 = "2a4e4090b96b2db06a9d7df01055a62a77c9b774";
       };
     };
-    "once-1.3.3" = {
+    "once-1.4.0" = {
       name = "once";
       packageName = "once";
-      version = "1.3.3";
+      version = "1.4.0";
       src = fetchurl {
-        url = "https://registry.npmjs.org/once/-/once-1.3.3.tgz";
-        sha1 = "b2e261557ce4c314ec8304f3fa82663e4297ca20";
+        url = "https://registry.npmjs.org/once/-/once-1.4.0.tgz";
+        sha1 = "583b1aa775961d4b113ac17d9c50baef9dd76bd1";
       };
     };
     "path-is-absolute-1.0.0" = {
@@ -1756,6 +1756,15 @@ let
         sha1 = "9c31dae34767018fe1d249b24dada67d092da105";
       };
     };
+    "once-1.3.3" = {
+      name = "once";
+      packageName = "once";
+      version = "1.3.3";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/once/-/once-1.3.3.tgz";
+        sha1 = "b2e261557ce4c314ec8304f3fa82663e4297ca20";
+      };
+    };
     "uid-number-0.0.6" = {
       name = "uid-number";
       packageName = "uid-number";
@@ -1819,13 +1828,13 @@ let
         sha1 = "1343955edaf2e37d9b9e7ee7241e27c4b9fb72be";
       };
     };
-    "which-1.2.10" = {
+    "which-1.2.11" = {
       name = "which";
       packageName = "which";
-      version = "1.2.10";
+      version = "1.2.11";
       src = fetchurl {
-        url = "https://registry.npmjs.org/which/-/which-1.2.10.tgz";
-        sha1 = "91cd9bd0751322411b659b40f054b21de957ab2d";
+        url = "https://registry.npmjs.org/which/-/which-1.2.11.tgz";
+        sha1 = "c8b2eeea6b8c1659fa7c1dd4fdaabe9533dc5e8b";
       };
     };
     "pseudomap-1.0.2" = {
@@ -2271,8 +2280,8 @@ in
     version = "4.16.0-pre";
     src = fetchgit {
       url = "git://github.com/lodash/lodash";
-      rev = "d1abde7d1af1bb4cb2423286a54313220c0d8f31";
-      sha256 = "0770f5a9aaf8fb13a3f6d2096bfa737d75f7ea735b39b70118b0e0767113d520";
+      rev = "8176d56c725489156e19d68aeaf8851d313f4446";
+      sha256 = "92205818347cc8d1880152f87d25ddc28308d2b584a1ba2c135b9fa2664b6018";
     };
     buildInputs = globalBuildInputs;
     meta = {
@@ -2352,7 +2361,7 @@ in
                   })
                 ];
               })
-              (sources."once-1.3.3" // {
+              (sources."once-1.4.0" // {
                 dependencies = [
                   sources."wrappy-1.0.2"
                 ];
@@ -2413,10 +2422,10 @@ in
   floomatic = nodeEnv.buildNodePackage {
     name = "floomatic";
     packageName = "floomatic";
-    version = "0.5.3";
+    version = "0.5.4";
     src = fetchurl {
-      url = "https://registry.npmjs.org/floomatic/-/floomatic-0.5.3.tgz";
-      sha1 = "d7a5aa8709300758d51f4de4be1f4e6fa1389050";
+      url = "https://registry.npmjs.org/floomatic/-/floomatic-0.5.4.tgz";
+      sha1 = "03706cfb435b4a4912cbea325438f509606e6750";
     };
     dependencies = [
       sources."async-1.5.2"
@@ -2656,7 +2665,7 @@ in
                         ];
                       })
                       sources."inherits-2.0.1"
-                      (sources."once-1.3.3" // {
+                      (sources."once-1.4.0" // {
                         dependencies = [
                           sources."wrappy-1.0.2"
                         ];
@@ -2748,7 +2757,7 @@ in
                   sources."yallist-2.0.0"
                 ];
               })
-              (sources."which-1.2.10" // {
+              (sources."which-1.2.11" // {
                 dependencies = [
                   sources."isexe-1.1.2"
                 ];

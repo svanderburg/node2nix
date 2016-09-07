@@ -589,13 +589,13 @@ let
         sha1 = "b17d08d326b4423e568eff719f91b0b1cbdf69f1";
       };
     };
-    "once-1.3.3" = {
+    "once-1.4.0" = {
       name = "once";
       packageName = "once";
-      version = "1.3.3";
+      version = "1.4.0";
       src = fetchurl {
-        url = "https://registry.npmjs.org/once/-/once-1.3.3.tgz";
-        sha1 = "b2e261557ce4c314ec8304f3fa82663e4297ca20";
+        url = "https://registry.npmjs.org/once/-/once-1.4.0.tgz";
+        sha1 = "583b1aa775961d4b113ac17d9c50baef9dd76bd1";
       };
     };
     "wrappy-1.0.2" = {
@@ -760,13 +760,13 @@ let
         sha1 = "047a449789fa160d018f5486ed91320b6ec7885c";
       };
     };
-    "which-1.2.10" = {
+    "which-1.2.11" = {
       name = "which";
       packageName = "which";
-      version = "1.2.10";
+      version = "1.2.11";
       src = fetchurl {
-        url = "https://registry.npmjs.org/which/-/which-1.2.10.tgz";
-        sha1 = "91cd9bd0751322411b659b40f054b21de957ab2d";
+        url = "https://registry.npmjs.org/which/-/which-1.2.11.tgz";
+        sha1 = "c8b2eeea6b8c1659fa7c1dd4fdaabe9533dc5e8b";
       };
     };
     "isexe-1.1.2" = {
@@ -1408,7 +1408,7 @@ let
                     ];
                   })
                   sources."inherits-2.0.1"
-                  (sources."once-1.3.3" // {
+                  (sources."once-1.4.0" // {
                     dependencies = [
                       sources."wrappy-1.0.2"
                     ];
@@ -1426,7 +1426,7 @@ let
                 ];
               })
               sources."inherits-2.0.1"
-              (sources."once-1.3.3" // {
+              (sources."once-1.4.0" // {
                 dependencies = [
                   sources."wrappy-1.0.2"
                 ];
@@ -1476,7 +1476,7 @@ let
               sources."hooker-0.2.3"
               sources."lodash-4.3.0"
               sources."underscore.string-3.2.3"
-              (sources."which-1.2.10" // {
+              (sources."which-1.2.11" // {
                 dependencies = [
                   sources."isexe-1.1.2"
                 ];
@@ -1546,7 +1546,7 @@ let
                         ];
                       })
                       sources."inherits-2.0.1"
-                      (sources."once-1.3.3" // {
+                      (sources."once-1.4.0" // {
                         dependencies = [
                           sources."wrappy-1.0.2"
                         ];
@@ -1620,7 +1620,7 @@ let
                         ];
                       })
                       sources."inherits-2.0.1"
-                      (sources."once-1.3.3" // {
+                      (sources."once-1.4.0" // {
                         dependencies = [
                           sources."wrappy-1.0.2"
                         ];

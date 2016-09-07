@@ -148,13 +148,13 @@ let
         sha1 = "809bc61cabf54bd5ff94f6165c89ba8ee88c115c";
       };
     };
-    "once-1.3.3" = {
+    "once-1.4.0" = {
       name = "once";
       packageName = "once";
-      version = "1.3.3";
+      version = "1.4.0";
       src = fetchurl {
-        url = "https://registry.npmjs.org/once/-/once-1.3.3.tgz";
-        sha1 = "b2e261557ce4c314ec8304f3fa82663e4297ca20";
+        url = "https://registry.npmjs.org/once/-/once-1.4.0.tgz";
+        sha1 = "583b1aa775961d4b113ac17d9c50baef9dd76bd1";
       };
     };
     "request-2.74.0" = {
@@ -1174,6 +1174,15 @@ let
         sha1 = "c6465dbf08abcd4db359317f79ac68a646b28ff9";
       };
     };
+    "once-1.3.3" = {
+      name = "once";
+      packageName = "once";
+      version = "1.3.3";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/once/-/once-1.3.3.tgz";
+        sha1 = "b2e261557ce4c314ec8304f3fa82663e4297ca20";
+      };
+    };
     "osenv-0.1.3" = {
       name = "osenv";
       packageName = "osenv";
@@ -1386,7 +1395,7 @@ let
               sources."semver-5.3.0"
             ];
           })
-          (sources."once-1.3.3" // {
+          (sources."once-1.4.0" // {
             dependencies = [
               sources."wrappy-1.0.2"
             ];
@@ -1668,7 +1677,7 @@ let
                           })
                         ];
                       })
-                      (sources."once-1.3.3" // {
+                      (sources."once-1.4.0" // {
                         dependencies = [
                           sources."wrappy-1.0.2"
                         ];
