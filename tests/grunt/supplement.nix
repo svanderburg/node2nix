@@ -301,13 +301,13 @@ let
         sha1 = "988df33feab191ef799a61369dd76c17adf957ea";
       };
     };
-    "signal-exit-3.0.0" = {
+    "signal-exit-3.0.1" = {
       name = "signal-exit";
       packageName = "signal-exit";
-      version = "3.0.0";
+      version = "3.0.1";
       src = fetchurl {
-        url = "https://registry.npmjs.org/signal-exit/-/signal-exit-3.0.0.tgz";
-        sha1 = "3c0543b65d7b4fbc60b6cd94593d9bf436739be8";
+        url = "https://registry.npmjs.org/signal-exit/-/signal-exit-3.0.1.tgz";
+        sha1 = "5a4c884992b63a7acd9badb7894c3ee9cfccad81";
       };
     };
     "array-find-index-1.0.1" = {
@@ -580,13 +580,13 @@ let
         sha1 = "db3204cd5a9de2e6cd890b85c6e2f66bcf4f620a";
       };
     };
-    "inherits-2.0.2" = {
+    "inherits-2.0.3" = {
       name = "inherits";
       packageName = "inherits";
-      version = "2.0.2";
+      version = "2.0.3";
       src = fetchurl {
-        url = "https://registry.npmjs.org/inherits/-/inherits-2.0.2.tgz";
-        sha1 = "7880e686ae72d327c3e7cdb406c3b71ad12b36b8";
+        url = "https://registry.npmjs.org/inherits/-/inherits-2.0.3.tgz";
+        sha1 = "633c2c83e3da42a502f52466022480f4208261de";
       };
     };
     "once-1.4.0" = {
@@ -1285,7 +1285,7 @@ in
                   sources."wrappy-1.0.2"
                 ];
               })
-              sources."inherits-2.0.2"
+              sources."inherits-2.0.3"
               (sources."minimatch-3.0.3" // {
                 dependencies = [
                   (sources."brace-expansion-1.1.6" // {

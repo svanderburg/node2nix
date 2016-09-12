@@ -571,13 +571,13 @@ let
         sha1 = "dded45cc18256d51ed40aec142489d5c61026d28";
       };
     };
-    "inherits-2.0.2" = {
+    "inherits-2.0.3" = {
       name = "inherits";
       packageName = "inherits";
-      version = "2.0.2";
+      version = "2.0.3";
       src = fetchurl {
-        url = "https://registry.npmjs.org/inherits/-/inherits-2.0.2.tgz";
-        sha1 = "7880e686ae72d327c3e7cdb406c3b71ad12b36b8";
+        url = "https://registry.npmjs.org/inherits/-/inherits-2.0.3.tgz";
+        sha1 = "633c2c83e3da42a502f52466022480f4208261de";
       };
     };
     "send-0.13.2" = {
@@ -1594,13 +1594,13 @@ let
         sha1 = "7a3b3d0e98063d43f4c03f2e8ae6cd51a86883a0";
       };
     };
-    "signal-exit-3.0.0" = {
+    "signal-exit-3.0.1" = {
       name = "signal-exit";
       packageName = "signal-exit";
-      version = "3.0.0";
+      version = "3.0.1";
       src = fetchurl {
-        url = "https://registry.npmjs.org/signal-exit/-/signal-exit-3.0.0.tgz";
-        sha1 = "3c0543b65d7b4fbc60b6cd94593d9bf436739be8";
+        url = "https://registry.npmjs.org/signal-exit/-/signal-exit-3.0.1.tgz";
+        sha1 = "5a4c884992b63a7acd9badb7894c3ee9cfccad81";
       };
     };
     "string-width-1.0.2" = {
@@ -2071,7 +2071,7 @@ in
       sources."http-errors-1.3.1"
       sources."mime-1.3.4"
       sources."statuses-1.2.1"
-      sources."inherits-2.0.2"
+      sources."inherits-2.0.3"
       sources."media-typer-0.3.0"
     ];
     buildInputs = globalBuildInputs;
@@ -2168,8 +2168,8 @@ in
     version = "4.16.0-pre";
     src = fetchgit {
       url = "git://github.com/lodash/lodash";
-      rev = "8176d56c725489156e19d68aeaf8851d313f4446";
-      sha256 = "92205818347cc8d1880152f87d25ddc28308d2b584a1ba2c135b9fa2664b6018";
+      rev = "d2a2b3a8c408b125a4986442110a7b4c811bfb71";
+      sha256 = "9890cce3193f3ce8188877b33ad0e275733c2b514103cbe87281665138c3d4cc";
     };
     buildInputs = globalBuildInputs;
     meta = {
@@ -2227,7 +2227,7 @@ in
       sources."resolve-1.1.7"
       sources."glob-5.0.15"
       sources."inflight-1.0.5"
-      sources."inherits-2.0.2"
+      sources."inherits-2.0.3"
       sources."minimatch-3.0.3"
       sources."once-1.4.0"
       sources."path-is-absolute-1.0.0"
@@ -2330,7 +2330,7 @@ in
       sources."tunnel-agent-0.4.3"
       sources."readable-stream-2.0.6"
       sources."core-util-is-1.0.2"
-      sources."inherits-2.0.2"
+      sources."inherits-2.0.3"
       sources."isarray-1.0.0"
       sources."process-nextick-args-1.0.7"
       sources."string_decoder-0.10.31"
@@ -2416,7 +2416,7 @@ in
       sources."has-color-0.1.7"
       sources."has-unicode-2.0.1"
       sources."object-assign-4.1.0"
-      sources."signal-exit-3.0.0"
+      sources."signal-exit-3.0.1"
       sources."string-width-1.0.2"
       sources."wide-align-1.1.0"
       sources."code-point-at-1.0.0"

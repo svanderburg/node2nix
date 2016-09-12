@@ -202,13 +202,13 @@ let
         sha1 = "2d46fa874337af9498a2f12bb43d8d0be4a36873";
       };
     };
-    "inherits-2.0.2" = {
+    "inherits-2.0.3" = {
       name = "inherits";
       packageName = "inherits";
-      version = "2.0.2";
+      version = "2.0.3";
       src = fetchurl {
-        url = "https://registry.npmjs.org/inherits/-/inherits-2.0.2.tgz";
-        sha1 = "7880e686ae72d327c3e7cdb406c3b71ad12b36b8";
+        url = "https://registry.npmjs.org/inherits/-/inherits-2.0.3.tgz";
+        sha1 = "633c2c83e3da42a502f52466022480f4208261de";
       };
     };
     "typedarray-0.0.6" = {
@@ -1093,13 +1093,13 @@ let
         sha1 = "7a3b3d0e98063d43f4c03f2e8ae6cd51a86883a0";
       };
     };
-    "signal-exit-3.0.0" = {
+    "signal-exit-3.0.1" = {
       name = "signal-exit";
       packageName = "signal-exit";
-      version = "3.0.0";
+      version = "3.0.1";
       src = fetchurl {
-        url = "https://registry.npmjs.org/signal-exit/-/signal-exit-3.0.0.tgz";
-        sha1 = "3c0543b65d7b4fbc60b6cd94593d9bf436739be8";
+        url = "https://registry.npmjs.org/signal-exit/-/signal-exit-3.0.1.tgz";
+        sha1 = "5a4c884992b63a7acd9badb7894c3ee9cfccad81";
       };
     };
     "string-width-1.0.2" = {
@@ -1350,7 +1350,7 @@ let
           sources."chownr-1.0.1"
           (sources."concat-stream-1.5.2" // {
             dependencies = [
-              sources."inherits-2.0.2"
+              sources."inherits-2.0.3"
               sources."typedarray-0.0.6"
               (sources."readable-stream-2.0.6" // {
                 dependencies = [
@@ -1409,7 +1409,7 @@ let
                   (sources."readable-stream-2.0.6" // {
                     dependencies = [
                       sources."core-util-is-1.0.2"
-                      sources."inherits-2.0.2"
+                      sources."inherits-2.0.3"
                       sources."isarray-1.0.0"
                       sources."process-nextick-args-1.0.7"
                       sources."string_decoder-0.10.31"
@@ -1542,7 +1542,7 @@ let
                       sources."wrappy-1.0.2"
                     ];
                   })
-                  sources."inherits-2.0.2"
+                  sources."inherits-2.0.3"
                   (sources."minimatch-3.0.3" // {
                     dependencies = [
                       (sources."brace-expansion-1.1.6" // {
@@ -1568,7 +1568,7 @@ let
                     dependencies = [
                       sources."buffer-shims-1.0.0"
                       sources."core-util-is-1.0.2"
-                      sources."inherits-2.0.2"
+                      sources."inherits-2.0.3"
                       sources."isarray-1.0.0"
                       sources."process-nextick-args-1.0.7"
                       sources."string_decoder-0.10.31"
@@ -1584,7 +1584,7 @@ let
                   sources."has-color-0.1.7"
                   sources."has-unicode-2.0.1"
                   sources."object-assign-4.1.0"
-                  sources."signal-exit-3.0.0"
+                  sources."signal-exit-3.0.1"
                   (sources."string-width-1.0.2" // {
                     dependencies = [
                       (sources."code-point-at-1.0.0" // {
@@ -1619,7 +1619,7 @@ let
               sources."proto-list-1.2.4"
             ];
           })
-          sources."inherits-2.0.2"
+          sources."inherits-2.0.3"
           sources."ini-1.3.4"
           (sources."mkdirp-0.5.1" // {
             dependencies = [
@@ -1689,7 +1689,7 @@ let
               })
             ];
           })
-          sources."inherits-2.0.2"
+          sources."inherits-2.0.3"
         ];
       })
       (sources."temp-0.8.3" // {
