@@ -3,6 +3,33 @@ node2nix
 Deploy [NPM Package Manager](http://www.npmjs.org) (NPM) packages with the
 [Nix package manager](http://www.nixos.org/nix)!
 
+Table of Contents
+================
+<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-generate-toc again -->
+**Table of Contents**
+
+- [node2nix](#node2nix)
+- [Table of Contents](#table-of-contents)
+- [Installation](#installation)
+- [Usage](#usage)
+    - [Deploying a Node.js development project](#deploying-a-nodejs-development-project)
+    - [Generating a tarball from a Node.js development project](#generating-a-tarball-from-a-nodejs-development-project)
+    - [Deploying a development environment of a Node.js development project](#deploying-a-development-environment-of-a-nodejs-development-project)
+    - [Deploying a collection of NPM packages from the NPM registry](#deploying-a-collection-of-npm-packages-from-the-npm-registry)
+    - [Generating packages for Node.js 5.x](#generating-packages-for-nodejs-5x)
+- [Advanced options](#advanced-options)
+    - [Development mode](#development-mode)
+    - [Specifying paths](#specifying-paths)
+    - [Using alternative NPM registries](#using-alternative-npm-registries)
+    - [Adding unspecified dependencies](#adding-unspecified-dependencies)
+    - [Adding additional/global NPM packages to a packaging process](#adding-additionalglobal-npm-packages-to-a-packaging-process)
+    - [Disabling running NPM install](#disabling-running-npm-install)
+- [API documentation](#api-documentation)
+- [License](#license)
+- [Acknowledgements](#acknowledgements)
+
+<!-- markdown-toc end -->
+
 Installation
 ============
 There are two ways this package can installed.
