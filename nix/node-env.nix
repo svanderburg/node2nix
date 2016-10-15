@@ -121,7 +121,7 @@ let
       if [ -f "${src}" ]
       then
           # Figure out what directory has been unpacked
-          packageDir=$(find . -type d -maxdepth 1 | tail -1)
+          packageDir=$(find . -maxdepth 1 -type d | tail -1)
           
           # Restore write permissions to make building work
           find "$packageDir" -type d -print0 | xargs -0 chmod u+x
@@ -261,7 +261,7 @@ let
           # calling executables outside the Nix store as much as possible
           patchShebangs .
           
-          export HOME=$TMPDIR
+          export HOME=$PWD
           npm --registry http://www.example.com --nodedir=${nodeSources} ${npmFlags} ${stdenv.lib.optionalString production "--production"} rebuild
           
           ${stdenv.lib.optionalString (!dontNpmInstall) ''
