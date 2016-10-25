@@ -121,7 +121,7 @@ let
       if [ -f "${src}" ]
       then
           # Figure out what directory has been unpacked
-          packageDir=$(find . -maxdepth 1 -type d | tail -1)
+          packageDir="$(find . -maxdepth 1 -type d | tail -1)"
           
           # Restore write permissions to make building work
           find "$packageDir" -type d -print0 | xargs -0 chmod u+x
@@ -131,11 +131,18 @@ let
           mv "$packageDir" "$DIR/${packageName}"
       elif [ -d "${src}" ]
       then
+          # Get a stripped name (without hash) of the source directory.
+          # On old nixpkgs it's already set internally.
+          if [ -z "$strippedName" ]
+          then
+              strippedName="$(stripHash ${src})"
+          fi
+
           # Restore write permissions to make building work
-          chmod -R u+w $strippedName
+          chmod -R u+w "$strippedName"
           
           # Move the extracted directory into the output folder
-          mv $strippedName "$DIR/${packageName}"
+          mv "$strippedName" "$DIR/${packageName}"
       fi
 
       # Unset the stripped name to not confuse the next unpack step
