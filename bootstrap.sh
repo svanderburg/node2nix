@@ -13,6 +13,7 @@
 node bin/node2nix -e nix/node-env.nix
 cd tests
 node ../bin/node2nix -i tests.json -o node-packages-v4.nix -c default-v4.nix -e ../nix/node-env.nix
-node ../bin/node2nix -i tests.json -o node-packages-v5.nix -c default-v5.nix -e ../nix/node-env.nix -5
+node ../bin/node2nix -i tests.json -o node-packages-v5v6.nix -c default-v5.nix -e ../nix/node-env.nix -5
+node ../bin/node2nix -i tests.json -o node-packages-v5v6.nix -c default-v6.nix -e ../nix/node-env.nix -6
 cd grunt
 node ../../bin/node2nix -d -i package.json --supplement-input supplement.json -e ../../nix/node-env.nix

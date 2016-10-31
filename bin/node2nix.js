@@ -14,6 +14,7 @@ var switches = [
     ['-e', '--node-env FILE', 'Path to the Nix expression implementing functions that build NPM packages (defaults to: node-env.nix)'],
     ['-d', '--development', 'Specifies whether to do a development (non-production) deployment for a package.json deployment (false by default)'],
     ['-5', '--nodejs-5', 'Provides all settings to generate expression for usage with Node.js 5.x (default is: Node.js 4.x)'],
+    ['-6', '--nodejs-6', 'Provides all settings to generate expression for usage with Node.js 6.x (default is: Node.js 4.x)'],
     ['--supplement-input FILE', 'A supplement package JSON file that are passed as build inputs to all packages defined in the input JSON file'],
     ['--supplement-output FILE', 'Path to a Nix expression representing a supplementing set of Nix packages provided as inputs to a project (defaults to: supplement.nix)'],
     ['--include-peer-dependencies', 'Specifies whether to include peer dependencies. In npm 2.x, this is the default. (false by default)'],
@@ -84,6 +85,11 @@ parser.on('nodejs-5', function(arg, value) {
     nodePackage = "nodejs-5_x";
 });
 
+parser.on('nodejs-6', function(arg, value) {
+    flatten = true;
+    nodePackage = "nodejs-6_x";
+});
+
 parser.on('include-peer-dependencies', function(arg, value) {
     includePeerDependencies = true;
 });
@@ -120,22 +126,22 @@ if(help) {
     }
 
     process.stdout.write("Usage: " + executable + " [OPTION]\n\n");
-    
+
     process.stdout.write("Generates a set of Nix expressions from a NPM package's package.json\n");
     process.stdout.write("configuration or a collection.json configuration containing a set of NPM\n");
     process.stdout.write("dependency specifiers so that the packages can be deployed with Nix instead\n");
     process.stdout.write("of NPM.\n\n");
-    
+
     process.stdout.write("Options:\n");
-    
+
     var maxlen = 30;
-    
+
     for(var i = 0; i < switches.length; i++) {
-    
+
         var currentSwitch = switches[i];
-        
+
         process.stdout.write("  ");
-        
+
         if(currentSwitch.length == 3) {
             process.stdout.write(currentSwitch[0] + ", "+currentSwitch[1]);
             displayTab(currentSwitch[0].length + 2 + currentSwitch[1].length, maxlen);
@@ -145,10 +151,10 @@ if(help) {
             displayTab(currentSwitch[0].length, maxlen);
             process.stdout.write(currentSwitch[1]);
         }
-        
+
         process.stdout.write("\n");
     }
-    
+
     process.exit(0);
 }
 
