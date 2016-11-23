@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+var fs = require('fs');
+var path = require('path');
 var optparse = require('optparse');
 var node2nix = require('../lib/node2nix.js');
 
@@ -161,7 +163,9 @@ if(help) {
 /* Display the version, if it has been requested */
 
 if(version) {
-    process.stdout.write("node2nix 1.1.0\n");
+    var version = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "package.json"))).version;
+    
+    process.stdout.write("node2nix " + version + "\n");
     process.exit(0);
 }
 

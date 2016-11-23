@@ -6,7 +6,7 @@
 
 let
   nodeEnv = import ../nix/node-env.nix {
-    inherit (pkgs) stdenv python utillinux runCommand writeTextFile;
+    inherit (pkgs) stdenv python2 utillinux runCommand writeTextFile;
     inherit nodejs;
   };
 in

@@ -1,6 +1,6 @@
 # This file originates from node2nix
 
-{stdenv, python, nodejs, utillinux, runCommand, writeTextFile}:
+{stdenv, python2, nodejs, utillinux, runCommand, writeTextFile}:
 
 let
   # Create a tar wrapper that filters all the 'Ignoring unknown extended header keyword' noise
@@ -171,7 +171,7 @@ let
 
     stdenv.lib.makeOverridable stdenv.mkDerivation (builtins.removeAttrs args [ "dependencies" ] // {
       name = "node-${name}-${version}";
-      buildInputs = [ tarWrapper python nodejs ] ++ stdenv.lib.optional (stdenv.isLinux) utillinux ++ args.buildInputs or [];
+      buildInputs = [ tarWrapper python2 nodejs ] ++ stdenv.lib.optional (stdenv.isLinux) utillinux ++ args.buildInputs or [];
       dontStrip = args.dontStrip or true; # Striping may fail a build for some package deployments
 
       inherit dontNpmInstall preRebuild;
@@ -249,7 +249,7 @@ let
       nodeDependencies = stdenv.mkDerivation {
         name = "node-dependencies-${name}-${version}";
 
-        buildInputs = [ tarWrapper python nodejs ] ++ stdenv.lib.optional (stdenv.isLinux) utillinux ++ args.buildInputs or [];
+        buildInputs = [ tarWrapper python2 nodejs ] ++ stdenv.lib.optional (stdenv.isLinux) utillinux ++ args.buildInputs or [];
 
         includeScript = includeDependencies { inherit dependencies; };
         passAsFile = [ "includeScript" ];
@@ -288,7 +288,7 @@ let
     stdenv.lib.makeOverridable stdenv.mkDerivation {
       name = "node-shell-${name}-${version}";
 
-      buildInputs = [ python nodejs ] ++ stdenv.lib.optional (stdenv.isLinux) utillinux ++ args.buildInputs or [];
+      buildInputs = [ python2 nodejs ] ++ stdenv.lib.optional (stdenv.isLinux) utillinux ++ args.buildInputs or [];
       buildCommand = ''
         mkdir -p $out/bin
         cat > $out/bin/shell <<EOF
