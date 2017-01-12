@@ -28,10 +28,6 @@ rec {
         pkgs = import nixpkgs { inherit system; };
         inherit system;
       };
-      v5 = import ./tests/override-v5.nix {
-        pkgs = import nixpkgs { inherit system; };
-        inherit system;
-      };
       v6 = import ./tests/override-v6.nix {
         pkgs = import nixpkgs { inherit system; };
         inherit system;
@@ -51,12 +47,6 @@ rec {
     ++ pkgs.lib.flatten (map (system:
       let
         tests_ = tests."${system}".v4;
-      in
-      map (name: builtins.getAttr name tests_) (builtins.attrNames tests_)
-      ) systems)
-    ++ pkgs.lib.flatten (map (system:
-      let
-        tests_ = tests."${system}".v5;
       in
       map (name: builtins.getAttr name tests_) (builtins.attrNames tests_)
       ) systems)

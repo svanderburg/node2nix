@@ -2150,8 +2150,8 @@ in
     version = "4.17.4";
     src = fetchgit {
       url = "git://github.com/lodash/lodash";
-      rev = "18f5fd9f6a6ab8b28a159e035c796494ca1a09f2";
-      sha256 = "e360372faf7680b81395ff53e35df06116503323b32194d5a35966d771aa782f";
+      rev = "c6854fa8fc77eb0c8a7a461655a9b97391e605fc";
+      sha256 = "70d754a319fcce40d0affc75f3e8d8f2f29a78fc31a0a45f328fbe9f31e28771";
     };
     buildInputs = globalBuildInputs;
     meta = {
