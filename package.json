@@ -21,7 +21,8 @@
     "fs.extra": "1.2.x",
     "findit": "2.0.x",
     "slasp": "0.0.4",
-    "nijs": "0.0.23"
+    "nijs": "0.0.23",
+    "yarn": "0.18.x"
   },
   "repository": {
     "type": "git",

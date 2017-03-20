@@ -11,6 +11,7 @@ var switches = [
     ['-h', '--help', 'Shows help sections'],
     ['-v', '--version', 'Shows version'],
     ['-i', '--input FILE', 'Specifies a path to a JSON file containing an object with package settings or an array of dependencies (defaults to: package.json)'],
+    ['-y', '--yarn-lock-file-dir FILE', 'Specifies a path to the directory containing a  yarn lock file which contains the versions to be used for all resolved dependencies'],
     ['-o', '--output FILE', 'Path to a Nix expression representing a registry of Node.js packages (defaults to: node-packages.nix)'],
     ['-c', '--composition FILE', 'Path to a Nix composition expression allowing someone to deploy the generated Nix packages from the command-line (defaults to: default.nix)'],
     ['-e', '--node-env FILE', 'Path to the Nix expression implementing functions that build NPM packages (defaults to: node-env.nix)'],
@@ -35,6 +36,7 @@ var production = true;
 var includePeerDependencies = false;
 var flatten = false;
 var inputJSON = "package.json";
+var yarnDir;
 var outputNix = "node-packages.nix";
 var compositionNix = "default.nix";
 var supplementJSON;
@@ -56,6 +58,10 @@ parser.on('version', function(arg, value) {
 
 parser.on('input', function(arg, value) {
     inputJSON = value;
+});
+
+parser.on('yarn-lock-file-dir', function(arg, value) {
+    yarnDir = value;
 });
 
 parser.on('output', function(arg, value) {
@@ -170,7 +176,7 @@ if(version) {
 }
 
 /* Perform the NPM to Nix conversion */
-node2nix.npmToNix(inputJSON, outputNix, compositionNix, nodeEnvNix, supplementJSON, supplementNix, production, includePeerDependencies, flatten, nodePackage, registryURL, function(err) {
+node2nix.npmToNix(inputJSON, yarnDir, outputNix, compositionNix, nodeEnvNix, supplementJSON, supplementNix, production, includePeerDependencies, flatten, nodePackage, registryURL, function(err) {
     if(err) {
         process.stderr.write(err + "\n");
         process.exit(1);
