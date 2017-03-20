@@ -41,7 +41,7 @@ var supplementJSON;
 var supplementNix = "supplement.nix";
 var nodeEnvNix = "node-env.nix";
 var registryURL = "http://registry.npmjs.org";
-var nodePackage = "nodejs";
+var nodePackage = "nodejs-4_x";
 var executable;
 
 /* Define process rules for option parameters */

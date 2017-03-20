@@ -107,7 +107,7 @@ let
           }
 
           /* Write the fixed JSON file */
-          fs.writeFileSync("package.json", JSON.stringify(packageObj));
+          fs.writeFileSync("package.json", JSON.stringify(packageObj, null, 2));
         '';
       };
     in

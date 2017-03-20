@@ -238,22 +238,22 @@ let
         sha1 = "a35008b20f41383eec1fb914f4cd5df79a264284";
       };
     };
-    "normalize-package-data-2.3.5" = {
+    "normalize-package-data-2.3.6" = {
       name = "normalize-package-data";
       packageName = "normalize-package-data";
-      version = "2.3.5";
+      version = "2.3.6";
       src = fetchurl {
-        url = "https://registry.npmjs.org/normalize-package-data/-/normalize-package-data-2.3.5.tgz";
-        sha1 = "8d924f142960e1777e7ffe170543631cc7cb02df";
+        url = "https://registry.npmjs.org/normalize-package-data/-/normalize-package-data-2.3.6.tgz";
+        sha1 = "498fa420c96401f787402ba21e600def9f981fff";
       };
     };
-    "object-assign-4.1.0" = {
+    "object-assign-4.1.1" = {
       name = "object-assign";
       packageName = "object-assign";
-      version = "4.1.0";
+      version = "4.1.1";
       src = fetchurl {
-        url = "https://registry.npmjs.org/object-assign/-/object-assign-4.1.0.tgz";
-        sha1 = "7a3b3d0e98063d43f4c03f2e8ae6cd51a86883a0";
+        url = "https://registry.npmjs.org/object-assign/-/object-assign-4.1.1.tgz";
+        sha1 = "2109adc7965887cfc05cbbd442cac8bfbb360863";
       };
     };
     "read-pkg-up-1.0.1" = {
@@ -319,13 +319,13 @@ let
         sha1 = "df010aa1287e164bbda6f9723b0a96a1ec4187a1";
       };
     };
-    "hosted-git-info-2.1.5" = {
+    "hosted-git-info-2.3.1" = {
       name = "hosted-git-info";
       packageName = "hosted-git-info";
-      version = "2.1.5";
+      version = "2.3.1";
       src = fetchurl {
-        url = "https://registry.npmjs.org/hosted-git-info/-/hosted-git-info-2.1.5.tgz";
-        sha1 = "0ba81d90da2e25ab34a332e6ec77936e1598118b";
+        url = "https://registry.npmjs.org/hosted-git-info/-/hosted-git-info-2.3.1.tgz";
+        sha1 = "ac439421605f0beb0ea1349de7d8bb28e50be1dd";
       };
     };
     "is-builtin-module-1.0.0" = {
@@ -490,13 +490,13 @@ let
         sha1 = "6219a85616520491f35788bdbf1447a99c7e6b0e";
       };
     };
-    "error-ex-1.3.0" = {
+    "error-ex-1.3.1" = {
       name = "error-ex";
       packageName = "error-ex";
-      version = "1.3.0";
+      version = "1.3.1";
       src = fetchurl {
-        url = "https://registry.npmjs.org/error-ex/-/error-ex-1.3.0.tgz";
-        sha1 = "e67b43f3e82c96ea3a584ffee0b9fc3325d802d9";
+        url = "https://registry.npmjs.org/error-ex/-/error-ex-1.3.1.tgz";
+        sha1 = "f855a86ce61adc4e8621c3cda21e7a7612c3a8dc";
       };
     };
     "is-arrayish-0.2.1" = {
@@ -733,13 +733,13 @@ let
         sha1 = "535d045ce6b6363fa40117084629995e9df324c7";
       };
     };
-    "ansi-regex-2.0.0" = {
+    "ansi-regex-2.1.1" = {
       name = "ansi-regex";
       packageName = "ansi-regex";
-      version = "2.0.0";
+      version = "2.1.1";
       src = fetchurl {
-        url = "https://registry.npmjs.org/ansi-regex/-/ansi-regex-2.0.0.tgz";
-        sha1 = "c5061b6e0ef8a81775e50f5d66151bf6bf371107";
+        url = "https://registry.npmjs.org/ansi-regex/-/ansi-regex-2.1.1.tgz";
+        sha1 = "c3b33ab5ee360d86e0e628f0468ae7ef27d654df";
       };
     };
     "async-1.5.2" = {
@@ -832,13 +832,13 @@ let
         sha1 = "d8a96bd77fd68df7793a73036a3ba0d5405d477b";
       };
     };
-    "abbrev-1.0.9" = {
+    "abbrev-1.1.0" = {
       name = "abbrev";
       packageName = "abbrev";
-      version = "1.0.9";
+      version = "1.1.0";
       src = fetchurl {
-        url = "https://registry.npmjs.org/abbrev/-/abbrev-1.0.9.tgz";
-        sha1 = "91b4792588a7738c25f35dd6f63752a2f8776135";
+        url = "https://registry.npmjs.org/abbrev/-/abbrev-1.1.0.tgz";
+        sha1 = "d0554c2256636e2f56e7c2e5ad183f859428d81f";
       };
     };
     "jshint-2.9.4" = {
@@ -1237,22 +1237,22 @@ let
         sha1 = "8710d7af0aa626f8fffa1ce00168545263255748";
       };
     };
-    "mime-types-2.1.13" = {
+    "mime-types-2.1.14" = {
       name = "mime-types";
       packageName = "mime-types";
-      version = "2.1.13";
+      version = "2.1.14";
       src = fetchurl {
-        url = "https://registry.npmjs.org/mime-types/-/mime-types-2.1.13.tgz";
-        sha1 = "e07aaa9c6c6b9a7ca3012c69003ad25a39e92a88";
+        url = "https://registry.npmjs.org/mime-types/-/mime-types-2.1.14.tgz";
+        sha1 = "f7ef7d97583fcaf3b7d282b6f8b5679dab1e94ee";
       };
     };
-    "mime-db-1.25.0" = {
+    "mime-db-1.26.0" = {
       name = "mime-db";
       packageName = "mime-db";
-      version = "1.25.0";
+      version = "1.26.0";
       src = fetchurl {
-        url = "https://registry.npmjs.org/mime-db/-/mime-db-1.25.0.tgz";
-        sha1 = "c18dbd7c73a5dbf6f44a024dc0d165a1e7b1c392";
+        url = "https://registry.npmjs.org/mime-db/-/mime-db-1.26.0.tgz";
+        sha1 = "eaffcd0e4fc6935cf8134da246e2e6c35305adff";
       };
     };
     "ms-0.7.1" = {
@@ -1315,9 +1315,9 @@ let
                   })
                   sources."map-obj-1.0.1"
                   sources."minimist-1.2.0"
-                  (sources."normalize-package-data-2.3.5" // {
+                  (sources."normalize-package-data-2.3.6" // {
                     dependencies = [
-                      sources."hosted-git-info-2.1.5"
+                      sources."hosted-git-info-2.3.1"
                       (sources."is-builtin-module-1.0.0" // {
                         dependencies = [
                           sources."builtin-modules-1.1.1"
@@ -1336,7 +1336,7 @@ let
                       })
                     ];
                   })
-                  sources."object-assign-4.1.0"
+                  sources."object-assign-4.1.1"
                   (sources."read-pkg-up-1.0.1" // {
                     dependencies = [
                       (sources."find-up-1.1.2" // {
@@ -1356,7 +1356,7 @@ let
                               sources."graceful-fs-4.1.11"
                               (sources."parse-json-2.2.0" // {
                                 dependencies = [
-                                  (sources."error-ex-1.3.0" // {
+                                  (sources."error-ex-1.3.1" // {
                                     dependencies = [
                                       sources."is-arrayish-0.2.1"
                                     ];
@@ -1468,12 +1468,12 @@ let
                       sources."escape-string-regexp-1.0.5"
                       (sources."has-ansi-2.0.0" // {
                         dependencies = [
-                          sources."ansi-regex-2.0.0"
+                          sources."ansi-regex-2.1.1"
                         ];
                       })
                       (sources."strip-ansi-3.0.1" // {
                         dependencies = [
-                          sources."ansi-regex-2.0.0"
+                          sources."ansi-regex-2.1.1"
                         ];
                       })
                       sources."supports-color-2.0.0"
@@ -1524,7 +1524,7 @@ let
           })
           (sources."nopt-3.0.6" // {
             dependencies = [
-              sources."abbrev-1.0.9"
+              sources."abbrev-1.1.0"
             ];
           })
           sources."path-is-absolute-1.0.1"
@@ -1539,12 +1539,12 @@ let
               sources."escape-string-regexp-1.0.5"
               (sources."has-ansi-2.0.0" // {
                 dependencies = [
-                  sources."ansi-regex-2.0.0"
+                  sources."ansi-regex-2.1.1"
                 ];
               })
               (sources."strip-ansi-3.0.1" // {
                 dependencies = [
-                  sources."ansi-regex-2.0.0"
+                  sources."ansi-regex-2.1.1"
                 ];
               })
               sources."supports-color-2.0.0"
@@ -1691,9 +1691,9 @@ let
                   (sources."type-is-1.6.14" // {
                     dependencies = [
                       sources."media-typer-0.3.0"
-                      (sources."mime-types-2.1.13" // {
+                      (sources."mime-types-2.1.14" // {
                         dependencies = [
-                          sources."mime-db-1.25.0"
+                          sources."mime-db-1.26.0"
                         ];
                       })
                     ];
