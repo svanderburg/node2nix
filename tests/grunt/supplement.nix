@@ -319,13 +319,13 @@ let
         sha1 = "df010aa1287e164bbda6f9723b0a96a1ec4187a1";
       };
     };
-    "hosted-git-info-2.3.1" = {
+    "hosted-git-info-2.4.1" = {
       name = "hosted-git-info";
       packageName = "hosted-git-info";
-      version = "2.3.1";
+      version = "2.4.1";
       src = fetchurl {
-        url = "https://registry.npmjs.org/hosted-git-info/-/hosted-git-info-2.3.1.tgz";
-        sha1 = "ac439421605f0beb0ea1349de7d8bb28e50be1dd";
+        url = "https://registry.npmjs.org/hosted-git-info/-/hosted-git-info-2.4.1.tgz";
+        sha1 = "4b0445e41c004a8bd1337773a4ff790ca40318c8";
       };
     };
     "is-builtin-module-1.0.0" = {
@@ -760,22 +760,22 @@ let
         sha1 = "047a449789fa160d018f5486ed91320b6ec7885c";
       };
     };
-    "which-1.2.12" = {
+    "which-1.2.14" = {
       name = "which";
       packageName = "which";
-      version = "1.2.12";
+      version = "1.2.14";
       src = fetchurl {
-        url = "https://registry.npmjs.org/which/-/which-1.2.12.tgz";
-        sha1 = "de67b5e450269f194909ef23ece4ebe416fa1192";
+        url = "https://registry.npmjs.org/which/-/which-1.2.14.tgz";
+        sha1 = "9a87c4378f03e827cecaf1acdf56c736c01c14e5";
       };
     };
-    "isexe-1.1.2" = {
+    "isexe-2.0.0" = {
       name = "isexe";
       packageName = "isexe";
-      version = "1.1.2";
+      version = "2.0.0";
       src = fetchurl {
-        url = "https://registry.npmjs.org/isexe/-/isexe-1.1.2.tgz";
-        sha1 = "36f3e22e60750920f5e7241a476a8c6a42275ad0";
+        url = "https://registry.npmjs.org/isexe/-/isexe-2.0.0.tgz";
+        sha1 = "e8fbf374dc556ff8947a10dcb0572d633f2cfa10";
       };
     };
     "argparse-1.0.9" = {

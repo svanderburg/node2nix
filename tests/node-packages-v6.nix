@@ -139,13 +139,13 @@ let
         sha1 = "6f631aef336d6c46362b51764044ce216be3c051";
       };
     };
-    "finalhandler-1.0.0" = {
+    "finalhandler-1.0.1" = {
       name = "finalhandler";
       packageName = "finalhandler";
-      version = "1.0.0";
+      version = "1.0.1";
       src = fetchurl {
-        url = "https://registry.npmjs.org/finalhandler/-/finalhandler-1.0.0.tgz";
-        sha1 = "b5691c2c0912092f18ac23e9416bde5cd7dc6755";
+        url = "https://registry.npmjs.org/finalhandler/-/finalhandler-1.0.1.tgz";
+        sha1 = "bcd15d1689c0e5ed729b6f7f541a6df984117db8";
       };
     };
     "fresh-0.5.0" = {
@@ -283,13 +283,13 @@ let
         sha1 = "0294fb922bb9375153541c4f7096231f287c8af8";
       };
     };
-    "vary-1.1.0" = {
+    "vary-1.1.1" = {
       name = "vary";
       packageName = "vary";
-      version = "1.1.0";
+      version = "1.1.1";
       src = fetchurl {
-        url = "https://registry.npmjs.org/vary/-/vary-1.1.0.tgz";
-        sha1 = "e1e5affbbd16ae768dd2674394b9ad3022653140";
+        url = "https://registry.npmjs.org/vary/-/vary-1.1.1.tgz";
+        sha1 = "67535ebb694c1d52257457984665323f587e8d37";
       };
     };
     "mime-types-2.1.14" = {
@@ -328,15 +328,6 @@ let
         sha1 = "ae25cf2512b3885a1d95d7f037868d8431124765";
       };
     };
-    "debug-2.6.1" = {
-      name = "debug";
-      packageName = "debug";
-      version = "2.6.1";
-      src = fetchurl {
-        url = "https://registry.npmjs.org/debug/-/debug-2.6.1.tgz";
-        sha1 = "79855090ba2c4e3115cc7d8769491d58f0491351";
-      };
-    };
     "unpipe-1.0.0" = {
       name = "unpipe";
       packageName = "unpipe";
@@ -371,6 +362,15 @@ let
       src = fetchurl {
         url = "https://registry.npmjs.org/ipaddr.js/-/ipaddr.js-1.2.0.tgz";
         sha1 = "8aba49c9192799585bdd643e0ccb50e8ae777ba4";
+      };
+    };
+    "debug-2.6.1" = {
+      name = "debug";
+      packageName = "debug";
+      version = "2.6.1";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/debug/-/debug-2.6.1.tgz";
+        sha1 = "79855090ba2c4e3115cc7d8769491d58f0491351";
       };
     };
     "destroy-1.0.4" = {
@@ -1333,13 +1333,22 @@ let
         sha1 = "d5b01691253326a97a2bbee9e61c55d8d60351e2";
       };
     };
-    "node-pre-gyp-0.6.33" = {
+    "node-pre-gyp-0.6.34" = {
       name = "node-pre-gyp";
       packageName = "node-pre-gyp";
-      version = "0.6.33";
+      version = "0.6.34";
       src = fetchurl {
-        url = "https://registry.npmjs.org/node-pre-gyp/-/node-pre-gyp-0.6.33.tgz";
-        sha1 = "640ac55198f6a925972e0c16c4ac26a034d5ecc9";
+        url = "https://registry.npmjs.org/node-pre-gyp/-/node-pre-gyp-0.6.34.tgz";
+        sha1 = "94ad1c798a11d7fc67381b50d47f8cc18d9799f7";
+      };
+    };
+    "nopt-4.0.1" = {
+      name = "nopt";
+      packageName = "nopt";
+      version = "4.0.1";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/nopt/-/nopt-4.0.1.tgz";
+        sha1 = "d0d4685afd5415193c8c7505602d0d17cd64474d";
       };
     };
     "npmlog-4.0.2" = {
@@ -1360,13 +1369,13 @@ let
         sha1 = "c5ea564bb07aff9fd3a5b32e906c1d3a65940fea";
       };
     };
-    "rimraf-2.5.4" = {
+    "rimraf-2.6.1" = {
       name = "rimraf";
       packageName = "rimraf";
-      version = "2.5.4";
+      version = "2.6.1";
       src = fetchurl {
-        url = "https://registry.npmjs.org/rimraf/-/rimraf-2.5.4.tgz";
-        sha1 = "96800093cbf1a0c86bd95b4625467535c29dfa04";
+        url = "https://registry.npmjs.org/rimraf/-/rimraf-2.6.1.tgz";
+        sha1 = "c2338ec643df7a1b7fe5c54fa86f57428a55f33d";
       };
     };
     "semver-5.3.0" = {
@@ -1387,13 +1396,40 @@ let
         sha1 = "8e4d2a256c0e2185c6b18ad694aec968b83cb1d1";
       };
     };
-    "tar-pack-3.3.0" = {
+    "tar-pack-3.4.0" = {
       name = "tar-pack";
       packageName = "tar-pack";
-      version = "3.3.0";
+      version = "3.4.0";
       src = fetchurl {
-        url = "https://registry.npmjs.org/tar-pack/-/tar-pack-3.3.0.tgz";
-        sha1 = "30931816418f55afc4d21775afdd6720cee45dae";
+        url = "https://registry.npmjs.org/tar-pack/-/tar-pack-3.4.0.tgz";
+        sha1 = "23be2d7f671a8339376cbdb0b8fe3fdebf317984";
+      };
+    };
+    "osenv-0.1.4" = {
+      name = "osenv";
+      packageName = "osenv";
+      version = "0.1.4";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/osenv/-/osenv-0.1.4.tgz";
+        sha1 = "42fe6d5953df06c8064be6f176c3d05aaaa34644";
+      };
+    };
+    "os-homedir-1.0.2" = {
+      name = "os-homedir";
+      packageName = "os-homedir";
+      version = "1.0.2";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/os-homedir/-/os-homedir-1.0.2.tgz";
+        sha1 = "ffbc4988336e0e833de0c168c7ef152121aa7fb3";
+      };
+    };
+    "os-tmpdir-1.0.2" = {
+      name = "os-tmpdir";
+      packageName = "os-tmpdir";
+      version = "1.0.2";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/os-tmpdir/-/os-tmpdir-1.0.2.tgz";
+        sha1 = "bbe67406c79aa85c5cfec766fe5734555dfa1274";
       };
     };
     "are-we-there-yet-1.1.2" = {
@@ -1693,24 +1729,6 @@ let
         sha1 = "9c31dae34767018fe1d249b24dada67d092da105";
       };
     };
-    "once-1.3.3" = {
-      name = "once";
-      packageName = "once";
-      version = "1.3.3";
-      src = fetchurl {
-        url = "https://registry.npmjs.org/once/-/once-1.3.3.tgz";
-        sha1 = "b2e261557ce4c314ec8304f3fa82663e4297ca20";
-      };
-    };
-    "readable-stream-2.1.5" = {
-      name = "readable-stream";
-      packageName = "readable-stream";
-      version = "2.1.5";
-      src = fetchurl {
-        url = "https://registry.npmjs.org/readable-stream/-/readable-stream-2.1.5.tgz";
-        sha1 = "66fa8b720e1438b364681f2ad1a63c618448c9d0";
-      };
-    };
     "uid-number-0.0.6" = {
       name = "uid-number";
       packageName = "uid-number";
@@ -1774,13 +1792,13 @@ let
         sha1 = "1d17679c069cda5d040991a09dbc2c0db377e55e";
       };
     };
-    "which-1.2.12" = {
+    "which-1.2.14" = {
       name = "which";
       packageName = "which";
-      version = "1.2.12";
+      version = "1.2.14";
       src = fetchurl {
-        url = "https://registry.npmjs.org/which/-/which-1.2.12.tgz";
-        sha1 = "de67b5e450269f194909ef23ece4ebe416fa1192";
+        url = "https://registry.npmjs.org/which/-/which-1.2.14.tgz";
+        sha1 = "9a87c4378f03e827cecaf1acdf56c736c01c14e5";
       };
     };
     "pseudomap-1.0.2" = {
@@ -1801,13 +1819,13 @@ let
         sha1 = "1c11f9218f076089a47dd512f93c6699a6a81d52";
       };
     };
-    "isexe-1.1.2" = {
+    "isexe-2.0.0" = {
       name = "isexe";
       packageName = "isexe";
-      version = "1.1.2";
+      version = "2.0.0";
       src = fetchurl {
-        url = "https://registry.npmjs.org/isexe/-/isexe-1.1.2.tgz";
-        sha1 = "36f3e22e60750920f5e7241a476a8c6a42275ad0";
+        url = "https://registry.npmjs.org/isexe/-/isexe-2.0.0.tgz";
+        sha1 = "e8fbf374dc556ff8947a10dcb0572d633f2cfa10";
       };
     };
   };
@@ -1909,8 +1927,8 @@ in
     version = "4.15.2";
     src = fetchgit {
       url = "https://github.com/strongloop/express.git";
-      rev = "efd7032f71f3ef18060a100edc4aa11f4c912dde";
-      sha256 = "77f6e9419e8f8b67ecdf5c411cee30f40231ca599f5a48fa399759c124cfa1a9";
+      rev = "3763d73a1f6663460b32e600b8fc892075e069c5";
+      sha256 = "a8ce9e426be06ddd0d3f612512373625c0416d3e61252c1ca40157fc419832bd";
     };
     dependencies = [
       sources."accepts-1.3.3"
@@ -1924,11 +1942,7 @@ in
       sources."encodeurl-1.0.1"
       sources."escape-html-1.0.3"
       sources."etag-1.8.0"
-      (sources."finalhandler-1.0.0" // {
-        dependencies = [
-          sources."debug-2.6.1"
-        ];
-      })
+      sources."finalhandler-1.0.1"
       sources."fresh-0.5.0"
       sources."merge-descriptors-1.0.1"
       sources."methods-1.1.2"
@@ -1948,7 +1962,7 @@ in
       sources."statuses-1.3.1"
       sources."type-is-1.6.14"
       sources."utils-merge-1.0.0"
-      sources."vary-1.1.0"
+      sources."vary-1.1.1"
       sources."mime-types-2.1.14"
       sources."negotiator-0.6.1"
       sources."mime-db-1.26.0"
@@ -2042,8 +2056,8 @@ in
     version = "4.15.2";
     src = fetchgit {
       url = "https://github.com/strongloop/express.git";
-      rev = "efd7032f71f3ef18060a100edc4aa11f4c912dde";
-      sha256 = "77f6e9419e8f8b67ecdf5c411cee30f40231ca599f5a48fa399759c124cfa1a9";
+      rev = "3763d73a1f6663460b32e600b8fc892075e069c5";
+      sha256 = "a8ce9e426be06ddd0d3f612512373625c0416d3e61252c1ca40157fc419832bd";
     };
     dependencies = [
       sources."accepts-1.3.3"
@@ -2057,11 +2071,7 @@ in
       sources."encodeurl-1.0.1"
       sources."escape-html-1.0.3"
       sources."etag-1.8.0"
-      (sources."finalhandler-1.0.0" // {
-        dependencies = [
-          sources."debug-2.6.1"
-        ];
-      })
+      sources."finalhandler-1.0.1"
       sources."fresh-0.5.0"
       sources."merge-descriptors-1.0.1"
       sources."methods-1.1.2"
@@ -2081,7 +2091,7 @@ in
       sources."statuses-1.3.1"
       sources."type-is-1.6.14"
       sources."utils-merge-1.0.0"
-      sources."vary-1.1.0"
+      sources."vary-1.1.1"
       sources."mime-types-2.1.14"
       sources."negotiator-0.6.1"
       sources."mime-db-1.26.0"
@@ -2130,8 +2140,8 @@ in
     version = "4.17.4";
     src = fetchgit {
       url = "git://github.com/lodash/lodash";
-      rev = "3c324a716d178b155372aa5fda82738d40bd48fa";
-      sha256 = "7ff02ecc44d10883b567f885442908c36ac4819293da6b593bd2c6cdc566cb67";
+      rev = "8db488b943e4e979e9e7a57c99086a7648b57d23";
+      sha256 = "cd05369223d19ec1866606723a8b945d0dec2fc21c139a6b854ec171c6274aa0";
     };
     buildInputs = globalBuildInputs;
     meta = {
@@ -2331,24 +2341,22 @@ in
       sources."mime-db-1.26.0"
       sources."punycode-1.4.1"
       sources."nan-2.5.1"
-      sources."node-pre-gyp-0.6.33"
-      sources."nopt-3.0.6"
+      sources."node-pre-gyp-0.6.34"
+      sources."nopt-4.0.1"
       sources."npmlog-4.0.2"
       (sources."rc-1.1.7" // {
         dependencies = [
           sources."minimist-1.2.0"
         ];
       })
-      sources."rimraf-2.5.4"
+      sources."rimraf-2.6.1"
       sources."semver-5.3.0"
       sources."tar-2.2.1"
-      (sources."tar-pack-3.3.0" // {
-        dependencies = [
-          sources."once-1.3.3"
-          sources."readable-stream-2.1.5"
-        ];
-      })
+      sources."tar-pack-3.4.0"
       sources."abbrev-1.1.0"
+      sources."osenv-0.1.4"
+      sources."os-homedir-1.0.2"
+      sources."os-tmpdir-1.0.2"
       sources."are-we-there-yet-1.1.2"
       sources."console-control-strings-1.1.0"
       sources."gauge-2.7.3"
@@ -2385,10 +2393,10 @@ in
       sources."block-stream-0.0.9"
       sources."fstream-1.0.11"
       sources."graceful-fs-4.1.11"
-      sources."debug-2.2.0"
+      sources."debug-2.6.3"
       sources."fstream-ignore-1.0.5"
       sources."uid-number-0.0.6"
-      sources."ms-0.7.1"
+      sources."ms-0.7.2"
     ];
     buildInputs = globalBuildInputs;
     meta = {
@@ -2414,10 +2422,10 @@ in
       sources."path-key-1.0.0"
       sources."strip-eof-1.0.0"
       sources."lru-cache-4.0.2"
-      sources."which-1.2.12"
+      sources."which-1.2.14"
       sources."pseudomap-1.0.2"
       sources."yallist-2.1.2"
-      sources."isexe-1.1.2"
+      sources."isexe-2.0.0"
     ];
     buildInputs = globalBuildInputs;
     meta = {

@@ -292,13 +292,13 @@ let
         sha1 = "857fcabfc3397d2625b8228262e86aa7a011b05d";
       };
     };
-    "hosted-git-info-2.3.1" = {
+    "hosted-git-info-2.4.1" = {
       name = "hosted-git-info";
       packageName = "hosted-git-info";
-      version = "2.3.1";
+      version = "2.4.1";
       src = fetchurl {
-        url = "https://registry.npmjs.org/hosted-git-info/-/hosted-git-info-2.3.1.tgz";
-        sha1 = "ac439421605f0beb0ea1349de7d8bb28e50be1dd";
+        url = "https://registry.npmjs.org/hosted-git-info/-/hosted-git-info-2.4.1.tgz";
+        sha1 = "4b0445e41c004a8bd1337773a4ff790ca40318c8";
       };
     };
     "is-builtin-module-1.0.0" = {
@@ -1264,7 +1264,7 @@ let
           })
           (sources."normalize-package-data-2.3.6" // {
             dependencies = [
-              sources."hosted-git-info-2.3.1"
+              sources."hosted-git-info-2.4.1"
               (sources."is-builtin-module-1.0.0" // {
                 dependencies = [
                   sources."builtin-modules-1.1.1"
@@ -1284,7 +1284,7 @@ let
           })
           (sources."npm-package-arg-4.2.1" // {
             dependencies = [
-              sources."hosted-git-info-2.3.1"
+              sources."hosted-git-info-2.4.1"
             ];
           })
           (sources."once-1.4.0" // {
