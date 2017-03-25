@@ -16,7 +16,7 @@ Table of Contents
     - [Generating a tarball from a Node.js development project](#generating-a-tarball-from-a-nodejs-development-project)
     - [Deploying a development environment of a Node.js development project](#deploying-a-development-environment-of-a-nodejs-development-project)
     - [Deploying a collection of NPM packages from the NPM registry](#deploying-a-collection-of-npm-packages-from-the-npm-registry)
-    - [Generating packages for Node.js 5.x](#generating-packages-for-nodejs-5x)
+    - [Generating packages for Node.js 6.x](#generating-packages-for-nodejs-6x)
 - [Advanced options](#advanced-options)
     - [Development mode](#development-mode)
     - [Specifying paths](#specifying-paths)
@@ -210,24 +210,24 @@ This command deploys NiJS version 0.0.18:
 $ nix-env -f default.nix -iA '"nijs-0.0.18"'
 ```
 
-Generating packages for Node.js 5.x
+Generating packages for Node.js 6.x
 -----------------------------------
 By default, `node2nix` generates Nix expressions that should be used in
-conjuction with Node.js 4.x, the current LTS release. The feature branch (Node.js
-5.x) contains the newer npm 3.x, that stores dependencies in a more flat
+conjuction with Node.js 4.x, the current LTS release. Node.js
+6.x contains the newer npm 3.x, that stores dependencies in a more flat
 structure.
 
 The flat structure can be simulated by adding the `--flatten` parameter.
-Additionally, to enable all flags to make generation for Node.js 5.x work, add
-the `-5` parameter. For example, running the following command generates
-expressions that can be used with Node.js 5.x:
+Additionally, to enable all flags to make generation for Node.js 6.x work, add
+the `-6` parameter. For example, running the following command generates
+expressions that can be used with Node.js 6.x:
 
 ```bash
-$ node2nix -5 -i node-package.json
+$ node2nix -6 -i node-package.json
 ```
 
 By running the following command, Nix deploys NiJS version 0.0.18 using Node.js
-5.x and npm 3.x:
+6.x and npm 3.x:
 
 ```bash
 $ nix-env -f default.nix -iA '"nijs-0.0.18"'
