@@ -481,13 +481,13 @@ let
         sha1 = "1296a2d58fd45f19a0f6ce01d65701e2c735b6eb";
       };
     };
-    "mime-types-2.1.14" = {
+    "mime-types-2.1.15" = {
       name = "mime-types";
       packageName = "mime-types";
-      version = "2.1.14";
+      version = "2.1.15";
       src = fetchurl {
-        url = "https://registry.npmjs.org/mime-types/-/mime-types-2.1.14.tgz";
-        sha1 = "f7ef7d97583fcaf3b7d282b6f8b5679dab1e94ee";
+        url = "https://registry.npmjs.org/mime-types/-/mime-types-2.1.15.tgz";
+        sha1 = "a4ebf5064094569237b8cf70046776d09fc92aed";
       };
     };
     "oauth-sign-0.8.2" = {
@@ -796,13 +796,13 @@ let
         sha1 = "63bc5dcb61331b92bc05fd528953c33462a06f8d";
       };
     };
-    "mime-db-1.26.0" = {
+    "mime-db-1.27.0" = {
       name = "mime-db";
       packageName = "mime-db";
-      version = "1.26.0";
+      version = "1.27.0";
       src = fetchurl {
-        url = "https://registry.npmjs.org/mime-db/-/mime-db-1.26.0.tgz";
-        sha1 = "eaffcd0e4fc6935cf8134da246e2e6c35305adff";
+        url = "https://registry.npmjs.org/mime-db/-/mime-db-1.27.0.tgz";
+        sha1 = "820f572296bbd20ec25ed55e5b5de869e5436eb1";
       };
     };
     "punycode-1.4.1" = {
@@ -1361,9 +1361,9 @@ let
               sources."is-typedarray-1.0.0"
               sources."isstream-0.1.2"
               sources."json-stringify-safe-5.0.1"
-              (sources."mime-types-2.1.14" // {
+              (sources."mime-types-2.1.15" // {
                 dependencies = [
-                  sources."mime-db-1.26.0"
+                  sources."mime-db-1.27.0"
                 ];
               })
               sources."oauth-sign-0.8.2"
@@ -1572,6 +1572,7 @@ let
     meta = {
       description = "Generate Nix expressions to build NPM packages";
       homepage = https://github.com/svanderburg/node2nix;
+      license = "MIT";
     };
     production = true;
   };

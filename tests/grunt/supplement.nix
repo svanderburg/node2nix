@@ -1237,22 +1237,22 @@ let
         sha1 = "8710d7af0aa626f8fffa1ce00168545263255748";
       };
     };
-    "mime-types-2.1.14" = {
+    "mime-types-2.1.15" = {
       name = "mime-types";
       packageName = "mime-types";
-      version = "2.1.14";
+      version = "2.1.15";
       src = fetchurl {
-        url = "https://registry.npmjs.org/mime-types/-/mime-types-2.1.14.tgz";
-        sha1 = "f7ef7d97583fcaf3b7d282b6f8b5679dab1e94ee";
+        url = "https://registry.npmjs.org/mime-types/-/mime-types-2.1.15.tgz";
+        sha1 = "a4ebf5064094569237b8cf70046776d09fc92aed";
       };
     };
-    "mime-db-1.26.0" = {
+    "mime-db-1.27.0" = {
       name = "mime-db";
       packageName = "mime-db";
-      version = "1.26.0";
+      version = "1.27.0";
       src = fetchurl {
-        url = "https://registry.npmjs.org/mime-db/-/mime-db-1.26.0.tgz";
-        sha1 = "eaffcd0e4fc6935cf8134da246e2e6c35305adff";
+        url = "https://registry.npmjs.org/mime-db/-/mime-db-1.27.0.tgz";
+        sha1 = "820f572296bbd20ec25ed55e5b5de869e5436eb1";
       };
     };
     "ms-0.7.1" = {

@@ -202,13 +202,13 @@ let
         sha1 = "df604178005f522f15eb4490e7247a1bfaa67f8c";
       };
     };
-    "proxy-addr-1.1.3" = {
+    "proxy-addr-1.1.4" = {
       name = "proxy-addr";
       packageName = "proxy-addr";
-      version = "1.1.3";
+      version = "1.1.4";
       src = fetchurl {
-        url = "https://registry.npmjs.org/proxy-addr/-/proxy-addr-1.1.3.tgz";
-        sha1 = "dc97502f5722e888467b3fa2297a7b1ff47df074";
+        url = "https://registry.npmjs.org/proxy-addr/-/proxy-addr-1.1.4.tgz";
+        sha1 = "27e545f6960a44a627d9b44467e35c1b6b4ce2f3";
       };
     };
     "qs-6.4.0" = {
@@ -292,13 +292,13 @@ let
         sha1 = "67535ebb694c1d52257457984665323f587e8d37";
       };
     };
-    "mime-types-2.1.14" = {
+    "mime-types-2.1.15" = {
       name = "mime-types";
       packageName = "mime-types";
-      version = "2.1.14";
+      version = "2.1.15";
       src = fetchurl {
-        url = "https://registry.npmjs.org/mime-types/-/mime-types-2.1.14.tgz";
-        sha1 = "f7ef7d97583fcaf3b7d282b6f8b5679dab1e94ee";
+        url = "https://registry.npmjs.org/mime-types/-/mime-types-2.1.15.tgz";
+        sha1 = "a4ebf5064094569237b8cf70046776d09fc92aed";
       };
     };
     "negotiator-0.6.1" = {
@@ -310,13 +310,13 @@ let
         sha1 = "2b327184e8992101177b28563fb5e7102acd0ca9";
       };
     };
-    "mime-db-1.26.0" = {
+    "mime-db-1.27.0" = {
       name = "mime-db";
       packageName = "mime-db";
-      version = "1.26.0";
+      version = "1.27.0";
       src = fetchurl {
-        url = "https://registry.npmjs.org/mime-db/-/mime-db-1.26.0.tgz";
-        sha1 = "eaffcd0e4fc6935cf8134da246e2e6c35305adff";
+        url = "https://registry.npmjs.org/mime-db/-/mime-db-1.27.0.tgz";
+        sha1 = "820f572296bbd20ec25ed55e5b5de869e5436eb1";
       };
     };
     "ms-0.7.2" = {
@@ -355,13 +355,13 @@ let
         sha1 = "19ef9874c4ae1c297bcf078fde63a09b66a84363";
       };
     };
-    "ipaddr.js-1.2.0" = {
+    "ipaddr.js-1.3.0" = {
       name = "ipaddr.js";
       packageName = "ipaddr.js";
-      version = "1.2.0";
+      version = "1.3.0";
       src = fetchurl {
-        url = "https://registry.npmjs.org/ipaddr.js/-/ipaddr.js-1.2.0.tgz";
-        sha1 = "8aba49c9192799585bdd643e0ccb50e8ae777ba4";
+        url = "https://registry.npmjs.org/ipaddr.js/-/ipaddr.js-1.3.0.tgz";
+        sha1 = "1e03a52fdad83a8bbb2b25cbf4998b4cffcd3dec";
       };
     };
     "debug-2.6.1" = {
@@ -1834,10 +1834,10 @@ in
   async = nodeEnv.buildNodePackage {
     name = "async";
     packageName = "async";
-    version = "2.1.5";
+    version = "2.2.0";
     src = fetchurl {
-      url = "https://registry.npmjs.org/async/-/async-2.1.5.tgz";
-      sha1 = "e587c68580994ac67fc56ff86d3ac56bdbe810bc";
+      url = "https://registry.npmjs.org/async/-/async-2.2.0.tgz";
+      sha1 = "c324eba010a237e4fbd55a12dee86367d5c0ef32";
     };
     dependencies = [
       sources."lodash-4.17.4"
@@ -1927,8 +1927,8 @@ in
     version = "4.15.2";
     src = fetchgit {
       url = "https://github.com/strongloop/express.git";
-      rev = "3763d73a1f6663460b32e600b8fc892075e069c5";
-      sha256 = "a8ce9e426be06ddd0d3f612512373625c0416d3e61252c1ca40157fc419832bd";
+      rev = "aabf7802a979f44cf75ffac2978724935d064fec";
+      sha256 = "899062cf4926cc153f93c62f1abf215039386084a40d777a5ccdebbe8084c349";
     };
     dependencies = [
       sources."accepts-1.3.3"
@@ -1949,7 +1949,7 @@ in
       sources."on-finished-2.3.0"
       sources."parseurl-1.3.1"
       sources."path-to-regexp-0.1.7"
-      sources."proxy-addr-1.1.3"
+      sources."proxy-addr-1.1.4"
       sources."qs-6.4.0"
       sources."range-parser-1.2.0"
       (sources."send-0.15.1" // {
@@ -1963,14 +1963,14 @@ in
       sources."type-is-1.6.14"
       sources."utils-merge-1.0.0"
       sources."vary-1.1.1"
-      sources."mime-types-2.1.14"
+      sources."mime-types-2.1.15"
       sources."negotiator-0.6.1"
-      sources."mime-db-1.26.0"
+      sources."mime-db-1.27.0"
       sources."ms-0.7.2"
       sources."unpipe-1.0.0"
       sources."ee-first-1.1.1"
       sources."forwarded-0.1.0"
-      sources."ipaddr.js-1.2.0"
+      sources."ipaddr.js-1.3.0"
       sources."destroy-1.0.4"
       sources."http-errors-1.6.1"
       sources."mime-1.3.4"
@@ -2027,9 +2027,9 @@ in
       sources."type-is-1.6.14"
       sources."utils-merge-1.0.0"
       sources."vary-1.0.1"
-      sources."mime-types-2.1.14"
+      sources."mime-types-2.1.15"
       sources."negotiator-0.5.3"
-      sources."mime-db-1.26.0"
+      sources."mime-db-1.27.0"
       sources."ms-0.7.1"
       sources."unpipe-1.0.0"
       sources."ee-first-1.1.1"
@@ -2056,8 +2056,8 @@ in
     version = "4.15.2";
     src = fetchgit {
       url = "https://github.com/strongloop/express.git";
-      rev = "3763d73a1f6663460b32e600b8fc892075e069c5";
-      sha256 = "a8ce9e426be06ddd0d3f612512373625c0416d3e61252c1ca40157fc419832bd";
+      rev = "aabf7802a979f44cf75ffac2978724935d064fec";
+      sha256 = "899062cf4926cc153f93c62f1abf215039386084a40d777a5ccdebbe8084c349";
     };
     dependencies = [
       sources."accepts-1.3.3"
@@ -2078,7 +2078,7 @@ in
       sources."on-finished-2.3.0"
       sources."parseurl-1.3.1"
       sources."path-to-regexp-0.1.7"
-      sources."proxy-addr-1.1.3"
+      sources."proxy-addr-1.1.4"
       sources."qs-6.4.0"
       sources."range-parser-1.2.0"
       (sources."send-0.15.1" // {
@@ -2092,14 +2092,14 @@ in
       sources."type-is-1.6.14"
       sources."utils-merge-1.0.0"
       sources."vary-1.1.1"
-      sources."mime-types-2.1.14"
+      sources."mime-types-2.1.15"
       sources."negotiator-0.6.1"
-      sources."mime-db-1.26.0"
+      sources."mime-db-1.27.0"
       sources."ms-0.7.2"
       sources."unpipe-1.0.0"
       sources."ee-first-1.1.1"
       sources."forwarded-0.1.0"
-      sources."ipaddr.js-1.2.0"
+      sources."ipaddr.js-1.3.0"
       sources."destroy-1.0.4"
       sources."http-errors-1.6.1"
       sources."mime-1.3.4"
@@ -2140,8 +2140,8 @@ in
     version = "4.17.4";
     src = fetchgit {
       url = "git://github.com/lodash/lodash";
-      rev = "8db488b943e4e979e9e7a57c99086a7648b57d23";
-      sha256 = "cd05369223d19ec1866606723a8b945d0dec2fc21c139a6b854ec171c6274aa0";
+      rev = "d7bdf0ae25f9ab6ffd7b9133c3dc42a93310448c";
+      sha256 = "4e5f5c47bd88087180324ce88d94f3e38793185b964b2ed74b5bb4f0a564080b";
     };
     buildInputs = globalBuildInputs;
     meta = {
@@ -2288,7 +2288,7 @@ in
       sources."is-typedarray-1.0.0"
       sources."isstream-0.1.2"
       sources."json-stringify-safe-5.0.1"
-      sources."mime-types-2.1.14"
+      sources."mime-types-2.1.15"
       sources."oauth-sign-0.8.2"
       sources."performance-now-0.2.0"
       sources."qs-6.4.0"
@@ -2338,7 +2338,7 @@ in
       sources."jodid25519-1.0.2"
       sources."ecc-jsbn-0.1.1"
       sources."bcrypt-pbkdf-1.0.1"
-      sources."mime-db-1.26.0"
+      sources."mime-db-1.27.0"
       sources."punycode-1.4.1"
       sources."nan-2.5.1"
       sources."node-pre-gyp-0.6.34"
