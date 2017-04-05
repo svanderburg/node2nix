@@ -280,54 +280,57 @@ let
   # Builds a development shell
   buildNodeShell = { name, packageName, version, src, dependencies ? [], production ? true, npmFlags ? "", dontNpmInstall ? false, ... }@args:
     let
-      nodeDependencies = stdenv.mkDerivation {
-        name = "node-dependencies-${name}-${version}";
+      mkShellDerivation = args: stdenv.mkDerivation
+        (builtins.removeAttrs args [ "dependencies" ] // {
+          nodeDependencies = stdenv.mkDerivation {
+            name = "${args.name}-dependencies";
 
-        buildInputs = [ tarWrapper python nodejs ] ++ stdenv.lib.optional (stdenv.isLinux) utillinux ++ args.buildInputs or [];
+            buildInputs = [ tarWrapper python nodejs ] ++ stdenv.lib.optional (stdenv.isLinux) utillinux ++ args.buildInputs or [];
 
-        includeScript = includeDependencies { inherit dependencies; };
-        pinpointDependenciesScript = pinpointDependenciesOfPackage args;
-        
-        passAsFile = [ "includeScript" "pinpointDependenciesScript" ];
+            includeScript = includeDependencies { inherit dependencies; };
+            pinpointDependenciesScript = pinpointDependenciesOfPackage args;
+            
+            passAsFile = [ "includeScript" "pinpointDependenciesScript" ];
 
-        buildCommand = ''
-          mkdir -p $out/lib
-          cd $out/lib
-          source $includeScriptPath
-          
-          # Pinpoint the versions of all dependencies to the ones that are actually being used
-          echo "pinpointing versions of dependencies..."
-          source $pinpointDependenciesScriptPath
+            buildCommand = ''
+              mkdir -p $out/lib
+              cd $out/lib
+              source $includeScriptPath
+              
+              # Pinpoint the versions of all dependencies to the ones that are actually being used
+              echo "pinpointing versions of dependencies..."
+              source $pinpointDependenciesScriptPath
 
-          # Create fake package.json to make the npm commands work properly
-          cat > package.json <<EOF
-          {
-              "name": "${packageName}",
-              "version": "${version}"
-          }
-          EOF
+              # Create fake package.json to make the npm commands work properly
+              cat > package.json <<EOF
+              {
+                  "name": "${args.packageName}",
+                  "version": "${args.version}"
+              }
+              EOF
 
-          # Patch the shebangs of the bundled modules to prevent them from
-          # calling executables outside the Nix store as much as possible
-          patchShebangs .
+              # Patch the shebangs of the bundled modules to prevent them from
+              # calling executables outside the Nix store as much as possible
+              patchShebangs .
 
-          export HOME=$PWD
-          npm --registry http://www.example.com --nodedir=${nodeSources} ${npmFlags} ${stdenv.lib.optionalString production "--production"} rebuild
+              export HOME=$PWD
+              npm --registry http://www.example.com --nodedir=${nodeSources} ${args.npmFlags} ${stdenv.lib.optionalString args.production "--production"} rebuild
 
-          ${stdenv.lib.optionalString (!dontNpmInstall) ''
-            # NPM tries to download packages even when they already exist if npm-shrinkwrap is used.
-            rm -f npm-shrinkwrap.json
+              ${stdenv.lib.optionalString (!args.dontNpmInstall) ''
+                # NPM tries to download packages even when they already exist if npm-shrinkwrap is used.
+                rm -f npm-shrinkwrap.json
 
-            npm --registry http://www.example.com --nodedir=${nodeSources} ${npmFlags} ${stdenv.lib.optionalString production "--production"} install
-          ''}
+                npm --registry http://www.example.com --nodedir=${nodeSources} ${args.npmFlags} ${stdenv.lib.optionalString args.production "--production"} install
+              ''}
 
-          ln -s $out/lib/node_modules/.bin $out/bin
-        '';
-      };
+              ln -s $out/lib/node_modules/.bin $out/bin
+            '';
+          };
+        });
     in
-    stdenv.lib.makeOverridable stdenv.mkDerivation {
+    stdenv.lib.makeOverridable mkShellDerivation (args // {
       name = "node-shell-${name}-${version}";
-
+      inherit npmFlags dontNpmInstall;
       buildInputs = [ python nodejs ] ++ stdenv.lib.optional (stdenv.isLinux) utillinux ++ args.buildInputs or [];
       buildCommand = ''
         mkdir -p $out/bin
@@ -340,10 +343,9 @@ let
       '';
 
       # Provide the dependencies in a development shell through the NODE_PATH environment variable
-      inherit nodeDependencies;
       shellHook = stdenv.lib.optionalString (dependencies != []) ''
         export NODE_PATH=$nodeDependencies/lib/node_modules
       '';
-    };
+    });
 in
 { inherit buildNodeSourceDist buildNodePackage buildNodeShell; }
