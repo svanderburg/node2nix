@@ -278,7 +278,7 @@ let
     });
 
   # Builds a development shell
-  buildNodeShell = { name, packageName, version, src, dependencies ? [], production ? true, npmFlags ? "", dontNpmInstall ? false, ... }@args:
+  buildNodeShell = { name, packageName, version, src, dependencies ? [], production ? true, npmFlags ? "", dontNpmInstall ? false, preRebuild ? "", ... }@args:
     let
       mkShellDerivation = args: stdenv.mkDerivation
         (builtins.removeAttrs args [ "dependencies" ] // {
@@ -286,6 +286,7 @@ let
             name = "${args.name}-dependencies";
 
             buildInputs = [ tarWrapper python nodejs ] ++ stdenv.lib.optional (stdenv.isLinux) utillinux ++ args.buildInputs or [];
+            inherit (args) preRebuild;
 
             includeScript = includeDependencies { inherit dependencies; };
             pinpointDependenciesScript = pinpointDependenciesOfPackage args;
@@ -314,6 +315,7 @@ let
               patchShebangs .
 
               export HOME=$PWD
+              runHook preRebuild
               npm --registry http://www.example.com --nodedir=${nodeSources} ${args.npmFlags} ${stdenv.lib.optionalString args.production "--production"} rebuild
 
               ${stdenv.lib.optionalString (!args.dontNpmInstall) ''
@@ -330,7 +332,7 @@ let
     in
     stdenv.lib.makeOverridable mkShellDerivation (args // {
       name = "node-shell-${name}-${version}";
-      inherit npmFlags dontNpmInstall;
+      inherit preRebuild npmFlags dontNpmInstall;
       buildInputs = [ python nodejs ] ++ stdenv.lib.optional (stdenv.isLinux) utillinux ++ args.buildInputs or [];
       buildCommand = ''
         mkdir -p $out/bin
