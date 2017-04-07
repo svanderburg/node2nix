@@ -13,7 +13,7 @@ var switches = [
     ['-i', '--input FILE', 'Specifies a path to a JSON file containing an object with package settings or an array of dependencies (defaults to: package.json)'],
     ['-o', '--output FILE', 'Path to a Nix expression representing a registry of Node.js packages (defaults to: node-packages.nix)'],
     ['-c', '--composition FILE', 'Path to a Nix composition expression allowing someone to deploy the generated Nix packages from the command-line (defaults to: default.nix)'],
-    ['-e', '--node-env FILE', 'Path to the Nix expression implementing functions that build NPM packages (defaults to: node-env.nix)'],
+    ['-e', '--node-env FILE', 'Path to the Nix expression implementing functions that builds NPM packages (defaults to: node-env.nix)'],
     ['-d', '--development', 'Specifies whether to do a development (non-production) deployment for a package.json deployment (false by default)'],
     ['-5', '--nodejs-5', 'Provides all settings to generate expression for usage with Node.js 5.x (default is: Node.js 4.x)'],
     ['-6', '--nodejs-6', 'Provides all settings to generate expression for usage with Node.js 6.x (default is: Node.js 4.x)'],
@@ -22,7 +22,8 @@ var switches = [
     ['--include-peer-dependencies', 'Specifies whether to include peer dependencies. In npm 2.x, this is the default. (false by default)'],
     ['--flatten', 'Simulate npm 3.x flat dependency structure. (false by default)'],
     ['--pkg-name NAME', 'Specifies the name of the Node.js package to use from Nixpkgs (defaults to: nodejs)'],
-    ['--registry NAME', 'URL referring to the NPM packages registry. It defaults to the official NPM one, but can be overridden to support private registries']
+    ['--registry NAME', 'URL referring to the NPM packages registry. It defaults to the official NPM one, but can be overridden to support private registries'],
+    ['--no-copy-node-env', 'Do not create a copy of the Nix expression that builds NPM packages']
 ];
 
 var parser = new optparse.OptionParser(switches);
@@ -42,6 +43,7 @@ var supplementNix = "supplement.nix";
 var nodeEnvNix = "node-env.nix";
 var registryURL = "http://registry.npmjs.org";
 var nodePackage = "nodejs-4_x";
+var noCopyNodeEnv = false;
 var executable;
 
 /* Define process rules for option parameters */
@@ -108,6 +110,10 @@ parser.on('registry', function(arg, value) {
     registryURL = value;
 });
 
+parser.on('no-copy-node-env', function(arg, value) {
+    noCopyNodeEnv = true;
+});
+
 /* Define process rules for non-option parameters */
 
 parser.on(1, function(opt) {
@@ -170,7 +176,7 @@ if(version) {
 }
 
 /* Perform the NPM to Nix conversion */
-node2nix.npmToNix(inputJSON, outputNix, compositionNix, nodeEnvNix, supplementJSON, supplementNix, production, includePeerDependencies, flatten, nodePackage, registryURL, function(err) {
+node2nix.npmToNix(inputJSON, outputNix, compositionNix, nodeEnvNix, supplementJSON, supplementNix, production, includePeerDependencies, flatten, nodePackage, registryURL, noCopyNodeEnv, function(err) {
     if(err) {
         process.stderr.write(err + "\n");
         process.exit(1);
