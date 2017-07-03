@@ -121,13 +121,13 @@ let
         sha1 = "386aa78dc6ed50986c2b18957265b1b48abb9b86";
       };
     };
-    "iconv-lite-0.4.15" = {
+    "iconv-lite-0.4.18" = {
       name = "iconv-lite";
       packageName = "iconv-lite";
-      version = "0.4.15";
+      version = "0.4.18";
       src = fetchurl {
-        url = "https://registry.npmjs.org/iconv-lite/-/iconv-lite-0.4.15.tgz";
-        sha1 = "fe265a218ac6a57cfe854927e9d04c19825eddeb";
+        url = "https://registry.npmjs.org/iconv-lite/-/iconv-lite-0.4.18.tgz";
+        sha512 = "2l97vd6kax8syr9aggcqhiyhd3b2rf506wdq6wapfrc74qwpdzqf2a3891kq9ri3g5sdzayph2sz4zkr8kbbps58z9h2lvpk115kgdj";
       };
     };
     "js-yaml-3.5.5" = {
@@ -139,13 +139,13 @@ let
         sha1 = "0377c38017cabc7322b0d1fbcd25a491641f2fbe";
       };
     };
-    "minimatch-3.0.3" = {
+    "minimatch-3.0.4" = {
       name = "minimatch";
       packageName = "minimatch";
-      version = "3.0.3";
+      version = "3.0.4";
       src = fetchurl {
-        url = "https://registry.npmjs.org/minimatch/-/minimatch-3.0.3.tgz";
-        sha1 = "2a4e4090b96b2db06a9d7df01055a62a77c9b774";
+        url = "https://registry.npmjs.org/minimatch/-/minimatch-3.0.4.tgz";
+        sha512 = "1879a3j85h92ypvb7lpv1dqpcxl49rqnbgs5la18zmj1yqhwl60c2m74254wbr5pp3znckqpkg9dvjyrz6hfz8b9vag5a3j910db4f8";
       };
     };
     "nopt-3.0.6" = {
@@ -238,13 +238,13 @@ let
         sha1 = "a35008b20f41383eec1fb914f4cd5df79a264284";
       };
     };
-    "normalize-package-data-2.3.6" = {
+    "normalize-package-data-2.4.0" = {
       name = "normalize-package-data";
       packageName = "normalize-package-data";
-      version = "2.3.6";
+      version = "2.4.0";
       src = fetchurl {
-        url = "https://registry.npmjs.org/normalize-package-data/-/normalize-package-data-2.3.6.tgz";
-        sha1 = "498fa420c96401f787402ba21e600def9f981fff";
+        url = "https://registry.npmjs.org/normalize-package-data/-/normalize-package-data-2.4.0.tgz";
+        sha512 = "01wzws79ps84ylshjb7rfpjykgiqxnpr89s52p2yyzfx8nfvyh5flvf1almiiavsi75xgi8g3s5davc1mmgz7gn8yvlqz6gnhax8f7n";
       };
     };
     "object-assign-4.1.1" = {
@@ -319,13 +319,13 @@ let
         sha1 = "df010aa1287e164bbda6f9723b0a96a1ec4187a1";
       };
     };
-    "hosted-git-info-2.4.1" = {
+    "hosted-git-info-2.5.0" = {
       name = "hosted-git-info";
       packageName = "hosted-git-info";
-      version = "2.4.1";
+      version = "2.5.0";
       src = fetchurl {
-        url = "https://registry.npmjs.org/hosted-git-info/-/hosted-git-info-2.4.1.tgz";
-        sha1 = "4b0445e41c004a8bd1337773a4ff790ca40318c8";
+        url = "https://registry.npmjs.org/hosted-git-info/-/hosted-git-info-2.5.0.tgz";
+        sha512 = "355g980qsk8k9hkv60z58llbvpscjl5yqkh4wx719s8jcq2swzn4ynzinj8azmvdgs10r22wb297rmixh9vvsml55sbysdf2i8ipn54";
       };
     };
     "is-builtin-module-1.0.0" = {
@@ -805,22 +805,22 @@ let
         sha1 = "04e6926f662895354f3dd015203633b857297e2c";
       };
     };
-    "brace-expansion-1.1.7" = {
+    "brace-expansion-1.1.8" = {
       name = "brace-expansion";
       packageName = "brace-expansion";
-      version = "1.1.7";
+      version = "1.1.8";
       src = fetchurl {
-        url = "https://registry.npmjs.org/brace-expansion/-/brace-expansion-1.1.7.tgz";
-        sha1 = "3effc3c50e000531fb720eaff80f0ae8ef23cf59";
+        url = "https://registry.npmjs.org/brace-expansion/-/brace-expansion-1.1.8.tgz";
+        sha1 = "c07b211c7c952ec1f8efd51a77ef0d1d3990a292";
       };
     };
-    "balanced-match-0.4.2" = {
+    "balanced-match-1.0.0" = {
       name = "balanced-match";
       packageName = "balanced-match";
-      version = "0.4.2";
+      version = "1.0.0";
       src = fetchurl {
-        url = "https://registry.npmjs.org/balanced-match/-/balanced-match-0.4.2.tgz";
-        sha1 = "cb3f3e3c732dc0f01ee70b403f302e61d7709838";
+        url = "https://registry.npmjs.org/balanced-match/-/balanced-match-1.0.0.tgz";
+        sha1 = "89b4d199ab2bee49de164ea02b89ce462d71b767";
       };
     };
     "concat-map-0.0.1" = {
@@ -841,13 +841,13 @@ let
         sha1 = "d0554c2256636e2f56e7c2e5ad183f859428d81f";
       };
     };
-    "jshint-2.9.4" = {
+    "jshint-2.9.5" = {
       name = "jshint";
       packageName = "jshint";
-      version = "2.9.4";
+      version = "2.9.5";
       src = fetchurl {
-        url = "https://registry.npmjs.org/jshint/-/jshint-2.9.4.tgz";
-        sha1 = "5e3ba97848d5290273db514aee47fe24cf592934";
+        url = "https://registry.npmjs.org/jshint/-/jshint-2.9.5.tgz";
+        sha1 = "1e7252915ce681b40827ee14248c46d34e9aa62c";
       };
     };
     "cli-1.0.1" = {
@@ -904,13 +904,13 @@ let
         sha1 = "3678bd8ab995057c07ade836ed2ef087da811d45";
       };
     };
-    "glob-7.1.1" = {
+    "glob-7.1.2" = {
       name = "glob";
       packageName = "glob";
-      version = "7.1.1";
+      version = "7.1.2";
       src = fetchurl {
-        url = "https://registry.npmjs.org/glob/-/glob-7.1.1.tgz";
-        sha1 = "805211df04faaf1c63a3600306cdf5ade50b2ec8";
+        url = "https://registry.npmjs.org/glob/-/glob-7.1.2.tgz";
+        sha512 = "08vjxzixc9dwc1hn5pd60yyij98krk2pr758aiga97r02ncvaqx1hidi95wk470k1v84gg4alls9bm52m77174z128bgf13b61x951h";
       };
     };
     "date-now-0.1.4" = {
@@ -1039,22 +1039,22 @@ let
         sha1 = "b3fdba802e5d56a33c2f6f10794b32e477ac729d";
       };
     };
-    "globule-1.1.0" = {
+    "globule-1.2.0" = {
       name = "globule";
       packageName = "globule";
-      version = "1.1.0";
+      version = "1.2.0";
       src = fetchurl {
-        url = "https://registry.npmjs.org/globule/-/globule-1.1.0.tgz";
-        sha1 = "c49352e4dc183d85893ee825385eb994bb6df45f";
+        url = "https://registry.npmjs.org/globule/-/globule-1.2.0.tgz";
+        sha1 = "1dc49c6822dd9e8a2fa00ba2a295006e8664bd09";
       };
     };
-    "lodash-4.16.6" = {
+    "lodash-4.17.4" = {
       name = "lodash";
       packageName = "lodash";
-      version = "4.16.6";
+      version = "4.17.4";
       src = fetchurl {
-        url = "https://registry.npmjs.org/lodash/-/lodash-4.16.6.tgz";
-        sha1 = "d22c9ac660288f3843e16ba7d2b5d06cca27d777";
+        url = "https://registry.npmjs.org/lodash/-/lodash-4.17.4.tgz";
+        sha1 = "78203a4d1c328ae1d86dca6460e369b57f4055ae";
       };
     };
     "body-parser-1.14.2" = {
@@ -1315,9 +1315,9 @@ let
                   })
                   sources."map-obj-1.0.1"
                   sources."minimist-1.2.0"
-                  (sources."normalize-package-data-2.3.6" // {
+                  (sources."normalize-package-data-2.4.0" // {
                     dependencies = [
-                      sources."hosted-git-info-2.4.1"
+                      sources."hosted-git-info-2.5.0"
                       (sources."is-builtin-module-1.0.0" // {
                         dependencies = [
                           sources."builtin-modules-1.1.1"
@@ -1501,7 +1501,7 @@ let
               })
             ];
           })
-          sources."iconv-lite-0.4.15"
+          sources."iconv-lite-0.4.18"
           (sources."js-yaml-3.5.5" // {
             dependencies = [
               (sources."argparse-1.0.9" // {
@@ -1512,11 +1512,11 @@ let
               sources."esprima-2.7.3"
             ];
           })
-          (sources."minimatch-3.0.3" // {
+          (sources."minimatch-3.0.4" // {
             dependencies = [
-              (sources."brace-expansion-1.1.7" // {
+              (sources."brace-expansion-1.1.8" // {
                 dependencies = [
-                  sources."balanced-match-0.4.2"
+                  sources."balanced-match-1.0.0"
                   sources."concat-map-0.0.1"
                 ];
               })
@@ -1551,11 +1551,11 @@ let
             ];
           })
           sources."hooker-0.2.3"
-          (sources."jshint-2.9.4" // {
+          (sources."jshint-2.9.5" // {
             dependencies = [
               (sources."cli-1.0.1" // {
                 dependencies = [
-                  (sources."glob-7.1.1" // {
+                  (sources."glob-7.1.2" // {
                     dependencies = [
                       sources."fs.realpath-1.0.0"
                       (sources."inflight-1.0.6" // {
@@ -1605,11 +1605,11 @@ let
                   sources."entities-1.0.0"
                 ];
               })
-              (sources."minimatch-3.0.3" // {
+              (sources."minimatch-3.0.4" // {
                 dependencies = [
-                  (sources."brace-expansion-1.1.7" // {
+                  (sources."brace-expansion-1.1.8" // {
                     dependencies = [
-                      sources."balanced-match-0.4.2"
+                      sources."balanced-match-1.0.0"
                       sources."concat-map-0.0.1"
                     ];
                   })
@@ -1627,9 +1627,9 @@ let
           sources."async-1.5.2"
           (sources."gaze-1.1.2" // {
             dependencies = [
-              (sources."globule-1.1.0" // {
+              (sources."globule-1.2.0" // {
                 dependencies = [
-                  (sources."glob-7.1.1" // {
+                  (sources."glob-7.1.2" // {
                     dependencies = [
                       sources."fs.realpath-1.0.0"
                       (sources."inflight-1.0.6" // {
@@ -1646,12 +1646,12 @@ let
                       sources."path-is-absolute-1.0.1"
                     ];
                   })
-                  sources."lodash-4.16.6"
-                  (sources."minimatch-3.0.3" // {
+                  sources."lodash-4.17.4"
+                  (sources."minimatch-3.0.4" // {
                     dependencies = [
-                      (sources."brace-expansion-1.1.7" // {
+                      (sources."brace-expansion-1.1.8" // {
                         dependencies = [
-                          sources."balanced-match-0.4.2"
+                          sources."balanced-match-1.0.0"
                           sources."concat-map-0.0.1"
                         ];
                       })
