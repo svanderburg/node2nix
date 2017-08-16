@@ -337,13 +337,13 @@ let
         sha1 = "540572d34f7ac3119f8f76c30cbc1b1e037affbe";
       };
     };
-    "semver-5.3.0" = {
+    "semver-5.4.1" = {
       name = "semver";
       packageName = "semver";
-      version = "5.3.0";
+      version = "5.4.1";
       src = fetchurl {
-        url = "https://registry.npmjs.org/semver/-/semver-5.3.0.tgz";
-        sha1 = "9b2ce5d3de02d17c6012ad326aa6b4d0cf54f94f";
+        url = "https://registry.npmjs.org/semver/-/semver-5.4.1.tgz";
+        sha512 = "2r13vwvb5ick34k6flr7vgbjfsdka8zbj5a74rd0ba4bp0nqmhppbaw3qlwn7f4smpifpa4iy4hxj137y598rbvsmy3h0d8vxgvzwar";
       };
     };
     "validate-npm-package-license-3.0.1" = {
@@ -1129,13 +1129,13 @@ let
         sha1 = "b7d113aee7a8dd27bd21133c4dc2529df1721eed";
       };
     };
-    "depd-1.1.0" = {
+    "depd-1.1.1" = {
       name = "depd";
       packageName = "depd";
-      version = "1.1.0";
+      version = "1.1.1";
       src = fetchurl {
-        url = "https://registry.npmjs.org/depd/-/depd-1.1.0.tgz";
-        sha1 = "e1bd82c6aab6ced965b97b88b17ed3e528ca18c3";
+        url = "https://registry.npmjs.org/depd/-/depd-1.1.1.tgz";
+        sha1 = "5783b4e1c459f06fa5ca27f991f3d06e7a310359";
       };
     };
     "http-errors-1.3.1" = {
@@ -1237,22 +1237,22 @@ let
         sha1 = "8710d7af0aa626f8fffa1ce00168545263255748";
       };
     };
-    "mime-types-2.1.15" = {
+    "mime-types-2.1.16" = {
       name = "mime-types";
       packageName = "mime-types";
-      version = "2.1.15";
+      version = "2.1.16";
       src = fetchurl {
-        url = "https://registry.npmjs.org/mime-types/-/mime-types-2.1.15.tgz";
-        sha1 = "a4ebf5064094569237b8cf70046776d09fc92aed";
+        url = "https://registry.npmjs.org/mime-types/-/mime-types-2.1.16.tgz";
+        sha1 = "2b858a52e5ecd516db897ac2be87487830698e23";
       };
     };
-    "mime-db-1.27.0" = {
+    "mime-db-1.29.0" = {
       name = "mime-db";
       packageName = "mime-db";
-      version = "1.27.0";
+      version = "1.29.0";
       src = fetchurl {
-        url = "https://registry.npmjs.org/mime-db/-/mime-db-1.27.0.tgz";
-        sha1 = "820f572296bbd20ec25ed55e5b5de869e5436eb1";
+        url = "https://registry.npmjs.org/mime-db/-/mime-db-1.29.0.tgz";
+        sha1 = "48d26d235589651704ac5916ca06001914266878";
       };
     };
     "ms-0.7.1" = {
@@ -1323,7 +1323,7 @@ let
                           sources."builtin-modules-1.1.1"
                         ];
                       })
-                      sources."semver-5.3.0"
+                      sources."semver-5.4.1"
                       (sources."validate-npm-package-license-3.0.1" // {
                         dependencies = [
                           (sources."spdx-correct-1.0.2" // {
@@ -1668,7 +1668,7 @@ let
                 dependencies = [
                   sources."bytes-2.2.0"
                   sources."content-type-1.0.2"
-                  sources."depd-1.1.0"
+                  sources."depd-1.1.1"
                   (sources."http-errors-1.3.1" // {
                     dependencies = [
                       sources."inherits-2.0.3"
@@ -1691,9 +1691,9 @@ let
                   (sources."type-is-1.6.15" // {
                     dependencies = [
                       sources."media-typer-0.3.0"
-                      (sources."mime-types-2.1.15" // {
+                      (sources."mime-types-2.1.16" // {
                         dependencies = [
-                          sources."mime-db-1.27.0"
+                          sources."mime-db-1.29.0"
                         ];
                       })
                     ];
