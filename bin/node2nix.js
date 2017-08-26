@@ -176,7 +176,7 @@ if(help) {
 
 if(version) {
     var version = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "package.json"))).version;
-    
+
     process.stdout.write("node2nix " + version + "\n");
     process.exit(0);
 }
