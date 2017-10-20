@@ -1,6 +1,6 @@
 [
   "async",
-  { "nijs": "0.0.23" },
+  { "nijs": "0.0.24" },
   { "commander": "2.9.x" },
   { "underscore": "latest" },
   { "semver": "http://registry.npmjs.org/semver/-/semver-5.0.3.tgz" },
