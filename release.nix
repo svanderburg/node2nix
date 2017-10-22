@@ -19,7 +19,14 @@ rec {
     (import ./default.nix {
       pkgs = import nixpkgs { inherit system; };
       inherit system;
-    }).package
+    }).package.override {
+      postInstall = ''
+      mkdir -p $out/share/doc/node2nix
+      $out/lib/node_modules/node2nix/node_modules/jsdoc/jsdoc.js -R README.md -r lib -d $out/share/doc/node2nix/apidox
+      mkdir -p $out/nix-support
+      echo "doc api $out/share/doc/node2nix/apidox" >> $out/nix-support/hydra-build-products
+    '';
+    }
   );
 
   tests = pkgs.lib.genAttrs systems (system:

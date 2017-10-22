@@ -121,13 +121,13 @@ let
         sha1 = "386aa78dc6ed50986c2b18957265b1b48abb9b86";
       };
     };
-    "iconv-lite-0.4.18" = {
+    "iconv-lite-0.4.19" = {
       name = "iconv-lite";
       packageName = "iconv-lite";
-      version = "0.4.18";
+      version = "0.4.19";
       src = fetchurl {
-        url = "https://registry.npmjs.org/iconv-lite/-/iconv-lite-0.4.18.tgz";
-        sha512 = "2l97vd6kax8syr9aggcqhiyhd3b2rf506wdq6wapfrc74qwpdzqf2a3891kq9ri3g5sdzayph2sz4zkr8kbbps58z9h2lvpk115kgdj";
+        url = "https://registry.npmjs.org/iconv-lite/-/iconv-lite-0.4.19.tgz";
+        sha512 = "0jj1pdq3j9ak8cixn2kjp7ip8hf3xgnb85j4jr32yf9rry620v9072c0kk577mllfk1zl9wzs5ypwzbp7vbhf7j31d5rrqgwb0nldm1";
       };
     };
     "js-yaml-3.5.5" = {
@@ -832,13 +832,13 @@ let
         sha1 = "d8a96bd77fd68df7793a73036a3ba0d5405d477b";
       };
     };
-    "abbrev-1.1.0" = {
+    "abbrev-1.1.1" = {
       name = "abbrev";
       packageName = "abbrev";
-      version = "1.1.0";
+      version = "1.1.1";
       src = fetchurl {
-        url = "https://registry.npmjs.org/abbrev/-/abbrev-1.1.0.tgz";
-        sha1 = "d0554c2256636e2f56e7c2e5ad183f859428d81f";
+        url = "https://registry.npmjs.org/abbrev/-/abbrev-1.1.1.tgz";
+        sha512 = "38s4f3id97wsb0rg9nm9zvxyq0nvwrmrpa5dzvrkp36mf5ibs98b4z6lvsbrwzzs0sbcank6c7gpp06vcwp9acfhp41rzlhi3ybsxwy";
       };
     };
     "jshint-2.9.5" = {
@@ -1093,13 +1093,13 @@ let
         sha1 = "6c87257e648ab475bc24ea257457edcc1f8d0bc2";
       };
     };
-    "parseurl-1.3.1" = {
+    "parseurl-1.3.2" = {
       name = "parseurl";
       packageName = "parseurl";
-      version = "1.3.1";
+      version = "1.3.2";
       src = fetchurl {
-        url = "https://registry.npmjs.org/parseurl/-/parseurl-1.3.1.tgz";
-        sha1 = "c8ab8c9223ba34888aa64a297b28853bec18da56";
+        url = "https://registry.npmjs.org/parseurl/-/parseurl-1.3.2.tgz";
+        sha1 = "fc289d4ed8993119460c156253262cdc8de65bf3";
       };
     };
     "qs-5.1.0" = {
@@ -1120,13 +1120,13 @@ let
         sha1 = "fd35464a403f6f9117c2de3609ecff9cae000588";
       };
     };
-    "content-type-1.0.2" = {
+    "content-type-1.0.4" = {
       name = "content-type";
       packageName = "content-type";
-      version = "1.0.2";
+      version = "1.0.4";
       src = fetchurl {
-        url = "https://registry.npmjs.org/content-type/-/content-type-1.0.2.tgz";
-        sha1 = "b7d113aee7a8dd27bd21133c4dc2529df1721eed";
+        url = "https://registry.npmjs.org/content-type/-/content-type-1.0.4.tgz";
+        sha512 = "1f4y61wc913jrnga7nny83gzf9l2488q6sl1ry9lbwgh5x5d3va0xcc0xrmjk6gdxl6d4r6rsk800xp5bazhjrx05yx1wpc8c8gg0w4";
       };
     };
     "depd-1.1.1" = {
@@ -1192,13 +1192,13 @@ let
         sha1 = "cab10fb4909e441c82842eafe1ad646c81804410";
       };
     };
-    "statuses-1.3.1" = {
+    "statuses-1.4.0" = {
       name = "statuses";
       packageName = "statuses";
-      version = "1.3.1";
+      version = "1.4.0";
       src = fetchurl {
-        url = "https://registry.npmjs.org/statuses/-/statuses-1.3.1.tgz";
-        sha1 = "faf51b9eb74aaef3b3acf4ad5f61abf24cb7b93e";
+        url = "https://registry.npmjs.org/statuses/-/statuses-1.4.0.tgz";
+        sha512 = "1xxwqpj713rq1idbmp7mj7cj9dl52lazgpd5x8a9g88jawbkn9xpwbgljl7cvnd0jqkll2zpdj5xy63dlis9l2k8vmx1n1gvyv8456f";
       };
     };
     "ee-first-1.1.1" = {
@@ -1237,22 +1237,22 @@ let
         sha1 = "8710d7af0aa626f8fffa1ce00168545263255748";
       };
     };
-    "mime-types-2.1.16" = {
+    "mime-types-2.1.17" = {
       name = "mime-types";
       packageName = "mime-types";
-      version = "2.1.16";
+      version = "2.1.17";
       src = fetchurl {
-        url = "https://registry.npmjs.org/mime-types/-/mime-types-2.1.16.tgz";
-        sha1 = "2b858a52e5ecd516db897ac2be87487830698e23";
+        url = "https://registry.npmjs.org/mime-types/-/mime-types-2.1.17.tgz";
+        sha1 = "09d7a393f03e995a79f8af857b70a9e0ab16557a";
       };
     };
-    "mime-db-1.29.0" = {
+    "mime-db-1.30.0" = {
       name = "mime-db";
       packageName = "mime-db";
-      version = "1.29.0";
+      version = "1.30.0";
       src = fetchurl {
-        url = "https://registry.npmjs.org/mime-db/-/mime-db-1.29.0.tgz";
-        sha1 = "48d26d235589651704ac5916ca06001914266878";
+        url = "https://registry.npmjs.org/mime-db/-/mime-db-1.30.0.tgz";
+        sha1 = "74c643da2dd9d6a45399963465b26d5ca7d71f01";
       };
     };
     "ms-0.7.1" = {
@@ -1264,22 +1264,31 @@ let
         sha1 = "9cd13c03adbff25b65effde7ce864ee952017098";
       };
     };
-    "websocket-driver-0.6.5" = {
+    "websocket-driver-0.7.0" = {
       name = "websocket-driver";
       packageName = "websocket-driver";
-      version = "0.6.5";
+      version = "0.7.0";
       src = fetchurl {
-        url = "https://registry.npmjs.org/websocket-driver/-/websocket-driver-0.6.5.tgz";
-        sha1 = "5cb2556ceb85f4373c6d8238aa691c8454e13a36";
+        url = "https://registry.npmjs.org/websocket-driver/-/websocket-driver-0.7.0.tgz";
+        sha1 = "0caf9d2d755d93aee049d4bdd0d3fe2cca2a24eb";
       };
     };
-    "websocket-extensions-0.1.1" = {
+    "http-parser-js-0.4.9" = {
+      name = "http-parser-js";
+      packageName = "http-parser-js";
+      version = "0.4.9";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/http-parser-js/-/http-parser-js-0.4.9.tgz";
+        sha1 = "ea1a04fb64adff0242e9974f297dd4c3cad271e1";
+      };
+    };
+    "websocket-extensions-0.1.2" = {
       name = "websocket-extensions";
       packageName = "websocket-extensions";
-      version = "0.1.1";
+      version = "0.1.2";
       src = fetchurl {
-        url = "https://registry.npmjs.org/websocket-extensions/-/websocket-extensions-0.1.1.tgz";
-        sha1 = "76899499c184b6ef754377c2dbb0cd6cb55d29e7";
+        url = "https://registry.npmjs.org/websocket-extensions/-/websocket-extensions-0.1.2.tgz";
+        sha1 = "0e18781de629a18308ce1481650f67ffa2693a5d";
       };
     };
   };
@@ -1501,7 +1510,7 @@ let
               })
             ];
           })
-          sources."iconv-lite-0.4.18"
+          sources."iconv-lite-0.4.19"
           (sources."js-yaml-3.5.5" // {
             dependencies = [
               (sources."argparse-1.0.9" // {
@@ -1524,7 +1533,7 @@ let
           })
           (sources."nopt-3.0.6" // {
             dependencies = [
-              sources."abbrev-1.1.0"
+              sources."abbrev-1.1.1"
             ];
           })
           sources."path-is-absolute-1.0.1"
@@ -1667,12 +1676,12 @@ let
               (sources."body-parser-1.14.2" // {
                 dependencies = [
                   sources."bytes-2.2.0"
-                  sources."content-type-1.0.2"
+                  sources."content-type-1.0.4"
                   sources."depd-1.1.1"
                   (sources."http-errors-1.3.1" // {
                     dependencies = [
                       sources."inherits-2.0.3"
-                      sources."statuses-1.3.1"
+                      sources."statuses-1.4.0"
                     ];
                   })
                   sources."iconv-lite-0.4.13"
@@ -1691,9 +1700,9 @@ let
                   (sources."type-is-1.6.15" // {
                     dependencies = [
                       sources."media-typer-0.3.0"
-                      (sources."mime-types-2.1.16" // {
+                      (sources."mime-types-2.1.17" // {
                         dependencies = [
-                          sources."mime-db-1.29.0"
+                          sources."mime-db-1.30.0"
                         ];
                       })
                     ];
@@ -1707,15 +1716,16 @@ let
               })
               (sources."faye-websocket-0.10.0" // {
                 dependencies = [
-                  (sources."websocket-driver-0.6.5" // {
+                  (sources."websocket-driver-0.7.0" // {
                     dependencies = [
-                      sources."websocket-extensions-0.1.1"
+                      sources."http-parser-js-0.4.9"
+                      sources."websocket-extensions-0.1.2"
                     ];
                   })
                 ];
               })
               sources."livereload-js-2.2.2"
-              sources."parseurl-1.3.1"
+              sources."parseurl-1.3.2"
               sources."qs-5.1.0"
             ];
           })
