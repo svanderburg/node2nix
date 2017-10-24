@@ -291,27 +291,27 @@ let
         passAsFile = [ "includeScript" "pinpointDependenciesScript" ];
 
         buildCommand = ''
-          mkdir -p $out/lib
-          cd $out/lib
+          mkdir -p $out/${packageName}
+          cd $out/${packageName}
+
           source $includeScriptPath
+
+          # Create fake package.json to make the npm commands work properly
+          cp ${src}/package.json .
+          chmod 644 package.json
 
           # Pinpoint the versions of all dependencies to the ones that are actually being used
           echo "pinpointing versions of dependencies..."
+          cd ..
           source $pinpointDependenciesScriptPath
-
-          # Create fake package.json to make the npm commands work properly
-          cat > package.json <<EOF
-          {
-              "name": "${packageName}",
-              "version": "${version}"
-          }
-          EOF
+          cd ${packageName}
 
           # Patch the shebangs of the bundled modules to prevent them from
           # calling executables outside the Nix store as much as possible
           patchShebangs .
 
           export HOME=$PWD
+
           npm --registry http://www.example.com --nodedir=${nodeSources} ${npmFlags} ${stdenv.lib.optionalString production "--production"} rebuild
 
           ${stdenv.lib.optionalString (!dontNpmInstall) ''
@@ -321,6 +321,8 @@ let
             npm --registry http://www.example.com --nodedir=${nodeSources} ${npmFlags} ${stdenv.lib.optionalString production "--production"} install
           ''}
 
+          cd ..
+          mv ${packageName} lib
           ln -s $out/lib/node_modules/.bin $out/bin
         '';
       };
