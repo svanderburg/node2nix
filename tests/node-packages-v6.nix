@@ -1234,13 +1234,13 @@ let
         sha1 = "a89fbb220f5ce25ec56e8c4aa8a4fd7b5b0d29fe";
       };
     };
-    "sntp-2.0.2" = {
+    "sntp-2.1.0" = {
       name = "sntp";
       packageName = "sntp";
-      version = "2.0.2";
+      version = "2.1.0";
       src = fetchurl {
-        url = "https://registry.npmjs.org/sntp/-/sntp-2.0.2.tgz";
-        sha1 = "5064110f0af85f7cfdb7d6b67a40028ce52b4b2b";
+        url = "https://registry.npmjs.org/sntp/-/sntp-2.1.0.tgz";
+        sha512 = "0k2smmr24w5hb1cpql6vcgh58vzp4pmh9anf0bgz3arlsgq1mapnlq9fjqr6xs10aq1cmxaw987fwknqi62frax0fvs9bj3q3kmpg8l";
       };
     };
     "boom-5.2.0" = {
@@ -1796,8 +1796,8 @@ in
     version = "0.0.25";
     src = fetchgit {
       url = "git://github.com/svanderburg/nijs";
-      rev = "e2ac831d9699d0bbe0790569dd0ec77294658a94";
-      sha256 = "2e99955cb15d2ce4b476b2f4a6d61d87fdd2c6fb60ee3f03a530b0e672da5210";
+      rev = "4e2738cbff3a43aba9297315ca5120cecf8dae3e";
+      sha256 = "544411ad03bbc67338dc9db90a237d33e2fb20c5778d358ae3f7fe1d1dd90880";
     };
     dependencies = [
       sources."optparse-1.0.5"
@@ -1816,8 +1816,8 @@ in
     version = "4.17.4";
     src = fetchgit {
       url = "git://github.com/lodash/lodash";
-      rev = "e8c87cfc45ceb1a5b6ba578bf7c78b669042275b";
-      sha256 = "5c5184ece0a81628bc1e5a419173e4fb6d666352ff6eb31a32a8a5f26f1e4b40";
+      rev = "7c006f7445f55e137e0172c9856c29d3a79cfbc9";
+      sha256 = "b418f628baa87dd4c9bc0b856b82b6198cb871196fd7906b3ece846a48db7eb0";
     };
     buildInputs = globalBuildInputs;
     meta = {
@@ -1984,7 +1984,7 @@ in
       sources."hoek-4.2.0"
       sources."boom-5.2.0"
       sources."cryptiles-3.1.2"
-      sources."sntp-2.0.2"
+      sources."sntp-2.1.0"
       sources."assert-plus-1.0.0"
       sources."jsprim-1.4.1"
       sources."sshpk-1.13.1"

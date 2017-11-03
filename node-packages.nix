@@ -607,13 +607,13 @@ let
         sha1 = "c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79";
       };
     };
-    "ajv-5.2.5" = {
+    "ajv-5.3.0" = {
       name = "ajv";
       packageName = "ajv";
-      version = "5.2.5";
+      version = "5.3.0";
       src = fetchurl {
-        url = "https://registry.npmjs.org/ajv/-/ajv-5.2.5.tgz";
-        sha1 = "b637234d3e2675eb5f79fc652242a853a48cb49f";
+        url = "https://registry.npmjs.org/ajv/-/ajv-5.3.0.tgz";
+        sha1 = "4414ff74a50879c208ee5fdc826e32c303549eda";
       };
     };
     "har-schema-2.0.0" = {
@@ -643,6 +643,15 @@ let
         sha1 = "96256a3bc975595eb36d82e9929d060d893439ff";
       };
     };
+    "fast-json-stable-stringify-2.0.0" = {
+      name = "fast-json-stable-stringify";
+      packageName = "fast-json-stable-stringify";
+      version = "2.0.0";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/fast-json-stable-stringify/-/fast-json-stable-stringify-2.0.0.tgz";
+        sha1 = "d5142c0caee6b1189f87d3a76111064f86c8bbf2";
+      };
+    };
     "json-schema-traverse-0.3.1" = {
       name = "json-schema-traverse";
       packageName = "json-schema-traverse";
@@ -650,24 +659,6 @@ let
       src = fetchurl {
         url = "https://registry.npmjs.org/json-schema-traverse/-/json-schema-traverse-0.3.1.tgz";
         sha1 = "349a6d44c53a51de89b40805c5d5e59b417d3340";
-      };
-    };
-    "json-stable-stringify-1.0.1" = {
-      name = "json-stable-stringify";
-      packageName = "json-stable-stringify";
-      version = "1.0.1";
-      src = fetchurl {
-        url = "https://registry.npmjs.org/json-stable-stringify/-/json-stable-stringify-1.0.1.tgz";
-        sha1 = "9a759d39c5f2ff503fd5300646ed445f88c4f9af";
-      };
-    };
-    "jsonify-0.0.0" = {
-      name = "jsonify";
-      packageName = "jsonify";
-      version = "0.0.0";
-      src = fetchurl {
-        url = "https://registry.npmjs.org/jsonify/-/jsonify-0.0.0.tgz";
-        sha1 = "2c74b6ee41d93ca51b7b5aaee8f503631d252a73";
       };
     };
     "hoek-4.2.0" = {
@@ -697,13 +688,13 @@ let
         sha1 = "a89fbb220f5ce25ec56e8c4aa8a4fd7b5b0d29fe";
       };
     };
-    "sntp-2.0.2" = {
+    "sntp-2.1.0" = {
       name = "sntp";
       packageName = "sntp";
-      version = "2.0.2";
+      version = "2.1.0";
       src = fetchurl {
-        url = "https://registry.npmjs.org/sntp/-/sntp-2.0.2.tgz";
-        sha1 = "5064110f0af85f7cfdb7d6b67a40028ce52b4b2b";
+        url = "https://registry.npmjs.org/sntp/-/sntp-2.1.0.tgz";
+        sha512 = "0k2smmr24w5hb1cpql6vcgh58vzp4pmh9anf0bgz3arlsgq1mapnlq9fjqr6xs10aq1cmxaw987fwknqi62frax0fvs9bj3q3kmpg8l";
       };
     };
     "boom-5.2.0" = {
@@ -1378,17 +1369,16 @@ let
       sources."uuid-3.1.0"
       sources."delayed-stream-1.0.0"
       sources."asynckit-0.4.0"
-      sources."ajv-5.2.5"
+      sources."ajv-5.3.0"
       sources."har-schema-2.0.0"
       sources."co-4.6.0"
       sources."fast-deep-equal-1.0.0"
+      sources."fast-json-stable-stringify-2.0.0"
       sources."json-schema-traverse-0.3.1"
-      sources."json-stable-stringify-1.0.1"
-      sources."jsonify-0.0.0"
       sources."hoek-4.2.0"
       sources."boom-5.2.0"
       sources."cryptiles-3.1.2"
-      sources."sntp-2.0.2"
+      sources."sntp-2.1.0"
       sources."assert-plus-1.0.0"
       sources."jsprim-1.4.1"
       sources."sshpk-1.13.1"
