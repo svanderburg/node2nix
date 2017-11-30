@@ -14,10 +14,12 @@ var switches = [
     ['-o', '--output FILE', 'Path to a Nix expression representing a registry of Node.js packages (defaults to: node-packages.nix)'],
     ['-c', '--composition FILE', 'Path to a Nix composition expression allowing someone to deploy the generated Nix packages from the command-line (defaults to: default.nix)'],
     ['-e', '--node-env FILE', 'Path to the Nix expression implementing functions that builds NPM packages (defaults to: node-env.nix)'],
+    ['-l', '--lock FILE', 'Path to the package-lock.json file that pinpoints the variants of all dependencies'],
     ['-d', '--development', 'Specifies whether to do a development (non-production) deployment for a package.json deployment (false by default)'],
     ['-5', '--nodejs-5', 'Provides all settings to generate expression for usage with Node.js 5.x (default is: Node.js 4.x)'],
     ['-6', '--nodejs-6', 'Provides all settings to generate expression for usage with Node.js 6.x (default is: Node.js 4.x)'],
     ['-7', '--nodejs-7', 'Provides all settings to generate expression for usage with Node.js 7.x (default is: Node.js 4.x)'],
+    ['-8', '--nodejs-8', 'Provides all settings to generate expression for usage with Node.js 8.x (default is: Node.js 4.x)'],
     ['--supplement-input FILE', 'A supplement package JSON file that are passed as build inputs to all packages defined in the input JSON file'],
     ['--supplement-output FILE', 'Path to a Nix expression representing a supplementing set of Nix packages provided as inputs to a project (defaults to: supplement.nix)'],
     ['--include-peer-dependencies', 'Specifies whether to include peer dependencies. In npm 2.x, this is the default. (false by default)'],
@@ -42,6 +44,7 @@ var compositionNix = "default.nix";
 var supplementJSON;
 var supplementNix = "supplement.nix";
 var nodeEnvNix = "node-env.nix";
+var lockJSON;
 var registryURL = "http://registry.npmjs.org";
 var nodePackage = "nodejs-4_x";
 var noCopyNodeEnv = false;
@@ -81,6 +84,14 @@ parser.on('node-env', function(arg, value) {
     nodeEnvNix = value;
 });
 
+parser.on('lock', function(arg, value) {
+    if(value) {
+        lockJSON = value;
+    } else {
+        lockJSON = "package-lock.json";
+    }
+});
+
 parser.on('development', function(arg, value) {
     production = false;
 });
@@ -98,6 +109,11 @@ parser.on('nodejs-6', function(arg, value) {
 parser.on('nodejs-7', function(arg, value) {
     flatten = true;
     nodePackage = "nodejs-7_x";
+});
+
+parser.on('nodejs-8', function(arg, value) {
+    flatten = true;
+    nodePackage = "nodejs-8_x";
 });
 
 parser.on('include-peer-dependencies', function(arg, value) {
@@ -182,7 +198,7 @@ if(version) {
 }
 
 /* Perform the NPM to Nix conversion */
-node2nix.npmToNix(inputJSON, outputNix, compositionNix, nodeEnvNix, supplementJSON, supplementNix, production, includePeerDependencies, flatten, nodePackage, registryURL, noCopyNodeEnv, function(err) {
+node2nix.npmToNix(inputJSON, outputNix, compositionNix, nodeEnvNix, lockJSON, supplementJSON, supplementNix, production, includePeerDependencies, flatten, nodePackage, registryURL, noCopyNodeEnv, function(err) {
     if(err) {
         process.stderr.write(err + "\n");
         process.exit(1);
