@@ -194,9 +194,55 @@ let
     mv node-* $out
   '';
 
-  # Builds and composes an NPM package including all its dependencies
-  buildNodePackage = { name, packageName, version, dependencies ? [], production ? true, npmFlags ? "", dontNpmInstall ? false, preRebuild ? "", ... }@args:
+  addIntegrityFieldsScript = writeTextFile {
+    name = "addintegrityfields.js";
+    text = ''
+      var fs = require('fs');
+      var path = require('path');
 
+      function augmentDependencies(baseDir, dependencies) {
+          for(var dependencyName in dependencies) {
+              var dependency = dependencies[dependencyName];
+
+              // Open package.json and add _integrity field
+              var packageJSONDir = path.join(baseDir, "node_modules", dependencyName);
+              var packageJSONPath = path.join(packageJSONDir, "package.json");
+
+              if(fs.existsSync(packageJSONPath)) { // Only augment packages that exist. Sometimes we may have prdduction installs in which development dependencies can be ignored
+                  console.log("Adding _integrity field to: "+packageJSONPath);
+                  var packageObj = JSON.parse(fs.readFileSync(packageJSONPath));
+                  packageObj["_integrity"] = dependency.integrity;
+                  fs.writeFileSync(packageJSONPath, JSON.stringify(packageObj, null, 2));
+              }
+
+              // Augment transitive dependencies
+              if(dependency.dependencies !== undefined) {
+                  augmentDependencies(packageJSONDir, dependency.dependencies);
+              }
+          }
+      }
+
+      if(fs.existsSync("./package-lock.json")) {
+          var packageLock = JSON.parse(fs.readFileSync("./package-lock.json"));
+
+          if(packageLock.lockfileVersion !== 1) {
+             process.stderr.write("Sorry, I only understand lock file version 1!\n");
+             process.exit(1);
+          }
+
+          if(packageLock.dependencies !== undefined) {
+              augmentDependencies(".", packageLock.dependencies);
+          }
+      }
+    '';
+  };
+
+  # Builds and composes an NPM package including all its dependencies
+  buildNodePackage = { name, packageName, version, dependencies ? [], production ? true, npmFlags ? "", dontNpmInstall ? false, bypassCache ? false, preRebuild ? "", ... }@args:
+
+    let
+      forceOfflineFlag = if bypassCache then "--offline" else "--registry http://www.example.com";
+    in
     stdenv.lib.makeOverridable stdenv.mkDerivation (builtins.removeAttrs args [ "dependencies" ] // {
       name = "node-${name}-${version}";
       buildInputs = [ tarWrapper python nodejs ] ++ stdenv.lib.optional (stdenv.isLinux) utillinux ++ args.buildInputs or [];
@@ -242,14 +288,19 @@ let
         export HOME=$TMPDIR
         cd "${packageName}"
         runHook preRebuild
-        npm --registry http://www.example.com --nodedir=${nodeSources} ${npmFlags} ${stdenv.lib.optionalString production "--production"} rebuild
+
+        ${stdenv.lib.optionalString bypassCache ''
+          node ${addIntegrityFieldsScript}
+        ''}
+
+        npm ${forceOfflineFlag} --nodedir=${nodeSources} ${npmFlags} ${stdenv.lib.optionalString production "--production"} rebuild
 
         if [ "$dontNpmInstall" != "1" ]
         then
             # NPM tries to download packages even when they already exist if npm-shrinkwrap is used.
             rm -f npm-shrinkwrap.json
 
-            npm --registry http://www.example.com --nodedir=${nodeSources} ${npmFlags} ${stdenv.lib.optionalString production "--production"} install
+            npm ${forceOfflineFlag} --nodedir=${nodeSources} ${npmFlags} ${stdenv.lib.optionalString production "--production"} install
         fi
 
         # Create symlink to the deployed executable folder, if applicable
@@ -278,8 +329,10 @@ let
     });
 
   # Builds a development shell
-  buildNodeShell = { name, packageName, version, src, dependencies ? [], production ? true, npmFlags ? "", dontNpmInstall ? false, ... }@args:
+  buildNodeShell = { name, packageName, version, src, dependencies ? [], production ? true, npmFlags ? "", dontNpmInstall ? false, bypassCache ? false, ... }@args:
     let
+      forceOfflineFlag = if bypassCache then "--offline" else "--registry http://www.example.com";
+
       nodeDependencies = stdenv.mkDerivation {
         name = "node-dependencies-${name}-${version}";
 
@@ -299,6 +352,12 @@ let
           # Create fake package.json to make the npm commands work properly
           cp ${src}/package.json .
           chmod 644 package.json
+          ${stdenv.lib.optionalString bypassCache ''
+            if [ -f ${src}/package-lock.json ]
+            then
+              cp ${src}/package-lock.json .
+            fi
+          ''}
 
           # Pinpoint the versions of all dependencies to the ones that are actually being used
           echo "pinpointing versions of dependencies..."
@@ -312,13 +371,17 @@ let
 
           export HOME=$PWD
 
-          npm --registry http://www.example.com --nodedir=${nodeSources} ${npmFlags} ${stdenv.lib.optionalString production "--production"} rebuild
+          ${stdenv.lib.optionalString bypassCache ''
+            node ${addIntegrityFieldsScript}
+          ''}
+
+          npm ${forceOfflineFlag} --nodedir=${nodeSources} ${npmFlags} ${stdenv.lib.optionalString production "--production"} rebuild
 
           ${stdenv.lib.optionalString (!dontNpmInstall) ''
             # NPM tries to download packages even when they already exist if npm-shrinkwrap is used.
             rm -f npm-shrinkwrap.json
 
-            npm --registry http://www.example.com --nodedir=${nodeSources} ${npmFlags} ${stdenv.lib.optionalString production "--production"} install
+            npm ${forceOfflineFlag} --nodedir=${nodeSources} ${npmFlags} ${stdenv.lib.optionalString production "--production"} install
           ''}
 
           cd ..

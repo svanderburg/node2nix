@@ -26,6 +26,7 @@ var switches = [
     ['--flatten', 'Simulate npm 3.x flat dependency structure. (false by default)'],
     ['--pkg-name NAME', 'Specifies the name of the Node.js package to use from Nixpkgs (defaults to: nodejs)'],
     ['--registry NAME', 'URL referring to the NPM packages registry. It defaults to the official NPM one, but can be overridden to support private registries'],
+    ['--bypass-cache', 'Specifies that package builds need to bypass the content addressable cache (required for NPM 5.x)'],
     ['--no-copy-node-env', 'Do not create a copy of the Nix expression that builds NPM packages']
 ];
 
@@ -48,6 +49,7 @@ var lockJSON;
 var registryURL = "http://registry.npmjs.org";
 var nodePackage = "nodejs-4_x";
 var noCopyNodeEnv = false;
+var bypassCache = false;
 var executable;
 
 /* Define process rules for option parameters */
@@ -114,6 +116,7 @@ parser.on('nodejs-7', function(arg, value) {
 parser.on('nodejs-8', function(arg, value) {
     flatten = true;
     nodePackage = "nodejs-8_x";
+    bypassCache = true;
 });
 
 parser.on('include-peer-dependencies', function(arg, value) {
@@ -130,6 +133,10 @@ parser.on('pkg-name', function(arg, value) {
 
 parser.on('registry', function(arg, value) {
     registryURL = value;
+});
+
+parser.on('bypass-cache', function(arg, value) {
+    bypassCache = true;
 });
 
 parser.on('no-copy-node-env', function(arg, value) {
@@ -198,7 +205,7 @@ if(version) {
 }
 
 /* Perform the NPM to Nix conversion */
-node2nix.npmToNix(inputJSON, outputNix, compositionNix, nodeEnvNix, lockJSON, supplementJSON, supplementNix, production, includePeerDependencies, flatten, nodePackage, registryURL, noCopyNodeEnv, function(err) {
+node2nix.npmToNix(inputJSON, outputNix, compositionNix, nodeEnvNix, lockJSON, supplementJSON, supplementNix, production, includePeerDependencies, flatten, nodePackage, registryURL, noCopyNodeEnv, bypassCache, function(err) {
     if(err) {
         process.stderr.write(err + "\n");
         process.exit(1);
