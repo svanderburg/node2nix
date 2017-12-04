@@ -194,6 +194,7 @@ let
     mv node-* $out
   '';
 
+  # Script that adds _integrity fields to all package.json files to prevent NPM from consulting the cache (that is empty)
   addIntegrityFieldsScript = writeTextFile {
     name = "addintegrityfields.js";
     text = ''
@@ -241,6 +242,54 @@ let
               augmentDependencies(".", packageLock.dependencies);
           }
       }
+    '';
+  };
+
+  # Reconstructs a package-lock file from the node_modules/ folder structure and package.json files with dummy sha1 hashes
+  reconstructPackageLock = writeTextFile {
+    name = "addintegrityfields.js";
+    text = ''
+      var fs = require('fs');
+      var path = require('path');
+
+      var packageObj = JSON.parse(fs.readFileSync("package.json"));
+
+      var lockObj = {
+          name: packageObj.name,
+          version: packageObj.version,
+          lockfileVersion: 1,
+          requires: true,
+          dependencies: {}
+      };
+
+      function processDependencies(dir, dependencies) {
+          if(fs.existsSync(dir)) {
+              var files = fs.readdirSync(dir);
+              var dirlist = [];
+
+              files.forEach(function(entry) {
+                  var filePath = path.join(dir, entry);
+                  var stats = fs.statSync(filePath);
+
+                  if(stats.isDirectory()) {
+                      var packageJSON = path.join(filePath, "package.json");
+                      if(fs.existsSync(packageJSON)) {
+                          var packageObj = JSON.parse(fs.readFileSync(packageJSON));
+                          dependencies[packageObj.name] = {
+                              version: packageObj.version,
+                              integrity: "sha1-000000000000000000000000000=",
+                              dependencies: {}
+                          };
+                          processDependencies(path.join(filePath, "node_modules"), dependencies[packageObj.name].dependencies);
+                      }
+                  }
+              });
+          }
+      }
+
+      processDependencies("node_modules", lockObj.dependencies);
+
+      fs.writeFileSync("package-lock.json", JSON.stringify(lockObj, null, 2));
     '';
   };
 
@@ -297,6 +346,12 @@ let
         runHook preRebuild
 
         ${stdenv.lib.optionalString bypassCache ''
+          if [ ! -f package-lock.json ]
+          then
+              echo "No package-lock.json file found, reconstructing..."
+              node ${reconstructPackageLock}
+          fi
+
           node ${addIntegrityFieldsScript}
         ''}
 
@@ -379,6 +434,12 @@ let
           export HOME=$PWD
 
           ${stdenv.lib.optionalString bypassCache ''
+            if [ ! -f package-lock.json ]
+            then
+                echo "No package-lock.json file found, reconstructing..."
+                node ${reconstructPackageLock}
+            fi
+
             node ${addIntegrityFieldsScript}
           ''}
 
