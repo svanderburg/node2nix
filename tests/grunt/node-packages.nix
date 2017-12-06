@@ -1282,13 +1282,13 @@ let
         sha1 = "ea1a04fb64adff0242e9974f297dd4c3cad271e1";
       };
     };
-    "websocket-extensions-0.1.2" = {
+    "websocket-extensions-0.1.3" = {
       name = "websocket-extensions";
       packageName = "websocket-extensions";
-      version = "0.1.2";
+      version = "0.1.3";
       src = fetchurl {
-        url = "https://registry.npmjs.org/websocket-extensions/-/websocket-extensions-0.1.2.tgz";
-        sha1 = "0e18781de629a18308ce1481650f67ffa2693a5d";
+        url = "https://registry.npmjs.org/websocket-extensions/-/websocket-extensions-0.1.3.tgz";
+        sha512 = "0d1n4yv45ibxf72hj7qka3j7v53dwn58savfiyvsppqhhrgg3g648ykk5v7fpb53hz85kj87m4f45r7d5iazx4yqgs381z6qnfd98cy";
       };
     };
   };
@@ -1719,7 +1719,7 @@ let
                   (sources."websocket-driver-0.7.0" // {
                     dependencies = [
                       sources."http-parser-js-0.4.9"
-                      sources."websocket-extensions-0.1.2"
+                      sources."websocket-extensions-0.1.3"
                     ];
                   })
                 ];
@@ -1736,6 +1736,7 @@ let
     meta = {
     };
     production = false;
+    bypassCache = false;
   };
 in
 {

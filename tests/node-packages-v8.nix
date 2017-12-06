@@ -1516,7 +1516,7 @@ in
       license = "MIT";
     };
     production = true;
-    bypassCache = false;
+    bypassCache = true;
   };
   "nijs-0.0.25" = nodeEnv.buildNodePackage {
     name = "nijs";
@@ -1537,7 +1537,7 @@ in
       license = "MIT";
     };
     production = true;
-    bypassCache = false;
+    bypassCache = true;
   };
   "commander-2.9.x" = nodeEnv.buildNodePackage {
     name = "commander";
@@ -1557,7 +1557,7 @@ in
       license = "MIT";
     };
     production = true;
-    bypassCache = false;
+    bypassCache = true;
   };
   underscore = nodeEnv.buildNodePackage {
     name = "underscore";
@@ -1574,7 +1574,7 @@ in
       license = "MIT";
     };
     production = true;
-    bypassCache = false;
+    bypassCache = true;
   };
   "semver-http://registry.npmjs.org/semver/-/semver-5.0.3.tgz" = nodeEnv.buildNodePackage {
     name = "semver";
@@ -1591,7 +1591,7 @@ in
       license = "ISC";
     };
     production = true;
-    bypassCache = false;
+    bypassCache = true;
   };
   "express-git+https://github.com/strongloop/express.git" = nodeEnv.buildNodePackage {
     name = "express";
@@ -1661,7 +1661,7 @@ in
       license = "MIT";
     };
     production = true;
-    bypassCache = false;
+    bypassCache = true;
   };
   "express-git+https://github.com/strongloop/express.git#ef7ad68" = nodeEnv.buildNodePackage {
     name = "express";
@@ -1726,7 +1726,7 @@ in
       license = "MIT";
     };
     production = true;
-    bypassCache = false;
+    bypassCache = true;
   };
   "express-git+https://github.com/strongloop/express.git#master" = nodeEnv.buildNodePackage {
     name = "express";
@@ -1796,7 +1796,7 @@ in
       license = "MIT";
     };
     production = true;
-    bypassCache = false;
+    bypassCache = true;
   };
   "nijs-svanderburg/nijs" = nodeEnv.buildNodePackage {
     name = "nijs";
@@ -1817,7 +1817,7 @@ in
       license = "MIT";
     };
     production = true;
-    bypassCache = false;
+    bypassCache = true;
   };
   "lodash-github:lodash/lodash" = nodeEnv.buildNodePackage {
     name = "lodash";
@@ -1833,7 +1833,7 @@ in
       license = "MIT";
     };
     production = true;
-    bypassCache = false;
+    bypassCache = true;
   };
   "testb-./testb" = nodeEnv.buildNodePackage {
     name = "testb";
@@ -1847,7 +1847,7 @@ in
     meta = {
     };
     production = true;
-    bypassCache = false;
+    bypassCache = true;
   };
   es5-ext = nodeEnv.buildNodePackage {
     name = "es5-ext";
@@ -1870,7 +1870,7 @@ in
       license = "MIT";
     };
     production = true;
-    bypassCache = false;
+    bypassCache = true;
   };
   grunt-cli = nodeEnv.buildNodePackage {
     name = "grunt-cli";
@@ -1904,7 +1904,7 @@ in
       license = "MIT";
     };
     production = true;
-    bypassCache = false;
+    bypassCache = true;
   };
   bower = nodeEnv.buildNodePackage {
     name = "bower";
@@ -1921,7 +1921,7 @@ in
       license = "MIT";
     };
     production = true;
-    bypassCache = false;
+    bypassCache = true;
   };
   coffee-script = nodeEnv.buildNodePackage {
     name = "coffee-script";
@@ -1938,7 +1938,7 @@ in
       license = "MIT";
     };
     production = true;
-    bypassCache = false;
+    bypassCache = true;
   };
   floomatic = nodeEnv.buildNodePackage {
     name = "floomatic";
@@ -2025,7 +2025,7 @@ in
       license = "Apache-2.0";
     };
     production = true;
-    bypassCache = false;
+    bypassCache = true;
   };
   "@sindresorhus/df" = nodeEnv.buildNodePackage {
     name = "_at_sindresorhus_slash_df";
@@ -2055,7 +2055,7 @@ in
       license = "MIT";
     };
     production = true;
-    bypassCache = false;
+    bypassCache = true;
   };
   "esprima-fb-~3001.0001.0000-dev-harmony-fb" = nodeEnv.buildNodePackage {
     name = "esprima-fb";
@@ -2071,6 +2071,6 @@ in
       homepage = https://github.com/facebook/esprima/tree/fb-harmony;
     };
     production = true;
-    bypassCache = false;
+    bypassCache = true;
   };
 }

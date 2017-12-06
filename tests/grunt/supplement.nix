@@ -923,5 +923,6 @@ in
       license = "MIT";
     };
     production = false;
+    bypassCache = false;
   };
 }

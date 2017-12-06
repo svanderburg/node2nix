@@ -721,13 +721,13 @@ let
         sha1 = "754bb5bfe55451da69a58b94d45f4c5b0462d58f";
       };
     };
-    "es5-ext-0.10.35" = {
+    "es5-ext-0.10.37" = {
       name = "es5-ext";
       packageName = "es5-ext";
-      version = "0.10.35";
+      version = "0.10.37";
       src = fetchurl {
-        url = "https://registry.npmjs.org/es5-ext/-/es5-ext-0.10.35.tgz";
-        sha1 = "18ee858ce6a3c45c7d79e91c15fcca9ec568494f";
+        url = "https://registry.npmjs.org/es5-ext/-/es5-ext-0.10.37.tgz";
+        sha1 = "0ee741d148b80069ba27d020393756af257defc3";
       };
     };
     "findup-sync-0.3.0" = {
@@ -919,13 +919,13 @@ let
         sha512 = "0by1djkn836sqd9pk2c777wcjvp34qbk1plx7s4lmykljrblpjc64dvn6ni2vyxsbyk33wnl6avym8vgw0ggr4226xakck8mw7y07cm";
       };
     };
-    "fsevents-1.1.2" = {
+    "fsevents-1.1.3" = {
       name = "fsevents";
       packageName = "fsevents";
-      version = "1.1.2";
+      version = "1.1.3";
       src = fetchurl {
-        url = "https://registry.npmjs.org/fsevents/-/fsevents-1.1.2.tgz";
-        sha512 = "25k3z64r4fhzjs1crh981lkkvkrhn2xv67k7y00zpnpsl571y5apg0r0kanddirms8kxf2xgf4yx9n2hzs9ml3v3p9qcnqhkh9khzja";
+        url = "https://registry.npmjs.org/fsevents/-/fsevents-1.1.3.tgz";
+        sha512 = "3jw51f4iayxvp9wfxczk1xgcvhsydhlgah64jmpl0mqiii2h8i5pp0lrqac5xn7296gxqrvy4lgm4k4hkifk8gipgqxd68x764gp2jq";
       };
     };
     "native-diff-match-patch-0.3.1" = {
@@ -1162,13 +1162,13 @@ let
         sha1 = "c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79";
       };
     };
-    "ajv-5.3.0" = {
+    "ajv-5.5.1" = {
       name = "ajv";
       packageName = "ajv";
-      version = "5.3.0";
+      version = "5.5.1";
       src = fetchurl {
-        url = "https://registry.npmjs.org/ajv/-/ajv-5.3.0.tgz";
-        sha1 = "4414ff74a50879c208ee5fdc826e32c303549eda";
+        url = "https://registry.npmjs.org/ajv/-/ajv-5.5.1.tgz";
+        sha1 = "b38bb8876d9e86bee994956a04e721e88b248eb2";
       };
     };
     "har-schema-2.0.0" = {
@@ -1396,13 +1396,13 @@ let
         sha1 = "c0d5a63b2718800ad8e1eb0fa5269c84dd41845e";
       };
     };
-    "nan-2.7.0" = {
+    "nan-2.8.0" = {
       name = "nan";
       packageName = "nan";
-      version = "2.7.0";
+      version = "2.8.0";
       src = fetchurl {
-        url = "https://registry.npmjs.org/nan/-/nan-2.7.0.tgz";
-        sha1 = "d95bf721ec877e08db276ed3fc6eb78f9083ad46";
+        url = "https://registry.npmjs.org/nan/-/nan-2.8.0.tgz";
+        sha1 = "ed715f3fe9de02b57a5e6252d90a96675e1f085a";
       };
     };
     "execa-0.2.2" = {
@@ -1510,10 +1510,10 @@ in
   async = nodeEnv.buildNodePackage {
     name = "async";
     packageName = "async";
-    version = "2.5.0";
+    version = "2.6.0";
     src = fetchurl {
-      url = "https://registry.npmjs.org/async/-/async-2.5.0.tgz";
-      sha512 = "1ijrwmifg76a8wwhhfqxg23kd0rsjhzklwvj2czvqxs2k25ii6p3y6s3vhbcc5hnr87b0gfc4nb54b8bph2hn9c6z1f6nldjw04ksbv";
+      url = "https://registry.npmjs.org/async/-/async-2.6.0.tgz";
+      sha512 = "0zp4b5788400npi1ixjry5x3a4m21c8pnknk8v731rgnwnjbp5ijmfcf5ppmn1ap4a04md1s9dr8n9ygdvrmiai590v0k6dby1wc1y4";
     };
     dependencies = [
       sources."lodash-4.17.4"
@@ -1521,10 +1521,11 @@ in
     buildInputs = globalBuildInputs;
     meta = {
       description = "Higher-order functions and common patterns for asynchronous code";
-      homepage = "https://github.com/caolan/async#readme";
+      homepage = https://caolan.github.io/async/;
       license = "MIT";
     };
     production = true;
+    bypassCache = false;
   };
   "nijs-0.0.25" = nodeEnv.buildNodePackage {
     name = "nijs";
@@ -1545,6 +1546,7 @@ in
       license = "MIT";
     };
     production = true;
+    bypassCache = false;
   };
   "commander-2.9.x" = nodeEnv.buildNodePackage {
     name = "commander";
@@ -1564,6 +1566,7 @@ in
       license = "MIT";
     };
     production = true;
+    bypassCache = false;
   };
   underscore = nodeEnv.buildNodePackage {
     name = "underscore";
@@ -1580,6 +1583,7 @@ in
       license = "MIT";
     };
     production = true;
+    bypassCache = false;
   };
   "semver-http://registry.npmjs.org/semver/-/semver-5.0.3.tgz" = nodeEnv.buildNodePackage {
     name = "semver";
@@ -1596,6 +1600,7 @@ in
       license = "ISC";
     };
     production = true;
+    bypassCache = false;
   };
   "express-git+https://github.com/strongloop/express.git" = nodeEnv.buildNodePackage {
     name = "express";
@@ -1708,6 +1713,7 @@ in
       license = "MIT";
     };
     production = true;
+    bypassCache = false;
   };
   "express-git+https://github.com/strongloop/express.git#ef7ad68" = nodeEnv.buildNodePackage {
     name = "express";
@@ -1817,6 +1823,7 @@ in
       license = "MIT";
     };
     production = true;
+    bypassCache = false;
   };
   "express-git+https://github.com/strongloop/express.git#master" = nodeEnv.buildNodePackage {
     name = "express";
@@ -1929,6 +1936,7 @@ in
       license = "MIT";
     };
     production = true;
+    bypassCache = false;
   };
   "nijs-svanderburg/nijs" = nodeEnv.buildNodePackage {
     name = "nijs";
@@ -1949,6 +1957,7 @@ in
       license = "MIT";
     };
     production = true;
+    bypassCache = false;
   };
   "lodash-github:lodash/lodash" = nodeEnv.buildNodePackage {
     name = "lodash";
@@ -1956,14 +1965,15 @@ in
     version = "4.17.4";
     src = fetchgit {
       url = "git://github.com/lodash/lodash";
-      rev = "7c006f7445f55e137e0172c9856c29d3a79cfbc9";
-      sha256 = "b418f628baa87dd4c9bc0b856b82b6198cb871196fd7906b3ece846a48db7eb0";
+      rev = "b2ea6b1cd251796dcb5f9700c4911a7b6223920b";
+      sha256 = "88f9d0a80bae83e607292889335a45051d2f5b888903070de9e321a65f4bd341";
     };
     buildInputs = globalBuildInputs;
     meta = {
       license = "MIT";
     };
     production = true;
+    bypassCache = false;
   };
   "testb-./testb" = nodeEnv.buildNodePackage {
     name = "testb";
@@ -1977,26 +1987,27 @@ in
     meta = {
     };
     production = true;
+    bypassCache = false;
   };
   es5-ext = nodeEnv.buildNodePackage {
     name = "es5-ext";
     packageName = "es5-ext";
-    version = "0.10.35";
+    version = "0.10.37";
     src = fetchurl {
-      url = "https://registry.npmjs.org/es5-ext/-/es5-ext-0.10.35.tgz";
-      sha1 = "18ee858ce6a3c45c7d79e91c15fcca9ec568494f";
+      url = "https://registry.npmjs.org/es5-ext/-/es5-ext-0.10.37.tgz";
+      sha1 = "0ee741d148b80069ba27d020393756af257defc3";
     };
     dependencies = [
       (sources."es6-iterator-2.0.3" // {
         dependencies = [
           sources."d-1.0.0"
-          sources."es5-ext-0.10.35"
+          sources."es5-ext-0.10.37"
         ];
       })
       (sources."es6-symbol-3.1.1" // {
         dependencies = [
           sources."d-1.0.0"
-          sources."es5-ext-0.10.35"
+          sources."es5-ext-0.10.37"
         ];
       })
     ];
@@ -2007,6 +2018,7 @@ in
       license = "MIT";
     };
     production = true;
+    bypassCache = false;
   };
   grunt-cli = nodeEnv.buildNodePackage {
     name = "grunt-cli";
@@ -2062,6 +2074,7 @@ in
       license = "MIT";
     };
     production = true;
+    bypassCache = false;
   };
   bower = nodeEnv.buildNodePackage {
     name = "bower";
@@ -2078,6 +2091,7 @@ in
       license = "MIT";
     };
     production = true;
+    bypassCache = false;
   };
   coffee-script = nodeEnv.buildNodePackage {
     name = "coffee-script";
@@ -2094,6 +2108,7 @@ in
       license = "MIT";
     };
     production = true;
+    bypassCache = false;
   };
   floomatic = nodeEnv.buildNodePackage {
     name = "floomatic";
@@ -2153,7 +2168,7 @@ in
           })
           (sources."har-validator-5.0.3" // {
             dependencies = [
-              (sources."ajv-5.3.0" // {
+              (sources."ajv-5.5.1" // {
                 dependencies = [
                   sources."co-4.6.0"
                   sources."fast-deep-equal-1.0.0"
@@ -2225,9 +2240,9 @@ in
           sources."uuid-3.1.0"
         ];
       })
-      (sources."fsevents-1.1.2" // {
+      (sources."fsevents-1.1.3" // {
         dependencies = [
-          sources."nan-2.7.0"
+          sources."nan-2.8.0"
         ];
       })
       sources."native-diff-match-patch-0.3.1"
@@ -2239,6 +2254,7 @@ in
       license = "Apache-2.0";
     };
     production = true;
+    bypassCache = false;
   };
   "@sindresorhus/df" = nodeEnv.buildNodePackage {
     name = "_at_sindresorhus_slash_df";
@@ -2280,6 +2296,7 @@ in
       license = "MIT";
     };
     production = true;
+    bypassCache = false;
   };
   "esprima-fb-~3001.0001.0000-dev-harmony-fb" = nodeEnv.buildNodePackage {
     name = "esprima-fb";
@@ -2295,5 +2312,6 @@ in
       homepage = https://github.com/facebook/esprima/tree/fb-harmony;
     };
     production = true;
+    bypassCache = false;
   };
 }

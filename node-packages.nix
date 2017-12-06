@@ -607,13 +607,13 @@ let
         sha1 = "c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79";
       };
     };
-    "ajv-5.3.0" = {
+    "ajv-5.5.1" = {
       name = "ajv";
       packageName = "ajv";
-      version = "5.3.0";
+      version = "5.5.1";
       src = fetchurl {
-        url = "https://registry.npmjs.org/ajv/-/ajv-5.3.0.tgz";
-        sha1 = "4414ff74a50879c208ee5fdc826e32c303549eda";
+        url = "https://registry.npmjs.org/ajv/-/ajv-5.5.1.tgz";
+        sha1 = "b38bb8876d9e86bee994956a04e721e88b248eb2";
       };
     };
     "har-schema-2.0.0" = {
@@ -994,13 +994,13 @@ let
         sha1 = "aba09747dfbe4c3e70e766a6e41586e1859fc6f2";
       };
     };
-    "ini-1.3.4" = {
+    "ini-1.3.5" = {
       name = "ini";
       packageName = "ini";
-      version = "1.3.4";
+      version = "1.3.5";
       src = fetchurl {
-        url = "https://registry.npmjs.org/ini/-/ini-1.3.4.tgz";
-        sha1 = "0537cb79daf59b59a1a517dff706c86ec039162e";
+        url = "https://registry.npmjs.org/ini/-/ini-1.3.5.tgz";
+        sha512 = "1rjbvf1rg5ywhnba08sgagn2qf23lab330qrqmh7d891zap3xpxcyfyj1cblpf0f0rypglcfacybzyrpd4996aa1mbc820awa33k5j5";
       };
     };
     "mkdirp-0.5.1" = {
@@ -1116,7 +1116,7 @@ let
       packageName = "fs-extra";
       version = "0.6.4";
       src = fetchurl {
-        url = "https://registry.npmjs.org/fs-extra/-/fs-extra-0.6.4.tgz";
+        url = "http://registry.npmjs.org/fs-extra/-/fs-extra-0.6.4.tgz";
         sha1 = "f46f0c75b7841f8d200b3348cd4d691d5a099d15";
       };
     };
@@ -1219,13 +1219,13 @@ let
         sha1 = "59c128e0dc5ce410201151194eeb9cbf858650f6";
       };
     };
-    "marked-0.3.6" = {
+    "marked-0.3.7" = {
       name = "marked";
       packageName = "marked";
-      version = "0.3.6";
+      version = "0.3.7";
       src = fetchurl {
-        url = "https://registry.npmjs.org/marked/-/marked-0.3.6.tgz";
-        sha1 = "b2c6c618fccece4ef86c4fc6cb8a7cbf5aeda8d7";
+        url = "https://registry.npmjs.org/marked/-/marked-0.3.7.tgz";
+        sha512 = "2yx1jx6vzjxzhhq2qcsrh0300d452bdl8pvsj0w1ajsxhcqvsba8mmx1lawxx025mzqbvwp5pvay8sff0pg3vbid5whlqdmlgi0y4fc";
       };
     };
     "requizzle-0.2.1" = {
@@ -1369,7 +1369,7 @@ let
       sources."uuid-3.1.0"
       sources."delayed-stream-1.0.0"
       sources."asynckit-0.4.0"
-      sources."ajv-5.3.0"
+      sources."ajv-5.5.1"
       sources."har-schema-2.0.0"
       sources."co-4.6.0"
       sources."fast-deep-equal-1.0.0"
@@ -1411,7 +1411,7 @@ let
       sources."number-is-nan-1.0.1"
       sources."ansi-regex-2.1.1"
       sources."config-chain-1.1.11"
-      sources."ini-1.3.4"
+      sources."ini-1.3.5"
       sources."mkdirp-0.5.1"
       sources."nopt-3.0.6"
       sources."uid-number-0.0.5"
@@ -1433,7 +1433,7 @@ let
       sources."escape-string-regexp-1.0.5"
       sources."js2xmlparser-3.0.0"
       sources."klaw-2.0.0"
-      sources."marked-0.3.6"
+      sources."marked-0.3.7"
       sources."requizzle-0.2.1"
       sources."strip-json-comments-2.0.1"
       sources."taffydb-2.6.2"
@@ -1448,6 +1448,7 @@ let
       license = "MIT";
     };
     production = false;
+    bypassCache = false;
   };
 in
 {
