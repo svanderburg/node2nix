@@ -262,25 +262,40 @@ let
           dependencies: {}
       };
 
+      function augmentPackageJSON(filePath, dependencies) {
+          var packageJSON = path.join(filePath, "package.json");
+          if(fs.existsSync(packageJSON)) {
+              var packageObj = JSON.parse(fs.readFileSync(packageJSON));
+              dependencies[packageObj.name] = {
+                  version: packageObj.version,
+                  integrity: "sha1-000000000000000000000000000=",
+                  dependencies: {}
+              };
+              processDependencies(path.join(filePath, "node_modules"), dependencies[packageObj.name].dependencies);
+          }
+      }
+
       function processDependencies(dir, dependencies) {
           if(fs.existsSync(dir)) {
               var files = fs.readdirSync(dir);
-              var dirlist = [];
 
               files.forEach(function(entry) {
                   var filePath = path.join(dir, entry);
                   var stats = fs.statSync(filePath);
 
                   if(stats.isDirectory()) {
-                      var packageJSON = path.join(filePath, "package.json");
-                      if(fs.existsSync(packageJSON)) {
-                          var packageObj = JSON.parse(fs.readFileSync(packageJSON));
-                          dependencies[packageObj.name] = {
-                              version: packageObj.version,
-                              integrity: "sha1-000000000000000000000000000=",
-                              dependencies: {}
-                          };
-                          processDependencies(path.join(filePath, "node_modules"), dependencies[packageObj.name].dependencies);
+                      if(entry.substr(0, 1) == "@") {
+                          // When we encounter a namespace folder, augment all packages belonging to the scope
+                          var pkgFiles = fs.readdirSync(filePath);
+
+                          pkgFiles.forEach(function(entry) {
+                              if(stats.isDirectory()) {
+                                  var pkgFilePath = path.join(filePath, entry);
+                                  augmentPackageJSON(pkgFilePath, dependencies);
+                              }
+                          });
+                      } else {
+                          augmentPackageJSON(filePath, dependencies);
                       }
                   }
               });

@@ -17,6 +17,7 @@ Table of Contents
     - [Deploying a development environment of a Node.js development project](#deploying-a-development-environment-of-a-nodejs-development-project)
     - [Deploying a collection of NPM packages from the NPM registry](#deploying-a-collection-of-npm-packages-from-the-npm-registry)
     - [Generating packages for Node.js 6.x](#generating-packages-for-nodejs-6x)
+    - [Generating packages for Node.js 8.x](#generating-packages-for-nodejs-8x)
 - [Advanced options](#advanced-options)
     - [Development mode](#development-mode)
     - [Specifying paths](#specifying-paths)
@@ -213,9 +214,8 @@ $ nix-env -f default.nix -iA '"nijs-0.0.18"'
 Generating packages for Node.js 6.x
 -----------------------------------
 By default, `node2nix` generates Nix expressions that should be used in
-conjuction with Node.js 4.x, the current LTS release. Node.js
-6.x contains the newer npm 3.x, that stores dependencies in a more flat
-structure.
+conjuction with Node.js 4.x. Node.js 6.x contains the newer npm 3.x, that stores
+dependencies in a more flat structure.
 
 The flat structure can be simulated by adding the `--flatten` parameter.
 Additionally, to enable all flags to make generation for Node.js 6.x work, add
@@ -231,6 +231,36 @@ By running the following command, Nix deploys NiJS version 0.0.18 using Node.js
 
 ```bash
 $ nix-env -f default.nix -iA '"nijs-0.0.18"'
+```
+
+Generating packages for Node.js 8.x
+-----------------------------------
+Node.js 8.x includes npm 5.x that supports lock files pinpointing the exact
+versions used of all dependencies and transitive dependencies, and a content
+addressable cache.
+
+Unfortunately, in a Nix builder environment the cache is empty and NPM does not
+seem to trust dependencies that are already stored in the bundled
+`node_modules/` folder, because they lack the meta data that can be used for
+integrity checks.
+
+We can bypass the cache by augmenting package configuration files with these
+mandatory meta data fields, by providing the `--bypass-cache` parameter.
+
+Additionally, to make the entire generation for Node.js 8.x work, you can
+provide the `-8` parameter:
+
+```bash
+$ node2nix -8 -i node-package.json
+```
+
+Some Node.js development projects may include a `package-lock.json` file
+pinpointing the exact versions of the dependencies and transitive dependencies.
+`node2nix` can use this file to generate a Nix expression from it so that Nix
+uses the exact same packages:
+
+```bash
+$ node2nix -8 -l package-lock.json
 ```
 
 Advanced options
