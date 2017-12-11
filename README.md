@@ -31,6 +31,12 @@ Table of Contents
 
 <!-- markdown-toc end -->
 
+Prerequisites
+=============
+To be able to convert Git dependencies, the presence of the `nix-hash`
+command-line utility (that is included with the
+[Nix package manager](http://nixos/nix)) is required.
+
 Installation
 ============
 There are two ways this package can installed.
