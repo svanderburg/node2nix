@@ -1,6 +1,6 @@
 {
   "name": "node2nix",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Generate Nix expressions to build NPM packages",
   "homepage": "https://github.com/svanderburg/node2nix",
   "author": {
