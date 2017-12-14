@@ -16,9 +16,7 @@ var switches = [
     ['-e', '--node-env FILE', 'Path to the Nix expression implementing functions that builds NPM packages (defaults to: node-env.nix)'],
     ['-l', '--lock FILE', 'Path to the package-lock.json file that pinpoints the variants of all dependencies'],
     ['-d', '--development', 'Specifies whether to do a development (non-production) deployment for a package.json deployment (false by default)'],
-    ['-5', '--nodejs-5', 'Provides all settings to generate expression for usage with Node.js 5.x (default is: Node.js 4.x)'],
     ['-6', '--nodejs-6', 'Provides all settings to generate expression for usage with Node.js 6.x (default is: Node.js 4.x)'],
-    ['-7', '--nodejs-7', 'Provides all settings to generate expression for usage with Node.js 7.x (default is: Node.js 4.x)'],
     ['-8', '--nodejs-8', 'Provides all settings to generate expression for usage with Node.js 8.x (default is: Node.js 4.x)'],
     ['--supplement-input FILE', 'A supplement package JSON file that are passed as build inputs to all packages defined in the input JSON file'],
     ['--supplement-output FILE', 'Path to a Nix expression representing a supplementing set of Nix packages provided as inputs to a project (defaults to: supplement.nix)'],
@@ -98,19 +96,9 @@ parser.on('development', function(arg, value) {
     production = false;
 });
 
-parser.on('nodejs-5', function(arg, value) {
-    flatten = true;
-    nodePackage = "nodejs-5_x";
-});
-
 parser.on('nodejs-6', function(arg, value) {
     flatten = true;
     nodePackage = "nodejs-6_x";
-});
-
-parser.on('nodejs-7', function(arg, value) {
-    flatten = true;
-    nodePackage = "nodejs-7_x";
 });
 
 parser.on('nodejs-8', function(arg, value) {
