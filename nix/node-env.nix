@@ -209,7 +209,7 @@ let
               var packageJSONDir = path.join(baseDir, "node_modules", dependencyName);
               var packageJSONPath = path.join(packageJSONDir, "package.json");
 
-              if(fs.existsSync(packageJSONPath)) { // Only augment packages that exist. Sometimes we may have prdduction installs in which development dependencies can be ignored
+              if(fs.existsSync(packageJSONPath)) { // Only augment packages that exist. Sometimes we may have production installs in which development dependencies can be ignored
                   console.log("Adding metadata fields to: "+packageJSONPath);
                   var packageObj = JSON.parse(fs.readFileSync(packageJSONPath));
 
