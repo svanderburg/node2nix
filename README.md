@@ -485,12 +485,7 @@ is actually responsible for obtaining and extracting the dependencies.
 API documentation
 =================
 This package includes API documentation, which can be generated with
-[JSDuck](https://github.com/senchalabs/jsduck). The Makefile in this package
-contains a `duck` target to generate it and produces the HTML files in `build/`:
-
-```bash
-$ make duck
-```
+[JSDoc](http://usejsdoc.org).
 
 License
 =======
