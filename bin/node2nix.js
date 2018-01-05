@@ -25,7 +25,8 @@ var switches = [
     ['--pkg-name NAME', 'Specifies the name of the Node.js package to use from Nixpkgs (defaults to: nodejs)'],
     ['--registry NAME', 'URL referring to the NPM packages registry. It defaults to the official NPM one, but can be overridden to support private registries'],
     ['--bypass-cache', 'Specifies that package builds need to bypass the content addressable cache (required for NPM 5.x)'],
-    ['--no-copy-node-env', 'Do not create a copy of the Nix expression that builds NPM packages']
+    ['--no-copy-node-env', 'Do not create a copy of the Nix expression that builds NPM packages'],
+    ['--use-fetchgit-private', 'Use fetchGitPrivate instead of fetchgit in the generated Nix expressions']
 ];
 
 var parser = new optparse.OptionParser(switches);
@@ -48,6 +49,7 @@ var registryURL = "http://registry.npmjs.org";
 var nodePackage = "nodejs-4_x";
 var noCopyNodeEnv = false;
 var bypassCache = false;
+var useFetchGitPrivate = false;
 var executable;
 
 /* Define process rules for option parameters */
@@ -131,6 +133,10 @@ parser.on('no-copy-node-env', function(arg, value) {
     noCopyNodeEnv = true;
 });
 
+parser.on('use-fetchgit-private', function(arg, value) {
+    useFetchGitPrivate = true;
+});
+
 /* Define process rules for non-option parameters */
 
 parser.on(1, function(opt) {
@@ -193,7 +199,7 @@ if(version) {
 }
 
 /* Perform the NPM to Nix conversion */
-node2nix.npmToNix(inputJSON, outputNix, compositionNix, nodeEnvNix, lockJSON, supplementJSON, supplementNix, production, includePeerDependencies, flatten, nodePackage, registryURL, noCopyNodeEnv, bypassCache, function(err) {
+node2nix.npmToNix(inputJSON, outputNix, compositionNix, nodeEnvNix, lockJSON, supplementJSON, supplementNix, production, includePeerDependencies, flatten, nodePackage, registryURL, noCopyNodeEnv, bypassCache, useFetchGitPrivate, function(err) {
     if(err) {
         process.stderr.write(err + "\n");
         process.exit(1);

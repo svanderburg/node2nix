@@ -25,6 +25,7 @@ Table of Contents
     - [Adding unspecified dependencies](#adding-unspecified-dependencies)
     - [Adding additional/global NPM packages to a packaging process](#adding-additionalglobal-npm-packages-to-a-packaging-process)
     - [Disabling running NPM install](#disabling-running-npm-install)
+    - [Using private Git repositories](#using-private-git-repositories)
 - [API documentation](#api-documentation)
 - [License](#license)
 - [Acknowledgements](#acknowledgements)
@@ -481,6 +482,51 @@ nodePackages // {
 By overriding a package and setting the `dontNpmInstall` parameter to `true`, we
 skip the install step (which merely serves as a check). The generated expression
 is actually responsible for obtaining and extracting the dependencies.
+
+Using private Git repositories
+------------------------------
+In some development projects, it may be desired to deploy private Git
+repositories as dependencies. The `fetchgit {}` function in Nixpkgs, however,
+only supports public repositories.
+
+It is also possible to instruct the generator to use the `fetchgitPrivate {}`
+function, that adds support for private repositories that can be reached with
+SSH:
+
+```bash
+node2nix --use-fetchgit-private
+```
+
+Before running the `node2nix` command shown above, you probably want to set
+up `ssh-agent` first and use `ssh-add` to add a private key to the keychain to
+prevent the generator from asking for passphrases.
+
+When deploying a project or package, you need to pass an additional parameter
+that provides an SSH configuration file with a reference to an identify file.
+The following SSH config file (e.g. `~/ssh_config`) suffices for me:
+
+```
+StrictHostKeyChecking=no
+UserKnownHostsFile /dev/null
+IdentityFile ~/id_rsa
+```
+
+When deploying a package with Nix, you must propagate the location of the SSH
+config file as a parameter:
+
+```bash
+$ nix-build -A package -I ssh-config-file=~/ssh_config
+```
+
+It is also possible to provide the location of the config file by adapting the
+`NIX_PATH` environment variable, as opposed to using the `-I` parameter:
+
+```bash
+$ export NIX_PATH=ssh-config-file=~/ssh_config:$NIX_PATH
+```
+
+The above approach also makes it possible to deploy a NPM package with private
+dependencies as part of a NixOS, NixOps or Disnix configuration.
 
 API documentation
 =================
