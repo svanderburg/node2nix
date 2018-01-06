@@ -494,7 +494,7 @@ function, that adds support for private repositories that can be reached with
 SSH:
 
 ```bash
-node2nix --use-fetchgit-private
+$ node2nix --use-fetchgit-private
 ```
 
 Before running the `node2nix` command shown above, you probably want to set
