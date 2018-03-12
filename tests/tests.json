@@ -16,5 +16,6 @@
   "coffee-script",
   "floomatic",
   "@sindresorhus/df",
-  { "esprima-fb": "~3001.0001.0000-dev-harmony-fb" }
+  { "esprima-fb": "~3001.0001.0000-dev-harmony-fb" },
+  { "bcrypt": "0.8.x" }
 ]
