@@ -21,7 +21,8 @@ var switches = [
     ['--supplement-input FILE', 'A supplement package JSON file that are passed as build inputs to all packages defined in the input JSON file'],
     ['--supplement-output FILE', 'Path to a Nix expression representing a supplementing set of Nix packages provided as inputs to a project (defaults to: supplement.nix)'],
     ['--include-peer-dependencies', 'Specifies whether to include peer dependencies. In npm 2.x, this is the default. (false by default)'],
-    ['--flatten', 'Simulate npm 3.x flat dependency structure. (false by default)'],
+    ['--flatten', 'Simulate npm 3.x flat dependency structure. (default on node 4: false, default on node 6, 8: true)'],
+    ['--no-flatten', 'Do not simulate npm 3.x flat dependency structure.'],
     ['--pkg-name NAME', 'Specifies the name of the Node.js package to use from Nixpkgs (defaults to: nodejs)'],
     ['--registry NAME', 'URL referring to the NPM packages registry. It defaults to the official NPM one, but can be overridden to support private registries'],
     ['--bypass-cache', 'Specifies that package builds need to bypass the content addressable cache (required for NPM 5.x)'],
@@ -115,6 +116,10 @@ parser.on('include-peer-dependencies', function(arg, value) {
 
 parser.on('flatten', function(arg, value) {
     flatten = true;
+});
+
+parser.on('no-flatten', function(arg, value) {
+    flatten = false;
 });
 
 parser.on('pkg-name', function(arg, value) {
