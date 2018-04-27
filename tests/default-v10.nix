@@ -2,7 +2,7 @@
 
 {pkgs ? import <nixpkgs> {
     inherit system;
-  }, system ? builtins.currentSystem, nodejs ? pkgs."nodejs-6_x"}:
+  }, system ? builtins.currentSystem, nodejs ? pkgs."nodejs-10_x"}:
 
 let
   nodeEnv = import ../nix/node-env.nix {
@@ -11,7 +11,7 @@ let
     libtool = if pkgs.stdenv.isDarwin then pkgs.darwin.cctools else null;
   };
 in
-import ./node-packages-v6.nix {
+import ./node-packages-v10.nix {
   inherit (pkgs) fetchurl fetchgit;
   inherit nodeEnv;
 }

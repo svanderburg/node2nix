@@ -18,6 +18,7 @@ Table of Contents
     - [Deploying a collection of NPM packages from the NPM registry](#deploying-a-collection-of-npm-packages-from-the-npm-registry)
     - [Generating packages for Node.js 6.x](#generating-packages-for-nodejs-6x)
     - [Generating packages for Node.js 8.x](#generating-packages-for-nodejs-8x)
+    - [Generating packages for Node.js 10.x](#generating-packages-for-nodejs-10x)
 - [Advanced options](#advanced-options)
     - [Development mode](#development-mode)
     - [Specifying paths](#specifying-paths)
@@ -268,6 +269,18 @@ uses the exact same packages:
 
 ```bash
 $ node2nix -8 -l package-lock.json
+```
+
+Generating packages for Node.js 10.x
+-----------------------------------
+Node.js 10.x includes npm 6.x but its generation process is no different than
+8.x.
+
+To tell `node2nix` to generate for version 10.x, use the `--nodejs-10`
+parameter:
+
+```bash
+$ node2nix --nodejs-10 -l package-lock.json
 ```
 
 Advanced options

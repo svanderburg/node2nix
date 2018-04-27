@@ -18,6 +18,7 @@ var switches = [
     ['-d', '--development', 'Specifies whether to do a development (non-production) deployment for a package.json deployment (false by default)'],
     ['-6', '--nodejs-6', 'Provides all settings to generate expression for usage with Node.js 6.x (default is: Node.js 4.x)'],
     ['-8', '--nodejs-8', 'Provides all settings to generate expression for usage with Node.js 8.x (default is: Node.js 4.x)'],
+    ['--nodejs-10', 'Provides all settings to generate expression for usage with Node.js 8.x (default is: Node.js 4.x)'],
     ['--supplement-input FILE', 'A supplement package JSON file that are passed as build inputs to all packages defined in the input JSON file'],
     ['--supplement-output FILE', 'Path to a Nix expression representing a supplementing set of Nix packages provided as inputs to a project (defaults to: supplement.nix)'],
     ['--include-peer-dependencies', 'Specifies whether to include peer dependencies. In npm 2.x, this is the default. (false by default)'],
@@ -106,6 +107,12 @@ parser.on('nodejs-6', function(arg, value) {
 parser.on('nodejs-8', function(arg, value) {
     flatten = true;
     nodePackage = "nodejs-8_x";
+    bypassCache = true;
+});
+
+parser.on('nodejs-10', function(arg, value) {
+    flatten = true;
+    nodePackage = "nodejs-10_x";
     bypassCache = true;
 });
 
