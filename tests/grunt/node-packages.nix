@@ -526,13 +526,13 @@ let
         sha1 = "a4274eeb32fa765da5a7a3b1712617ce3b144149";
       };
     };
-    "grunt-legacy-log-1.0.1" = {
+    "grunt-legacy-log-1.0.2" = {
       name = "grunt-legacy-log";
       packageName = "grunt-legacy-log";
-      version = "1.0.1";
+      version = "1.0.2";
       src = fetchurl {
-        url = "https://registry.npmjs.org/grunt-legacy-log/-/grunt-legacy-log-1.0.1.tgz";
-        sha512 = "0fk74316iarjn5hc1sipqnrj4sv192c24aj63zbm0mhb1rham6c8wlqaan68s5isjdmfdc12q890j3hccrcgvs0rw7l48x5salb42xg";
+        url = "https://registry.npmjs.org/grunt-legacy-log/-/grunt-legacy-log-1.0.2.tgz";
+        sha512 = "3x7g8x7yscacn1hmivp3f7n59b0mj8i3pjsanrmkp11jfr5wnn7j81798s8h5yvj47vgadhvgbhiydanf5nla7p4gkjbk7skx69vmsr";
       };
     };
     "grunt-legacy-log-utils-1.0.0" = {
@@ -1147,15 +1147,6 @@ let
         sha1 = "04e6926f662895354f3dd015203633b857297e2c";
       };
     };
-    "sprintf-js-1.1.1" = {
-      name = "sprintf-js";
-      packageName = "sprintf-js";
-      version = "1.1.1";
-      src = fetchurl {
-        url = "https://registry.npmjs.org/sprintf-js/-/sprintf-js-1.1.1.tgz";
-        sha1 = "36be78320afe5801f6cea3ee78b6e5aab940ea0c";
-      };
-    };
     "statuses-1.5.0" = {
       name = "statuses";
       packageName = "statuses";
@@ -1255,15 +1246,6 @@ let
         sha1 = "806992633665d5e5fcb4db1fb3a862eb68e9e6da";
       };
     };
-    "underscore.string-3.3.4" = {
-      name = "underscore.string";
-      packageName = "underscore.string";
-      version = "3.3.4";
-      src = fetchurl {
-        url = "https://registry.npmjs.org/underscore.string/-/underscore.string-3.3.4.tgz";
-        sha1 = "2c2a3f9f83e64762fdc45e6ceac65142864213db";
-      };
-    };
     "unpipe-1.0.0" = {
       name = "unpipe";
       packageName = "unpipe";
@@ -1271,15 +1253,6 @@ let
       src = fetchurl {
         url = "https://registry.npmjs.org/unpipe/-/unpipe-1.0.0.tgz";
         sha1 = "b2bf4ee8514aae6165b4817829d21b2ef49904ec";
-      };
-    };
-    "util-deprecate-1.0.2" = {
-      name = "util-deprecate";
-      packageName = "util-deprecate";
-      version = "1.0.2";
-      src = fetchurl {
-        url = "https://registry.npmjs.org/util-deprecate/-/util-deprecate-1.0.2.tgz";
-        sha1 = "450d4dc9fa70de732762fbd2d4a28981419a0ccf";
       };
     };
     "validate-npm-package-license-3.0.3" = {
@@ -1507,7 +1480,7 @@ let
             ];
           })
           sources."grunt-known-options-1.1.0"
-          (sources."grunt-legacy-log-1.0.1" // {
+          (sources."grunt-legacy-log-1.0.2" // {
             dependencies = [
               sources."colors-1.1.2"
               (sources."grunt-legacy-log-utils-1.0.0" // {
@@ -1534,12 +1507,6 @@ let
               })
               sources."hooker-0.2.3"
               sources."lodash-4.17.10"
-              (sources."underscore.string-3.3.4" // {
-                dependencies = [
-                  sources."sprintf-js-1.1.1"
-                  sources."util-deprecate-1.0.2"
-                ];
-              })
             ];
           })
           (sources."grunt-legacy-util-1.0.0" // {

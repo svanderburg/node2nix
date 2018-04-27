@@ -51,6 +51,10 @@ rec {
         pkgs = import nixpkgs { inherit system; };
         inherit system;
       };
+      lockfile = (import ./tests/lockfile {
+        pkgs = import nixpkgs { inherit system; };
+        inherit system;
+      }).package;
     });
 
   release = pkgs.releaseTools.aggregate {
@@ -83,6 +87,7 @@ rec {
       in
       map (name: builtins.getAttr name tests_) (builtins.attrNames tests_)
       ) systems)
-    ++ map (system: tests."${system}".grunt) systems;
+    ++ map (system: tests."${system}".grunt) systems
+    ++ map (system: tests."${system}".lockfile) systems;
   };
 }

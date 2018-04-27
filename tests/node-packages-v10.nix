@@ -130,6 +130,15 @@ let
         sha1 = "14ad6113812d2d37d72e67b4cacb4bb726505f11";
       };
     };
+    "bindings-1.3.0" = {
+      name = "bindings";
+      packageName = "bindings";
+      version = "1.3.0";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/bindings/-/bindings-1.3.0.tgz";
+        sha512 = "15lvjac4av3h7xmks8jgd56vryz5xb27r8xcpfwhfyr9dv305lms5llc1x6nx6nfvha873d4vg04nfi89aj4jkxplrnjiyc9kjf34hf";
+      };
+    };
     "body-parser-1.18.2" = {
       name = "body-parser";
       packageName = "body-parser";
@@ -2160,6 +2169,27 @@ in
       description = "A bcrypt library for NodeJS.";
       homepage = "https://github.com/ncb000gt/node.bcrypt.js#readme";
       license = "MIT";
+    };
+    production = true;
+    bypassCache = true;
+  };
+  hiredis = nodeEnv.buildNodePackage {
+    name = "hiredis";
+    packageName = "hiredis";
+    version = "0.5.0";
+    src = fetchurl {
+      url = "https://registry.npmjs.org/hiredis/-/hiredis-0.5.0.tgz";
+      sha1 = "db03a98becd7003d13c260043aceecfacdf59b87";
+    };
+    dependencies = [
+      sources."bindings-1.3.0"
+      sources."nan-2.10.0"
+    ];
+    buildInputs = globalBuildInputs;
+    meta = {
+      description = "Wrapper for reply processing code in hiredis";
+      homepage = http://github.com/redis/hiredis-node;
+      license = "BSD-3-Clause";
     };
     production = true;
     bypassCache = true;

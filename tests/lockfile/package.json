@@ -1,0 +1,10 @@
+{
+  "name": "lockfile",
+  "version": "0.0.1",
+  "dependencies": {
+    "async": "*",
+    "express": "git+https://github.com/strongloop/express.git#ef7ad68",
+    "testa": "../testa"
+  },
+  "private": true
+}
