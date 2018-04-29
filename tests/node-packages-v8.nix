@@ -616,13 +616,13 @@ let
         sha1 = "3d8cadd90d976569fa835ab1f8e4b23a105605a7";
       };
     };
-    "fsevents-1.2.2" = {
+    "fsevents-1.2.3" = {
       name = "fsevents";
       packageName = "fsevents";
-      version = "1.2.2";
+      version = "1.2.3";
       src = fetchurl {
-        url = "https://registry.npmjs.org/fsevents/-/fsevents-1.2.2.tgz";
-        sha512 = "2siqm8q7irfjphlw43m7hrj4jw9dkh43sqs9msnn0bw5v9kkf4svqk27hyafqa7dglnp6rv9a4xlb75ybzw1q7flz2y3qj2x01jg34a";
+        url = "https://registry.npmjs.org/fsevents/-/fsevents-1.2.3.tgz";
+        sha512 = "3nsv4z5qk2hhcrp6bng9bzpj4nsk0b41i363phlqfp69dq1p2x6a1g3y86z2j7aj4mfj88y1i1agkb1y0pg5c388223h394jqxppvjz";
       };
     };
     "getpass-0.1.7" = {
@@ -2056,7 +2056,7 @@ in
       sources."floorine-0.3.0"
       sources."forever-agent-0.6.1"
       sources."form-data-2.3.2"
-      sources."fsevents-1.2.2"
+      sources."fsevents-1.2.3"
       sources."getpass-0.1.7"
       sources."har-schema-2.0.0"
       sources."har-validator-5.0.3"
