@@ -5,7 +5,7 @@
   }, system ? builtins.currentSystem, nodejs ? pkgs."nodejs-4_x"}:
 
 let
-  globalBuildInputs = pkgs.lib.attrValues (import ./tests/grunt/supplement.nix {
+  globalBuildInputs = pkgs.lib.attrValues (import ./supplement.nix {
     inherit nodeEnv;
     inherit (pkgs) fetchurl fetchgit;
   });

@@ -10,7 +10,7 @@
 #
 # $ nix-shell -A shell
 
-PROJECT=`dirname ${BASH_SOURCE[0]-$0}`
+PROJECT=$(readlink -f $0 | xargs dirname)
 
 node $PROJECT/bin/node2nix \
   -e $PROJECT/nix/node-env.nix \
@@ -52,31 +52,33 @@ node $PROJECT/bin/node2nix \
   --no-copy-node-env
 
 # grunt
+cd $PROJECT/tests/grunt
+
 node $PROJECT/bin/node2nix \
   -d \
-  -i $PROJECT/tests/grunt/package.json \
-  -o $PROJECT/tests/grunt/node-packages.nix \
-  -c $PROJECT/tests/grunt/default.nix \
-  --supplement-input $PROJECT/tests/grunt/supplement.json \
-  --supplement-output $PROJECT/tests/grunt/supplement.nix \
+  -i ./package.json \
+  --supplement-input ./supplement.json \
+  --supplement-output ./supplement.nix \
   -e $PROJECT/nix/node-env.nix \
   --no-copy-node-env
 
 # lockfile
+cd $PROJECT/tests/lockfile
+
 node $PROJECT/bin/node2nix \
   -8 \
-  -i $PROJECT/tests/lockfile/package.json \
-  -l $PROJECT/tests/lockfile/package-lock.json \
-  -o $PROJECT/tests/lockfile/node-packages.nix \
-  -c $PROJECT/tests/lockfile/default.nix \
+  -i ./package.json \
+  -l ./package-lock.json \
   -e $PROJECT/nix/node-env.nix \
   --no-copy-node-env
 
 # scoped_package
+cd $PROJECT/tests/scoped_package
+
 node $PROJECT/bin/node2nix \
   -8 \
-  -i $PROJECT/tests/scoped_package/package.json \
-  -o $PROJECT/tests/scoped_package/node-packages.nix \
-  -c $PROJECT/tests/scoped_package/default.nix \
+  -i ./package.json \
+  -o ./node-packages.nix \
+  -c ./default.nix \
   -e $PROJECT/nix/node-env.nix \
   --no-copy-node-env
