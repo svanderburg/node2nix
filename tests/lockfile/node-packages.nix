@@ -387,7 +387,7 @@ let
       name = "testa";
       packageName = "testa";
       version = 1;
-      src = ../testa;
+      src = ../../../testa;
     };
     "type-is-1.6.16" = {
       name = "type-is";

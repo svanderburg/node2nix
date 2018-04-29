@@ -10,13 +10,73 @@
 #
 # $ nix-shell -A shell
 
-node bin/node2nix -e nix/node-env.nix -6 -d --no-copy-node-env
-cd tests
-node ../bin/node2nix -i tests.json -o node-packages-v4.nix -c default-v4.nix -e ../nix/node-env.nix --no-copy-node-env
-node ../bin/node2nix -i tests.json -o node-packages-v6.nix -c default-v6.nix -e ../nix/node-env.nix -6 --no-copy-node-env
-node ../bin/node2nix -i tests.json -o node-packages-v8.nix -c default-v8.nix -e ../nix/node-env.nix -8 --no-copy-node-env
-node ../bin/node2nix -i tests.json -o node-packages-v10.nix -c default-v10.nix -e ../nix/node-env.nix --nodejs-10 --no-copy-node-env
-cd grunt
-node ../../bin/node2nix -d -i package.json --supplement-input supplement.json -e ../../nix/node-env.nix --no-copy-node-env
-cd ../lockfile
-node ../../bin/node2nix -8 -l package-lock.json -e ../../nix/node-env.nix --no-copy-node-env
+PROJECT=`dirname ${BASH_SOURCE[0]-$0}`
+
+node $PROJECT/bin/node2nix \
+  -e $PROJECT/nix/node-env.nix \
+  -6 \
+  -d \
+  --no-copy-node-env
+
+# tests
+
+node $PROJECT/bin/node2nix \
+  -i $PROJECT/tests/tests.json \
+  -o $PROJECT/tests/node-packages-v4.nix \
+  -c $PROJECT/tests/default-v4.nix \
+  -e $PROJECT/nix/node-env.nix \
+  --no-copy-node-env
+
+node $PROJECT/bin/node2nix \
+  -i $PROJECT/tests/tests.json \
+  -o $PROJECT/tests/node-packages-v6.nix \
+  -c $PROJECT/tests/default-v6.nix \
+  -e $PROJECT/nix/node-env.nix \
+  -6 \
+  --no-copy-node-env
+
+node $PROJECT/bin/node2nix \
+  -i $PROJECT/tests/tests.json \
+  -o $PROJECT/tests/node-packages-v8.nix \
+  -c $PROJECT/tests/default-v8.nix \
+  -e $PROJECT/nix/node-env.nix \
+  -8 \
+  --no-copy-node-env
+
+node $PROJECT/bin/node2nix \
+  -i $PROJECT/tests/tests.json \
+  -o $PROJECT/tests/node-packages-v10.nix \
+  -c $PROJECT/tests/default-v10.nix \
+  -e $PROJECT/nix/node-env.nix \
+  --nodejs-10 \
+  --no-copy-node-env
+
+# grunt
+node $PROJECT/bin/node2nix \
+  -d \
+  -i $PROJECT/tests/grunt/package.json \
+  -o $PROJECT/tests/grunt/node-packages.nix \
+  -c $PROJECT/tests/grunt/default.nix \
+  --supplement-input $PROJECT/tests/grunt/supplement.json \
+  --supplement-output $PROJECT/tests/grunt/supplement.nix \
+  -e $PROJECT/nix/node-env.nix \
+  --no-copy-node-env
+
+# lockfile
+node $PROJECT/bin/node2nix \
+  -8 \
+  -i $PROJECT/tests/lockfile/package.json \
+  -l $PROJECT/tests/lockfile/package-lock.json \
+  -o $PROJECT/tests/lockfile/node-packages.nix \
+  -c $PROJECT/tests/lockfile/default.nix \
+  -e $PROJECT/nix/node-env.nix \
+  --no-copy-node-env
+
+# scoped_package
+node $PROJECT/bin/node2nix \
+  -8 \
+  -i $PROJECT/tests/scoped_package/package.json \
+  -o $PROJECT/tests/scoped_package/node-packages.nix \
+  -c $PROJECT/tests/scoped_package/default.nix \
+  -e $PROJECT/nix/node-env.nix \
+  --no-copy-node-env
