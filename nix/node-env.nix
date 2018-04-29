@@ -444,9 +444,9 @@ let
 
           # Pinpoint the versions of all dependencies to the ones that are actually being used
           echo "pinpointing versions of dependencies..."
-          cd ..
+          cd $out
           source $pinpointDependenciesScriptPath
-          cd ${packageName}
+          cd $out/${packageName}
 
           # Patch the shebangs of the bundled modules to prevent them from
           # calling executables outside the Nix store as much as possible
@@ -473,8 +473,7 @@ let
             npm ${forceOfflineFlag} --nodedir=${nodeSources} ${npmFlags} ${stdenv.lib.optionalString production "--production"} install
           ''}
 
-          cd ..
-          mv ${packageName} lib
+          mv $out/${packageName} $out/lib
           ln -s $out/lib/node_modules/.bin $out/bin
         '';
       };

@@ -82,3 +82,6 @@ node $PROJECT/bin/node2nix \
   -c ./default.nix \
   -e $PROJECT/nix/node-env.nix \
   --no-copy-node-env
+
+# test scoped_package shell works
+nix-shell -A shell $PROJECT/tests/scoped_package --command 'true'
