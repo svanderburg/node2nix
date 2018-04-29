@@ -52,9 +52,11 @@ node $PROJECT/bin/node2nix \
   --no-copy-node-env
 
 # grunt
+
 cd $PROJECT/tests/grunt
 
 node $PROJECT/bin/node2nix \
+  -8 \
   -d \
   -i ./package.json \
   --supplement-input ./supplement.json \
@@ -62,7 +64,10 @@ node $PROJECT/bin/node2nix \
   -e $PROJECT/nix/node-env.nix \
   --no-copy-node-env
 
+nix-shell -A shell $PROJECT/tests/grunt --command 'true'
+
 # lockfile
+
 cd $PROJECT/tests/lockfile
 
 node $PROJECT/bin/node2nix \
@@ -72,7 +77,10 @@ node $PROJECT/bin/node2nix \
   -e $PROJECT/nix/node-env.nix \
   --no-copy-node-env
 
+nix-shell -A shell $PROJECT/tests/lockfile --command 'true'
+
 # scoped_package
+
 cd $PROJECT/tests/scoped_package
 
 node $PROJECT/bin/node2nix \
@@ -83,5 +91,4 @@ node $PROJECT/bin/node2nix \
   -e $PROJECT/nix/node-env.nix \
   --no-copy-node-env
 
-# test scoped_package shell works
 nix-shell -A shell $PROJECT/tests/scoped_package --command 'true'

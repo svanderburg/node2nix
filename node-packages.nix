@@ -1485,7 +1485,7 @@ let
       license = "MIT";
     };
     production = false;
-    bypassCache = false;
+    bypassCache = true;
   };
 in
 {

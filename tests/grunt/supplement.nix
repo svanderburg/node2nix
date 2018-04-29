@@ -718,203 +718,106 @@ in
       sha1 = "562b119ebb069ddb464ace2845501be97b35b6a8";
     };
     dependencies = [
-      (sources."findup-sync-0.3.0" // {
+      sources."abbrev-1.1.1"
+      sources."ansi-regex-2.1.1"
+      sources."ansi-styles-2.2.1"
+      sources."argparse-0.1.16"
+      sources."async-0.1.22"
+      sources."balanced-match-1.0.0"
+      sources."brace-expansion-1.1.11"
+      sources."chalk-1.1.3"
+      sources."cli-1.0.1"
+      sources."coffee-script-1.3.3"
+      sources."colors-0.6.2"
+      sources."concat-map-0.0.1"
+      sources."console-browserify-1.1.0"
+      sources."core-util-is-1.0.2"
+      sources."date-now-0.1.4"
+      sources."dateformat-1.0.2-1.2.3"
+      (sources."dom-serializer-0.1.0" // {
         dependencies = [
-          (sources."glob-5.0.15" // {
-            dependencies = [
-              (sources."inflight-1.0.6" // {
-                dependencies = [
-                  sources."wrappy-1.0.2"
-                ];
-              })
-              sources."inherits-2.0.3"
-              (sources."minimatch-3.0.4" // {
-                dependencies = [
-                  (sources."brace-expansion-1.1.11" // {
-                    dependencies = [
-                      sources."balanced-match-1.0.0"
-                      sources."concat-map-0.0.1"
-                    ];
-                  })
-                ];
-              })
-              (sources."once-1.4.0" // {
-                dependencies = [
-                  sources."wrappy-1.0.2"
-                ];
-              })
-              sources."path-is-absolute-1.0.1"
-            ];
-          })
+          sources."domelementtype-1.1.3"
         ];
       })
+      sources."domelementtype-1.3.0"
+      sources."domhandler-2.3.0"
+      (sources."domutils-1.5.1" // {
+        dependencies = [
+          sources."entities-1.1.1"
+        ];
+      })
+      sources."entities-1.0.0"
+      sources."escape-string-regexp-1.0.5"
+      sources."esprima-1.0.4"
+      sources."eventemitter2-0.4.14"
+      sources."exit-0.1.2"
+      sources."findup-sync-0.3.0"
+      sources."fs.realpath-1.0.0"
+      sources."getobject-0.1.0"
+      sources."glob-5.0.15"
+      sources."graceful-fs-1.2.3"
       (sources."grunt-0.4.5" // {
         dependencies = [
-          sources."async-0.1.22"
-          sources."coffee-script-1.3.3"
-          sources."colors-0.6.2"
-          sources."dateformat-1.0.2-1.2.3"
-          sources."eventemitter2-0.4.14"
-          sources."exit-0.1.2"
           (sources."findup-sync-0.1.3" // {
             dependencies = [
-              (sources."glob-3.2.11" // {
-                dependencies = [
-                  sources."inherits-2.0.3"
-                  (sources."minimatch-0.3.0" // {
-                    dependencies = [
-                      sources."lru-cache-2.7.3"
-                      sources."sigmund-1.0.1"
-                    ];
-                  })
-                ];
-              })
+              sources."glob-3.2.11"
               sources."lodash-2.4.2"
+              sources."minimatch-0.3.0"
             ];
           })
-          sources."getobject-0.1.0"
-          (sources."glob-3.1.21" // {
-            dependencies = [
-              sources."graceful-fs-1.2.3"
-              sources."inherits-1.0.2"
-            ];
-          })
-          (sources."grunt-legacy-log-0.1.3" // {
-            dependencies = [
-              sources."grunt-legacy-log-utils-0.1.1"
-              sources."lodash-2.4.2"
-              sources."underscore.string-2.3.3"
-            ];
-          })
-          sources."grunt-legacy-util-0.2.0"
-          sources."hooker-0.2.3"
-          sources."iconv-lite-0.2.11"
-          (sources."js-yaml-2.0.5" // {
-            dependencies = [
-              (sources."argparse-0.1.16" // {
-                dependencies = [
-                  sources."underscore-1.7.0"
-                  sources."underscore.string-2.4.0"
-                ];
-              })
-              sources."esprima-1.0.4"
-            ];
-          })
-          sources."lodash-0.9.2"
-          (sources."minimatch-0.2.14" // {
-            dependencies = [
-              sources."lru-cache-2.7.3"
-              sources."sigmund-1.0.1"
-            ];
-          })
-          (sources."nopt-1.0.10" // {
-            dependencies = [
-              sources."abbrev-1.1.1"
-            ];
-          })
-          sources."rimraf-2.2.8"
-          sources."underscore.string-2.2.1"
-          sources."which-1.0.9"
+          sources."glob-3.1.21"
+          sources."inherits-1.0.2"
+          sources."minimatch-0.2.14"
+          sources."nopt-1.0.10"
         ];
       })
       (sources."grunt-contrib-jshint-1.0.0" // {
         dependencies = [
-          (sources."chalk-1.1.3" // {
-            dependencies = [
-              sources."ansi-styles-2.2.1"
-              sources."escape-string-regexp-1.0.5"
-              (sources."has-ansi-2.0.0" // {
-                dependencies = [
-                  sources."ansi-regex-2.1.1"
-                ];
-              })
-              (sources."strip-ansi-3.0.1" // {
-                dependencies = [
-                  sources."ansi-regex-2.1.1"
-                ];
-              })
-              sources."supports-color-2.0.0"
-            ];
-          })
-          sources."hooker-0.2.3"
-          (sources."jshint-2.9.5" // {
-            dependencies = [
-              (sources."cli-1.0.1" // {
-                dependencies = [
-                  (sources."glob-7.1.2" // {
-                    dependencies = [
-                      sources."fs.realpath-1.0.0"
-                      (sources."inflight-1.0.6" // {
-                        dependencies = [
-                          sources."wrappy-1.0.2"
-                        ];
-                      })
-                      sources."inherits-2.0.3"
-                      (sources."once-1.4.0" // {
-                        dependencies = [
-                          sources."wrappy-1.0.2"
-                        ];
-                      })
-                      sources."path-is-absolute-1.0.1"
-                    ];
-                  })
-                ];
-              })
-              (sources."console-browserify-1.1.0" // {
-                dependencies = [
-                  sources."date-now-0.1.4"
-                ];
-              })
-              sources."exit-0.1.2"
-              (sources."htmlparser2-3.8.3" // {
-                dependencies = [
-                  sources."domelementtype-1.3.0"
-                  sources."domhandler-2.3.0"
-                  (sources."domutils-1.5.1" // {
-                    dependencies = [
-                      (sources."dom-serializer-0.1.0" // {
-                        dependencies = [
-                          sources."domelementtype-1.1.3"
-                          sources."entities-1.1.1"
-                        ];
-                      })
-                    ];
-                  })
-                  sources."entities-1.0.0"
-                  (sources."readable-stream-1.1.14" // {
-                    dependencies = [
-                      sources."core-util-is-1.0.2"
-                      sources."inherits-2.0.3"
-                      sources."isarray-0.0.1"
-                      sources."string_decoder-0.10.31"
-                    ];
-                  })
-                ];
-              })
-              sources."lodash-3.7.0"
-              (sources."minimatch-3.0.4" // {
-                dependencies = [
-                  (sources."brace-expansion-1.1.11" // {
-                    dependencies = [
-                      sources."balanced-match-1.0.0"
-                      sources."concat-map-0.0.1"
-                    ];
-                  })
-                ];
-              })
-              sources."shelljs-0.3.0"
-              sources."strip-json-comments-1.0.4"
-            ];
-          })
+          sources."glob-7.1.2"
+          sources."lodash-3.7.0"
         ];
       })
       sources."grunt-known-options-1.1.0"
-      (sources."nopt-3.0.6" // {
+      (sources."grunt-legacy-log-0.1.3" // {
         dependencies = [
-          sources."abbrev-1.1.1"
+          sources."lodash-2.4.2"
+          sources."underscore.string-2.3.3"
         ];
       })
+      sources."grunt-legacy-log-utils-0.1.1"
+      sources."grunt-legacy-util-0.2.0"
+      sources."has-ansi-2.0.0"
+      sources."hooker-0.2.3"
+      sources."htmlparser2-3.8.3"
+      sources."iconv-lite-0.2.11"
+      sources."inflight-1.0.6"
+      sources."inherits-2.0.3"
+      sources."isarray-0.0.1"
+      (sources."js-yaml-2.0.5" // {
+        dependencies = [
+          sources."underscore.string-2.4.0"
+        ];
+      })
+      sources."jshint-2.9.5"
+      sources."lodash-0.9.2"
+      sources."lru-cache-2.7.3"
+      sources."minimatch-3.0.4"
+      sources."nopt-3.0.6"
+      sources."once-1.4.0"
+      sources."path-is-absolute-1.0.1"
+      sources."readable-stream-1.1.14"
       sources."resolve-1.1.7"
+      sources."rimraf-2.2.8"
+      sources."shelljs-0.3.0"
+      sources."sigmund-1.0.1"
+      sources."string_decoder-0.10.31"
+      sources."strip-ansi-3.0.1"
+      sources."strip-json-comments-1.0.4"
+      sources."supports-color-2.0.0"
+      sources."underscore-1.7.0"
+      sources."underscore.string-2.2.1"
+      sources."which-1.0.9"
+      sources."wrappy-1.0.2"
     ];
     buildInputs = globalBuildInputs;
     meta = {
@@ -923,6 +826,6 @@ in
       license = "MIT";
     };
     production = false;
-    bypassCache = false;
+    bypassCache = true;
   };
 }
