@@ -16,9 +16,9 @@ Table of Contents
     - [Generating a tarball from a Node.js development project](#generating-a-tarball-from-a-nodejs-development-project)
     - [Deploying a development environment of a Node.js development project](#deploying-a-development-environment-of-a-nodejs-development-project)
     - [Deploying a collection of NPM packages from the NPM registry](#deploying-a-collection-of-npm-packages-from-the-npm-registry)
-    - [Generating packages for Node.js 6.x](#generating-packages-for-nodejs-6x)
     - [Generating packages for Node.js 8.x](#generating-packages-for-nodejs-8x)
     - [Generating packages for Node.js 10.x](#generating-packages-for-nodejs-10x)
+    - [Generating packages for Node.js 4.x](#generating-packages-for-nodejs-4x)
 - [Advanced options](#advanced-options)
     - [Development mode](#development-mode)
     - [Specifying paths](#specifying-paths)
@@ -219,28 +219,6 @@ This command deploys NiJS version 0.0.18:
 $ nix-env -f default.nix -iA '"nijs-0.0.18"'
 ```
 
-Generating packages for Node.js 6.x
------------------------------------
-By default, `node2nix` generates Nix expressions that should be used in
-conjuction with Node.js 4.x. Node.js 6.x contains the newer npm 3.x, that stores
-dependencies in a more flat structure.
-
-The flat structure can be simulated by adding the `--flatten` parameter.
-Additionally, to enable all flags to make generation for Node.js 6.x work, add
-the `-6` parameter. For example, running the following command generates
-expressions that can be used with Node.js 6.x:
-
-```bash
-$ node2nix -6 -i node-package.json
-```
-
-By running the following command, Nix deploys NiJS version 0.0.18 using Node.js
-6.x and npm 3.x:
-
-```bash
-$ nix-env -f default.nix -iA '"nijs-0.0.18"'
-```
-
 Generating packages for Node.js 8.x
 -----------------------------------
 Node.js 8.x includes npm 5.x that supports lock files pinpointing the exact
@@ -281,6 +259,32 @@ parameter:
 
 ```bash
 $ node2nix --nodejs-10 -l package-lock.json
+```
+
+Generating packages for Node.js 4.x
+-----------------------------------
+By default, `node2nix` generates Nix expressions that should be used in
+conjuction with Node.js 6.x, which is currently the oldest supported release.
+
+When it is desired, it is still possible to generate expression for Node.js 4.x
+that does not use a flattening/deduplication algorithm.
+
+The old non-flattening structure can be simulated by adding the `--no-flatten`
+parameter.
+
+Additionally, to enable all flags to make generation for Node.js 4.x work, add
+the `-4` parameter. For example, running the following command generates
+expressions that can be used with Node.js 4.x:
+
+```bash
+$ node2nix -4 -i node-package.json
+```
+
+By running the following command, Nix deploys NiJS version 0.0.18 using Node.js
+4.x and npm 2.x:
+
+```bash
+$ nix-env -f default.nix -iA '"nijs-0.0.18"'
 ```
 
 Advanced options
@@ -468,9 +472,8 @@ However, it may happen that there is a small difference and the deployment fails
 a result.
 
 A mismatch is typically caused by versions that can't be reliably resolved (e.g.
-due to wildcards) or errors in lifting bundled dependencies (with the
-`--flatten` option enabled). In many cases, the package should still work
-despite the error.
+due to wildcards) or errors in lifting bundled dependencies. In many cases, the
+package should still work despite the error.
 
 To prevent the deployment from failing, we can disable the `npm install` step,
 by overriding the package:
