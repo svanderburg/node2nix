@@ -20,3 +20,5 @@ cd grunt
 node ../../bin/node2nix -d -i package.json --supplement-input supplement.json -e ../../nix/node-env.nix --no-copy-node-env
 cd ../lockfile
 node ../../bin/node2nix -8 -l package-lock.json -e ../../nix/node-env.nix --no-copy-node-env
+cd ../scoped
+node ../../bin/node2nix -e ../../nix/node-env.nix --no-copy-node-env

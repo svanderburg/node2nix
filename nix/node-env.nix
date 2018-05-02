@@ -438,13 +438,15 @@ let
           ${stdenv.lib.optionalString bypassCache ''
             if [ -f ${src}/package-lock.json ]
             then
-              cp ${src}/package-lock.json .
+                cp ${src}/package-lock.json .
             fi
           ''}
 
           # Pinpoint the versions of all dependencies to the ones that are actually being used
           echo "pinpointing versions of dependencies..."
           cd ..
+          ${stdenv.lib.optionalString (builtins.substring 0 1 packageName == "@") "cd .."}
+
           source $pinpointDependenciesScriptPath
           cd ${packageName}
 
@@ -474,6 +476,8 @@ let
           ''}
 
           cd ..
+          ${stdenv.lib.optionalString (builtins.substring 0 1 packageName == "@") "cd .."}
+
           mv ${packageName} lib
           ln -s $out/lib/node_modules/.bin $out/bin
         '';
