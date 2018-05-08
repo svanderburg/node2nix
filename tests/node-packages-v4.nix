@@ -859,13 +859,13 @@ let
         sha512 = "1ba5b80jjzwrh9fbdk5ywv8sic0dynij21wgrfxsfjzwvwd7x1n6azdhdc0vjdxqmcpm0mhshd1k7n2ascxpz00z3p8a3k97mwg1s2i";
       };
     };
-    "lru-cache-4.1.2" = {
+    "lru-cache-4.1.3" = {
       name = "lru-cache";
       packageName = "lru-cache";
-      version = "4.1.2";
+      version = "4.1.3";
       src = fetchurl {
-        url = "https://registry.npmjs.org/lru-cache/-/lru-cache-4.1.2.tgz";
-        sha512 = "1whynbvy3pbwcpkxk6rqhsymj2h3bh7p13nfhs9ch6hfx96vrh86j7vd4lqcaqjy5dhsfjps6sh2wqndh269wjz42khbh6339g9a1y2";
+        url = "https://registry.npmjs.org/lru-cache/-/lru-cache-4.1.3.tgz";
+        sha512 = "0j2ny2y61f70dbzarfa1xazv68dw7nb2r4p5sy46fw6dwr9y0yg003lb1yv7sdl77hcrpzn22mih799z657sz21al4qmf1kr2yj2lbw";
       };
     };
     "media-typer-0.3.0" = {
@@ -1226,6 +1226,15 @@ let
       src = fetchurl {
         url = "https://registry.npmjs.org/qs/-/qs-6.5.1.tgz";
         sha512 = "3waqapyj1k4g135sgj636rmswiaixq19is1rw0rpv4qp6k7dl0a9nwy06m7yl5lbdk9p6xpwwngnggbzlzaz6rh11c86j2nvnnf273r";
+      };
+    };
+    "qs-6.5.2" = {
+      name = "qs";
+      packageName = "qs";
+      version = "6.5.2";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/qs/-/qs-6.5.2.tgz";
+        sha512 = "0c46ws0x9g3mmkgfmvd78bzvnmv2b8ryg4ah6jvyyqgjv9v994z7xdyvsc4vg9sf98gg7phvy3q1ahgaj5fy3dwzf2rki6bixgl15ip";
       };
     };
     "range-parser-1.0.3" = {
@@ -2038,8 +2047,8 @@ in
     version = "4.17.4";
     src = fetchgit {
       url = "git://github.com/lodash/lodash";
-      rev = "fe14140c6904571ea1ea8a16a36f3657785b7405";
-      sha256 = "d0e0f1b0b09b66ca6f2ec6b16fd1d9a74a1c21efbaf270270da87c3bdc6c345b";
+      rev = "79dc90dfcb743b57d348a0ac134ff9694ae937e7";
+      sha256 = "5cc5f2b1f08fc6e25acca9a399ec0c21b93624f33dafffea3eae7594e7631948";
     };
     buildInputs = globalBuildInputs;
     meta = {
@@ -2308,7 +2317,7 @@ in
           })
           sources."oauth-sign-0.8.2"
           sources."performance-now-2.1.0"
-          sources."qs-6.5.1"
+          sources."qs-6.5.2"
           sources."safe-buffer-5.1.2"
           sources."stringstream-0.0.5"
           (sources."tough-cookie-2.3.4" // {
@@ -2343,7 +2352,7 @@ in
         dependencies = [
           (sources."cross-spawn-async-2.2.5" // {
             dependencies = [
-              (sources."lru-cache-4.1.2" // {
+              (sources."lru-cache-4.1.3" // {
                 dependencies = [
                   sources."pseudomap-1.0.2"
                   sources."yallist-2.1.2"

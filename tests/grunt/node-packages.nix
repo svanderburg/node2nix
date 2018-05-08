@@ -616,13 +616,13 @@ let
         sha1 = "1f88aba4ab0b1508e8312acc39345f36e992e2f2";
       };
     };
-    "iconv-lite-0.4.21" = {
+    "iconv-lite-0.4.23" = {
       name = "iconv-lite";
       packageName = "iconv-lite";
-      version = "0.4.21";
+      version = "0.4.23";
       src = fetchurl {
-        url = "https://registry.npmjs.org/iconv-lite/-/iconv-lite-0.4.21.tgz";
-        sha512 = "0myjcmxx7dn5liikg8d2zgwb433sk761dfxwwnszyam16rzv5dzva352jrvav7cnambn0ha8fzh6g6xhdhxsd20l5v1p65r6vvmazhj";
+        url = "https://registry.npmjs.org/iconv-lite/-/iconv-lite-0.4.23.tgz";
+        sha512 = "062yxlrx4glr90bxn6jdv83qf03c9appkxdjjz5bhbphsx2yrn0y1i6yn9pfr3hfv2xiwq18hxvrvzfzfa7axv0sbgihskda58r7v4x";
       };
     };
     "indent-string-2.1.0" = {
@@ -1417,7 +1417,7 @@ let
       sources."htmlparser2-3.8.3"
       sources."http-errors-1.3.1"
       sources."http-parser-js-0.4.12"
-      sources."iconv-lite-0.4.21"
+      sources."iconv-lite-0.4.23"
       sources."indent-string-2.1.0"
       sources."inflight-1.0.6"
       sources."inherits-2.0.3"
