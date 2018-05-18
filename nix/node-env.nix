@@ -27,7 +27,7 @@ let
       buildInputs = [ nodejs ];
       buildPhase = ''
         export HOME=$TMPDIR
-        tgzFile=$(npm pack)
+        tgzFile=$(npm pack | tail -n 1) # Hooks to the pack command will add output (https://docs.npmjs.com/misc/scripts)
       '';
       installPhase = ''
         mkdir -p $out/tarballs
