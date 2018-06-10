@@ -428,6 +428,17 @@ NPM packages that are supposed to be installed globally:
 The above configuration (`supplement.json`) states that we need the `grunt-cli`
 as an additional package, installed globally.
 
+Also you can provide specific version of supplemental packages.
+Here is example of `supplement.json` with `grunt-cli` version `1.2.0`:
+
+```json
+[
+  {
+    "grunt-cli": "1.2.0"
+  }
+]
+```
+
 Running the following command-line instruction generates the Nix expressions for
 the project:
 
