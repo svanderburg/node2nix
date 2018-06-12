@@ -24,6 +24,7 @@ Table of Contents
     - [Specifying paths](#specifying-paths)
     - [Using alternative NPM registries](#using-alternative-npm-registries)
     - [Adding unspecified dependencies](#adding-unspecified-dependencies)
+    - [Wrapping or patching the code or any of its dependencies](#wrapping-or-patching-the-code-or-any-of-its-dependencies)
     - [Adding additional/global NPM packages to a packaging process](#adding-additionalglobal-npm-packages-to-a-packaging-process)
     - [Disabling running NPM install](#disabling-running-npm-install)
     - [Using private Git repositories](#using-private-git-repositories)
@@ -385,6 +386,57 @@ With the above wrapper expression, we can correctly deploy floomatic, by running
 
 ```bash
 $ nix-build override.nix -A floomatic
+```
+
+Wrapping or patching the code or any of its dependencies
+--------------------------------------------------------
+Some packages or any of its dependencies may also require some ad-hoc fixes to
+make them work. In such cases, we can implement a `preRebuild` hook with shell
+instructions that will be executed before the builder will run `npm rebuild` and
+`npm install`.
+
+For example, consider the `dnschain` package:
+
+```json
+[
+  "dnschain"
+]
+```
+
+We can generate Nix expressions from the above specification, by running:
+
+```bash
+$ node2nix -i node-packages.json
+```
+
+`dnschain` has a practical problem -- it requires OpenSSL to be in the `PATH` of
+the user. We can create an `override.nix` expression implementing a `preRebuild`
+hook that wraps the executable in a script that adds `openssl` to the `PATH`:
+
+```nix
+{pkgs ? import <nixpkgs> {
+  inherit system;
+}, system ? builtins.currentSystem}:
+
+let
+  nodePackages = import ./default.nix {
+    inherit pkgs system;
+  };
+in
+nodePackages // {
+  dnschain = nodePackages.floomatic.override (oldAttrs: {
+    preRebuild = ''
+      wrapProgram $out/bin/dnschain --suffix PATH : ${pkgs.openssl.bin}/bin
+    '';
+  });
+}
+```
+
+With the above wrapper expression, we can deploy a wrapped `dnschain` (that is
+able to find the `openssl` executable), by running:
+
+```bash
+$ nix-build override.nix -A dnschain
 ```
 
 Adding additional/global NPM packages to a packaging process
