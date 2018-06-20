@@ -4,7 +4,8 @@
   "dependencies": {
     "async": "*",
     "express": "git+https://github.com/strongloop/express.git#ef7ad68",
-    "testa": "../testa"
+    "testa": "../testa",
+    "@sindresorhus/df": "*"
   },
   "private": true
 }

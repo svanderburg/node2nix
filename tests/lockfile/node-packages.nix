@@ -4,6 +4,15 @@
 
 let
   sources = {
+    "@sindresorhus/df-2.1.0" = {
+      name = "_at_sindresorhus_slash_df";
+      packageName = "@sindresorhus/df";
+      version = "2.1.0";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/@sindresorhus/df/-/df-2.1.0.tgz";
+        sha1 = "d208cf27e06f0bb476d14d7deccd7d726e9aa389";
+      };
+    };
     "accepts-1.2.13" = {
       name = "accepts";
       packageName = "accepts";
@@ -22,13 +31,13 @@ let
         sha1 = "9a5f699051b1e7073328f2a008968b64ea2955d2";
       };
     };
-    "async-2.6.0" = {
+    "async-2.6.1" = {
       name = "async";
       packageName = "async";
-      version = "2.6.0";
+      version = "2.6.1";
       src = fetchurl {
-        url = "https://registry.npmjs.org/async/-/async-2.6.0.tgz";
-        sha512 = "0zp4b5788400npi1ixjry5x3a4m21c8pnknk8v731rgnwnjbp5ijmfcf5ppmn1ap4a04md1s9dr8n9ygdvrmiai590v0k6dby1wc1y4";
+        url = "https://registry.npmjs.org/async/-/async-2.6.1.tgz";
+        sha512 = "2aqgkis9ac37q6jv6zspfpj3rikh2vr9fdch7wajrvqihq5sxyd1gh5zv65hy0y3r22l720qkidwh6img8dngqcjj0dwrl0dwpj5lbw";
       };
     };
     "content-disposition-0.5.0" = {
@@ -65,6 +74,15 @@ let
       src = fetchurl {
         url = "https://registry.npmjs.org/cookie-signature/-/cookie-signature-1.0.6.tgz";
         sha1 = "e303a882b342cc3ee8ca513a79999734dab3ae2c";
+      };
+    };
+    "cross-spawn-async-2.2.5" = {
+      name = "cross-spawn-async";
+      packageName = "cross-spawn-async";
+      version = "2.2.5";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/cross-spawn-async/-/cross-spawn-async-2.2.5.tgz";
+        sha1 = "845ff0c0834a3ded9d160daca6d390906bb288cc";
       };
     };
     "debug-2.2.0" = {
@@ -148,6 +166,15 @@ let
         sha1 = "03d30b5f67dd6e632d2945d30d6652731a34d5d8";
       };
     };
+    "execa-0.2.2" = {
+      name = "execa";
+      packageName = "execa";
+      version = "0.2.2";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/execa/-/execa-0.2.2.tgz";
+        sha1 = "e2ead472c2c31aad6f73f1ac956eef45e12320cb";
+      };
+    };
     "express-git+https://github.com/strongloop/express.git#ef7ad681b245fba023843ce94f6bcb8e275bbb8e" = {
       name = "express";
       packageName = "express";
@@ -212,6 +239,15 @@ let
         sha1 = "5fa78cf301b825c78abc3042d812723049ea23c7";
       };
     };
+    "isexe-2.0.0" = {
+      name = "isexe";
+      packageName = "isexe";
+      version = "2.0.0";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/isexe/-/isexe-2.0.0.tgz";
+        sha1 = "e8fbf374dc556ff8947a10dcb0572d633f2cfa10";
+      };
+    };
     "lodash-4.17.10" = {
       name = "lodash";
       packageName = "lodash";
@@ -219,6 +255,15 @@ let
       src = fetchurl {
         url = "https://registry.npmjs.org/lodash/-/lodash-4.17.10.tgz";
         sha512 = "1ba5b80jjzwrh9fbdk5ywv8sic0dynij21wgrfxsfjzwvwd7x1n6azdhdc0vjdxqmcpm0mhshd1k7n2ascxpz00z3p8a3k97mwg1s2i";
+      };
+    };
+    "lru-cache-4.1.3" = {
+      name = "lru-cache";
+      packageName = "lru-cache";
+      version = "4.1.3";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/lru-cache/-/lru-cache-4.1.3.tgz";
+        sha512 = "0j2ny2y61f70dbzarfa1xazv68dw7nb2r4p5sy46fw6dwr9y0yg003lb1yv7sdl77hcrpzn22mih799z657sz21al4qmf1kr2yj2lbw";
       };
     };
     "media-typer-0.3.0" = {
@@ -293,6 +338,24 @@ let
         sha1 = "269d5c476810ec92edbe7b6c2f28316384f9a7e8";
       };
     };
+    "npm-run-path-1.0.0" = {
+      name = "npm-run-path";
+      packageName = "npm-run-path";
+      version = "1.0.0";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/npm-run-path/-/npm-run-path-1.0.0.tgz";
+        sha1 = "f5c32bf595fe81ae927daec52e82f8b000ac3c8f";
+      };
+    };
+    "object-assign-4.1.1" = {
+      name = "object-assign";
+      packageName = "object-assign";
+      version = "4.1.1";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/object-assign/-/object-assign-4.1.1.tgz";
+        sha1 = "2109adc7965887cfc05cbbd442cac8bfbb360863";
+      };
+    };
     "on-finished-2.3.0" = {
       name = "on-finished";
       packageName = "on-finished";
@@ -311,6 +374,15 @@ let
         sha1 = "fc289d4ed8993119460c156253262cdc8de65bf3";
       };
     };
+    "path-key-1.0.0" = {
+      name = "path-key";
+      packageName = "path-key";
+      version = "1.0.0";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/path-key/-/path-key-1.0.0.tgz";
+        sha1 = "5d53d578019646c0d68800db4e146e6bdc2ac7af";
+      };
+    };
     "path-to-regexp-0.1.7" = {
       name = "path-to-regexp";
       packageName = "path-to-regexp";
@@ -327,6 +399,15 @@ let
       src = fetchurl {
         url = "https://registry.npmjs.org/proxy-addr/-/proxy-addr-1.0.10.tgz";
         sha1 = "0d40a82f801fc355567d2ecb65efe3f077f121c5";
+      };
+    };
+    "pseudomap-1.0.2" = {
+      name = "pseudomap";
+      packageName = "pseudomap";
+      version = "1.0.2";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/pseudomap/-/pseudomap-1.0.2.tgz";
+        sha1 = "f052a28da70e618917ef0a8ac34c1ae5a68286b3";
       };
     };
     "qs-4.0.0" = {
@@ -383,6 +464,15 @@ let
         sha1 = "dded45cc18256d51ed40aec142489d5c61026d28";
       };
     };
+    "strip-eof-1.0.0" = {
+      name = "strip-eof";
+      packageName = "strip-eof";
+      version = "1.0.0";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/strip-eof/-/strip-eof-1.0.0.tgz";
+        sha1 = "bb43ff5598a6eb05d89b59fcd129c983313606bf";
+      };
+    };
     "testa-../testa" = {
       name = "testa";
       packageName = "testa";
@@ -425,6 +515,24 @@ let
         sha1 = "99e4981566a286118dfb2b817357df7993376d10";
       };
     };
+    "which-1.3.1" = {
+      name = "which";
+      packageName = "which";
+      version = "1.3.1";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/which/-/which-1.3.1.tgz";
+        sha512 = "0hr4hxkk8yb9fz993bs69pf8z2z2qb6sdpxfxb84sd16lja9fsx444pk1ang1ivmjjv5srnsm6fihdj593w7rwxdh834cdmd9hms4hz";
+      };
+    };
+    "yallist-2.1.2" = {
+      name = "yallist";
+      packageName = "yallist";
+      version = "2.1.2";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/yallist/-/yallist-2.1.2.tgz";
+        sha1 = "1c11f9218f076089a47dd512f93c6699a6a81d52";
+      };
+    };
   };
   args = {
     name = "lockfile";
@@ -432,19 +540,22 @@ let
     version = "0.0.1";
     src = ./.;
     dependencies = [
+      sources."@sindresorhus/df-2.1.0"
       sources."accepts-1.2.13"
       sources."array-flatten-1.1.1"
-      sources."async-2.6.0"
+      sources."async-2.6.1"
       sources."content-disposition-0.5.0"
       sources."content-type-1.0.4"
       sources."cookie-0.1.3"
       sources."cookie-signature-1.0.6"
+      sources."cross-spawn-async-2.2.5"
       sources."debug-2.2.0"
       sources."depd-1.0.1"
       sources."destroy-1.0.3"
       sources."ee-first-1.1.1"
       sources."escape-html-1.0.2"
       sources."etag-1.7.0"
+      sources."execa-0.2.2"
       sources."express-git+https://github.com/strongloop/express.git#ef7ad681b245fba023843ce94f6bcb8e275bbb8e"
       sources."finalhandler-0.4.0"
       sources."forwarded-0.1.2"
@@ -452,7 +563,9 @@ let
       sources."http-errors-1.3.1"
       sources."inherits-2.0.3"
       sources."ipaddr.js-1.0.5"
+      sources."isexe-2.0.0"
       sources."lodash-4.17.10"
+      sources."lru-cache-4.1.3"
       sources."media-typer-0.3.0"
       sources."merge-descriptors-1.0.0"
       sources."methods-1.1.2"
@@ -461,10 +574,14 @@ let
       sources."mime-types-2.1.18"
       sources."ms-0.7.1"
       sources."negotiator-0.5.3"
+      sources."npm-run-path-1.0.0"
+      sources."object-assign-4.1.1"
       sources."on-finished-2.3.0"
       sources."parseurl-1.3.2"
+      sources."path-key-1.0.0"
       sources."path-to-regexp-0.1.7"
       sources."proxy-addr-1.0.10"
+      sources."pseudomap-1.0.2"
       sources."qs-4.0.0"
       sources."range-parser-1.0.3"
       sources."send-0.13.0"
@@ -477,11 +594,14 @@ let
         ];
       })
       sources."statuses-1.2.1"
+      sources."strip-eof-1.0.0"
       sources."testa-../testa"
       sources."type-is-1.6.16"
       sources."unpipe-1.0.0"
       sources."utils-merge-1.0.0"
       sources."vary-1.0.1"
+      sources."which-1.3.1"
+      sources."yallist-2.1.2"
     ];
     buildInputs = globalBuildInputs;
     meta = {

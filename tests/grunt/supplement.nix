@@ -721,12 +721,20 @@ in
       sources."abbrev-1.1.1"
       sources."ansi-regex-2.1.1"
       sources."ansi-styles-2.2.1"
-      sources."argparse-0.1.16"
+      (sources."argparse-0.1.16" // {
+        dependencies = [
+          sources."underscore.string-2.4.0"
+        ];
+      })
       sources."async-0.1.22"
       sources."balanced-match-1.0.0"
       sources."brace-expansion-1.1.11"
       sources."chalk-1.1.3"
-      sources."cli-1.0.1"
+      (sources."cli-1.0.1" // {
+        dependencies = [
+          sources."glob-7.1.2"
+        ];
+      })
       sources."coffee-script-1.3.3"
       sources."colors-0.6.2"
       sources."concat-map-0.0.1"
@@ -737,15 +745,12 @@ in
       (sources."dom-serializer-0.1.0" // {
         dependencies = [
           sources."domelementtype-1.1.3"
+          sources."entities-1.1.1"
         ];
       })
       sources."domelementtype-1.3.0"
       sources."domhandler-2.3.0"
-      (sources."domutils-1.5.1" // {
-        dependencies = [
-          sources."entities-1.1.1"
-        ];
-      })
+      sources."domutils-1.5.1"
       sources."entities-1.0.0"
       sources."escape-string-regexp-1.0.5"
       sources."esprima-1.0.4"
@@ -771,12 +776,7 @@ in
           sources."nopt-1.0.10"
         ];
       })
-      (sources."grunt-contrib-jshint-1.0.0" // {
-        dependencies = [
-          sources."glob-7.1.2"
-          sources."lodash-3.7.0"
-        ];
-      })
+      sources."grunt-contrib-jshint-1.0.0"
       sources."grunt-known-options-1.1.0"
       (sources."grunt-legacy-log-0.1.3" // {
         dependencies = [
@@ -784,7 +784,12 @@ in
           sources."underscore.string-2.3.3"
         ];
       })
-      sources."grunt-legacy-log-utils-0.1.1"
+      (sources."grunt-legacy-log-utils-0.1.1" // {
+        dependencies = [
+          sources."lodash-2.4.2"
+          sources."underscore.string-2.3.3"
+        ];
+      })
       sources."grunt-legacy-util-0.2.0"
       sources."has-ansi-2.0.0"
       sources."hooker-0.2.3"
@@ -793,12 +798,12 @@ in
       sources."inflight-1.0.6"
       sources."inherits-2.0.3"
       sources."isarray-0.0.1"
-      (sources."js-yaml-2.0.5" // {
+      sources."js-yaml-2.0.5"
+      (sources."jshint-2.9.5" // {
         dependencies = [
-          sources."underscore.string-2.4.0"
+          sources."lodash-3.7.0"
         ];
       })
-      sources."jshint-2.9.5"
       sources."lodash-0.9.2"
       sources."lru-cache-2.7.3"
       sources."minimatch-3.0.4"
