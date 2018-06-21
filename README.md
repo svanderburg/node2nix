@@ -26,8 +26,11 @@ Table of Contents
     - [Adding unspecified dependencies](#adding-unspecified-dependencies)
     - [Wrapping or patching the code or any of its dependencies](#wrapping-or-patching-the-code-or-any-of-its-dependencies)
     - [Adding additional/global NPM packages to a packaging process](#adding-additionalglobal-npm-packages-to-a-packaging-process)
-    - [Disabling running NPM install](#disabling-running-npm-install)
     - [Using private Git repositories](#using-private-git-repositories)
+- [Troubleshooting](#troubleshooting)
+    - [Deploying peer dependencies](#deploying-peer-dependencies)
+    - [Striping optional dependencies](#striping-optional-dependencies)
+    - [Disabling running NPM install](#disabling-running-npm-install)
 - [API documentation](#api-documentation)
 - [License](#license)
 - [Acknowledgements](#acknowledgements)
@@ -528,40 +531,6 @@ grunt post-processing step:
 $ nix-build override.nix -A package
 ```
 
-Disabling running NPM install
------------------------------
-`node2nix` tries to mimic npm's dependency resolver as closely as possible.
-However, it may happen that there is a small difference and the deployment fails
-a result.
-
-A mismatch is typically caused by versions that can't be reliably resolved (e.g.
-due to wildcards) or errors in lifting bundled dependencies. In many cases, the
-package should still work despite the error.
-
-To prevent the deployment from failing, we can disable the `npm install` step,
-by overriding the package:
-
-```nix
-{pkgs ? import <nixpkgs> {
-  inherit system;
-}, system ? builtins.currentSystem}:
-
-let
-  nodePackages = import ./default.nix {
-    inherit pkgs system;
-  };
-in
-nodePackages // {
-  express = nodePackages.express.override (oldAttrs: {
-    dontNpmInstall = true;
-  });
-}
-```
-
-By overriding a package and setting the `dontNpmInstall` parameter to `true`, we
-skip the install step (which merely serves as a check). The generated expression
-is actually responsible for obtaining and extracting the dependencies.
-
 Using private Git repositories
 ------------------------------
 In some development projects, it may be desired to deploy private Git
@@ -606,6 +575,73 @@ $ export NIX_PATH=ssh-config-file=~/ssh_config:$NIX_PATH
 
 The above approach also makes it possible to deploy a NPM package with private
 dependencies as part of a NixOS, NixOps or Disnix configuration.
+
+Troubleshooting
+===============
+This section contains some troubleshooting information for common problems.
+
+Deploying peer dependencies
+---------------------------
+In NPM version 2.x and older, peer dependencies were automatically deployed if
+they were not declared as regular dependencies. In newer versions of NPM, this
+behaviour has changed -- peer dependencies are only used for version checks,
+but NPM no longer installs them.
+
+Some package deployments may still rely on the old behaviour and will fail to
+deploy. To generate expressions that install peer dependencies, you can add the
+`--include-peer-dependencies` parameter:
+
+```bash
+$ node2nix --include-peer-dependencies
+```
+
+Striping optional dependencies
+------------------------------
+When NPM packages with optional dependencies are published to the NPM registry,
+the optional dependencies become regular runtime dependencies. As a result,
+when deploying a package with a broken optional dependency, the deployment
+with fail, unlike pure optional dependencies that are allowed to fail.
+
+To fix these package deployments, it is possible to strip the optional
+dependencies from packages installed from the NPM registry:
+
+```bash
+$ node2nix --strip-optional-dependencies
+```
+
+Disabling running NPM install
+-----------------------------
+`node2nix` tries to mimic npm's dependency resolver as closely as possible.
+However, it may happen that there is a small difference and the deployment fails
+a result.
+
+A mismatch is typically caused by versions that can't be reliably resolved (e.g.
+due to wildcards) or errors in lifting bundled dependencies. In many cases, the
+package should still work despite the error.
+
+To prevent the deployment from failing, we can disable the `npm install` step,
+by overriding the package:
+
+```nix
+{pkgs ? import <nixpkgs> {
+  inherit system;
+}, system ? builtins.currentSystem}:
+
+let
+  nodePackages = import ./default.nix {
+    inherit pkgs system;
+  };
+in
+nodePackages // {
+  express = nodePackages.express.override (oldAttrs: {
+    dontNpmInstall = true;
+  });
+}
+```
+
+By overriding a package and setting the `dontNpmInstall` parameter to `true`, we
+skip the install step (which merely serves as a check). The generated expression
+is actually responsible for obtaining and extracting the dependencies.
 
 API documentation
 =================

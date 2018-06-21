@@ -112,6 +112,15 @@ let
         sha1 = "89b4d199ab2bee49de164ea02b89ce462d71b767";
       };
     };
+    "bcrypt-pbkdf-1.0.1" = {
+      name = "bcrypt-pbkdf";
+      packageName = "bcrypt-pbkdf";
+      version = "1.0.1";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/bcrypt-pbkdf/-/bcrypt-pbkdf-1.0.1.tgz";
+        sha1 = "63bc5dcb61331b92bc05fd528953c33462a06f8d";
+      };
+    };
     "bindings-1.2.1" = {
       name = "bindings";
       packageName = "bindings";
@@ -364,6 +373,15 @@ let
         sha1 = "55bc6493a0fe0bb3e131a73355c14f3029af2b89";
       };
     };
+    "ecc-jsbn-0.1.1" = {
+      name = "ecc-jsbn";
+      packageName = "ecc-jsbn";
+      version = "0.1.1";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/ecc-jsbn/-/ecc-jsbn-0.1.1.tgz";
+        sha1 = "0fc73a9ed5f0d53c38193398523ef7e543777505";
+      };
+    };
     "ee-first-1.1.1" = {
       name = "ee-first";
       packageName = "ee-first";
@@ -571,6 +589,15 @@ let
         sha1 = "3d8cadd90d976569fa835ab1f8e4b23a105605a7";
       };
     };
+    "fsevents-1.2.4" = {
+      name = "fsevents";
+      packageName = "fsevents";
+      version = "1.2.4";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/fsevents/-/fsevents-1.2.4.tgz";
+        sha512 = "0vfzl6byj55zmi8xiqb9bqd5q0awlpgz4hsph9xzhzrd46did859d6fp5vydh7n4d0n1ph5q36smq6k3pjq6w5fxs0vx4xjv3yzrhfg";
+      };
+    };
     "getpass-0.1.7" = {
       name = "getpass";
       packageName = "getpass";
@@ -731,6 +758,15 @@ let
       src = fetchurl {
         url = "https://registry.npmjs.org/isstream/-/isstream-0.1.2.tgz";
         sha1 = "47e63f7af55afa6f92e1500e690eb8b8529c099a";
+      };
+    };
+    "jsbn-0.1.1" = {
+      name = "jsbn";
+      packageName = "jsbn";
+      version = "0.1.1";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/jsbn/-/jsbn-0.1.1.tgz";
+        sha1 = "a5e654c2e5a2deb5f201d96cefbca80c0ef2f513";
       };
     };
     "json-schema-0.2.3" = {
@@ -920,6 +956,15 @@ let
       src = fetchurl {
         url = "https://registry.npmjs.org/nan/-/nan-2.3.5.tgz";
         sha1 = "822a0dc266290ce4cd3a12282ca3e7e364668a08";
+      };
+    };
+    "native-diff-match-patch-0.3.1" = {
+      name = "native-diff-match-patch";
+      packageName = "native-diff-match-patch";
+      version = "0.3.1";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/native-diff-match-patch/-/native-diff-match-patch-0.3.1.tgz";
+        sha1 = "620304151a78171386ed2e2f3db2e7dfd6436707";
       };
     };
     "negotiator-0.5.3" = {
@@ -1349,6 +1394,15 @@ let
       src = fetchurl {
         url = "https://registry.npmjs.org/tunnel-agent/-/tunnel-agent-0.6.0.tgz";
         sha1 = "27a5dea06b36b04a0a9966774b290868f0fc40fd";
+      };
+    };
+    "tweetnacl-0.14.5" = {
+      name = "tweetnacl";
+      packageName = "tweetnacl";
+      version = "0.14.5";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/tweetnacl/-/tweetnacl-0.14.5.tgz";
+        sha1 = "5ae68177f192d4456269d108afa93ff8743f4f64";
       };
     };
     "type-is-1.6.16" = {
@@ -1927,6 +1981,7 @@ in
       sources."aws-sign2-0.7.0"
       sources."aws4-1.7.0"
       sources."balanced-match-1.0.0"
+      sources."bcrypt-pbkdf-1.0.1"
       sources."brace-expansion-1.1.11"
       sources."caseless-0.12.0"
       sources."co-4.6.0"
@@ -1936,6 +1991,7 @@ in
       sources."dashdash-1.14.1"
       sources."delayed-stream-1.0.0"
       sources."dmp-1.0.0"
+      sources."ecc-jsbn-0.1.1"
       sources."extend-3.0.1"
       sources."extsprintf-1.3.0"
       sources."fast-deep-equal-1.1.0"
@@ -1943,12 +1999,14 @@ in
       sources."floorine-0.3.0"
       sources."forever-agent-0.6.1"
       sources."form-data-2.3.2"
+      sources."fsevents-1.2.4"
       sources."getpass-0.1.7"
       sources."har-schema-2.0.0"
       sources."har-validator-5.0.3"
       sources."http-signature-1.2.0"
       sources."is-typedarray-1.0.0"
       sources."isstream-0.1.2"
+      sources."jsbn-0.1.1"
       sources."json-schema-0.2.3"
       sources."json-schema-traverse-0.3.1"
       sources."json-stringify-safe-5.0.1"
@@ -1959,6 +2017,8 @@ in
       sources."minimatch-3.0.4"
       sources."minimist-0.0.8"
       sources."mkdirp-0.5.1"
+      sources."nan-2.10.0"
+      sources."native-diff-match-patch-0.3.1"
       sources."oauth-sign-0.8.2"
       sources."open-0.0.5"
       sources."optimist-0.6.1"
@@ -1972,6 +2032,7 @@ in
       sources."strftime-0.10.0"
       sources."tough-cookie-2.3.4"
       sources."tunnel-agent-0.6.0"
+      sources."tweetnacl-0.14.5"
       sources."uuid-3.2.1"
       sources."verror-1.10.0"
       sources."wordwrap-0.0.3"
