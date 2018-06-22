@@ -30,6 +30,7 @@ Table of Contents
 - [Troubleshooting](#troubleshooting)
     - [Deploying peer dependencies](#deploying-peer-dependencies)
     - [Striping optional dependencies](#striping-optional-dependencies)
+    - [Updating the package lock file](#updating-the-package-lock-file)
     - [Disabling running NPM install](#disabling-running-npm-install)
 - [API documentation](#api-documentation)
 - [License](#license)
@@ -608,6 +609,16 @@ dependencies from packages installed from the NPM registry:
 ```bash
 $ node2nix --strip-optional-dependencies
 ```
+
+Updating the package lock file
+------------------------------
+When deploying projects that provide a `package-lock.json` file, `node2nix`
+deployments will typically fail if the corresponding `package.json`
+configuration has changed after the generation of the lock file, because the
+dependencies in the lock file may be incomplete.
+
+To fix this problem, `npm install` must be executed again so that the missing
+or changed dependencies are updated in the lock file.
 
 Disabling running NPM install
 -----------------------------
