@@ -29,7 +29,7 @@ Table of Contents
     - [Using private Git repositories](#using-private-git-repositories)
 - [Troubleshooting](#troubleshooting)
     - [Deploying peer dependencies](#deploying-peer-dependencies)
-    - [Striping optional dependencies](#striping-optional-dependencies)
+    - [Stripping optional dependencies](#striping-optional-dependencies)
     - [Updating the package lock file](#updating-the-package-lock-file)
     - [Disabling running NPM install](#disabling-running-npm-install)
 - [API documentation](#api-documentation)
@@ -596,8 +596,8 @@ deploy. To generate expressions that install peer dependencies, you can add the
 $ node2nix --include-peer-dependencies
 ```
 
-Striping optional dependencies
-------------------------------
+Stripping optional dependencies
+-------------------------------
 When NPM packages with optional dependencies are published to the NPM registry,
 the optional dependencies become regular runtime dependencies. As a result,
 when deploying a package with a broken optional dependency, the deployment
