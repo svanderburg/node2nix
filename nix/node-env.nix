@@ -457,7 +457,7 @@ let
 
         passAsFile = [ "includeScript" "pinpointDependenciesScript" ];
 
-        buildCommand = ''
+        installPhase = ''
           mkdir -p $out/${packageName}
           cd $out/${packageName}
 
