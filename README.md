@@ -374,9 +374,9 @@ let
   };
 in
 nodePackages // {
-  floomatic = nodePackages.floomatic.override (oldAttrs: {
-    buildInputs = oldAttrs.buildInputs ++ [ pkgs.pkgconfig pkgs.qt4 ];
-  });
+  floomatic = nodePackages.floomatic.override {
+    buildInputs = [ pkgs.pkgconfig pkgs.qt4 ];
+  };
 }
 ```
 
@@ -428,11 +428,11 @@ let
   };
 in
 nodePackages // {
-  dnschain = nodePackages.floomatic.override (oldAttrs: {
+  dnschain = nodePackages.floomatic.override {
     preRebuild = ''
       wrapProgram $out/bin/dnschain --suffix PATH : ${pkgs.openssl.bin}/bin
     '';
-  });
+  };
 }
 ```
 
@@ -644,9 +644,9 @@ let
   };
 in
 nodePackages // {
-  express = nodePackages.express.override (oldAttrs: {
+  express = nodePackages.express.override {
     dontNpmInstall = true;
-  });
+  };
 }
 ```
 

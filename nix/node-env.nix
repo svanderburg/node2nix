@@ -329,7 +329,7 @@ let
       forceOfflineFlag = if bypassCache then "--offline" else "--registry http://www.example.com";
       extraArgs = removeAttrs args [ "name" "dependencies" "buildInputs" "dontStrip" "dontNpmInstall" "preRebuild" "unpackPhase" "buildPhase" ];
     in
-    stdenv.lib.makeOverridable stdenv.mkDerivation ({
+    stdenv.mkDerivation ({
       name = "node-${name}-${version}";
       buildInputs = [ tarWrapper python nodejs ]
         ++ stdenv.lib.optional (stdenv.isLinux) utillinux
@@ -514,7 +514,7 @@ let
         '';
       } // extraArgs);
     in
-    stdenv.lib.makeOverridable stdenv.mkDerivation {
+    stdenv.mkDerivation {
       name = "node-shell-${name}-${version}";
 
       buildInputs = [ python nodejs ] ++ stdenv.lib.optional (stdenv.isLinux) utillinux ++ buildInputs;
@@ -535,4 +535,8 @@ let
       '';
     };
 in
-{ inherit buildNodeSourceDist buildNodePackage buildNodeShell; }
+{
+  buildNodeSourceDist = stdenv.lib.makeOverridable buildNodeSourceDist;
+  buildNodePackage = stdenv.lib.makeOverridable buildNodePackage;
+  buildNodeShell = stdenv.lib.makeOverridable buildNodeShell;
+}

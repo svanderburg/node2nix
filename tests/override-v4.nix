@@ -8,7 +8,7 @@ let
   };
 in
 nodePackages // {
-  floomatic = nodePackages.floomatic.override (oldAttrs: {
+  floomatic = nodePackages.floomatic.override {
     buildInputs = oldAttrs.buildInputs ++ [ pkgs.pkgconfig pkgs.qt4 ];
-  });
+  };
 }
