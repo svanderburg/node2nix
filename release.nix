@@ -55,7 +55,12 @@ rec {
         pkgs = import nixpkgs { inherit system; };
         inherit system;
       }).package;
-    });
+    }) // {
+      cli = import ./tests/cli {
+        inherit nixpkgs;
+        node2nix = builtins.getAttr (builtins.currentSystem) package;
+      };
+    };
 
   release = pkgs.releaseTools.aggregate {
     name = "node2nix-${version}";
@@ -83,6 +88,7 @@ rec {
       ) systems)
     ++ map (system: tests."${system}".grunt) systems
     ++ map (system: tests."${system}".lockfile) systems
-    ++ map (system: tests."${system}".scoped) systems;
+    ++ map (system: tests."${system}".scoped) systems
+    ++ [ tests.cli ];
   };
 }
