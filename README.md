@@ -90,7 +90,7 @@ $ node2nix
 ```
 
 The above command generates three files `node-packages.nix` containing Nix
-expressions for the requested packge, `node-env.nix` contains the build logic
+expressions for the requested package, `node-env.nix` contains the build logic
 and `default.nix` is a composition expression allowing users to deploy the
 package.
 
