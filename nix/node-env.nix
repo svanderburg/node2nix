@@ -72,7 +72,7 @@ let
           packageDir="$(find . -maxdepth 1 -type d | tail -1)"
 
           # Restore write permissions to make building work
-          find "$packageDir" -type d -print0 | xargs -0 chmod u+x
+          find "$packageDir" -type d -exec chmod u+x {} \;
           chmod -R u+w "$packageDir"
 
           # Move the extracted tarball into the output folder
