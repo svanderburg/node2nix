@@ -319,6 +319,7 @@ let
     , npmFlags ? ""
     , dontNpmInstall ? false
     , bypassCache ? false
+    , reconstructLock ? false
     , preRebuild ? ""
     , dontStrip ? true
     , unpackPhase ? "true"
@@ -375,11 +376,18 @@ let
         runHook preRebuild
 
         ${stdenv.lib.optionalString bypassCache ''
-          if [ ! -f package-lock.json ]
-          then
-              echo "No package-lock.json file found, reconstructing..."
-              node ${reconstructPackageLock}
-          fi
+          ${stdenv.lib.optionalString reconstructLock ''
+            if [ -f package-lock.json ]
+            then
+                echo "WARNING: Reconstruct lock option enabled, but a lock file already exists!"
+                echo "This will most likely result in version mismatches! We will remove the lock file and regenerate it!"
+                rm package-lock.json
+            else
+                echo "No package-lock.json file found, reconstructing..."
+            fi
+
+            node ${reconstructPackageLock}
+          ''}
 
           node ${addIntegrityFieldsScript}
         ''}
@@ -431,6 +439,7 @@ let
     , npmFlags ? ""
     , dontNpmInstall ? false
     , bypassCache ? false
+    , reconstructLock ? false
     , dontStrip ? true
     , unpackPhase ? "true"
     , buildPhase ? "true"
@@ -488,11 +497,18 @@ let
           export HOME=$PWD
 
           ${stdenv.lib.optionalString bypassCache ''
-            if [ ! -f package-lock.json ]
-            then
-                echo "No package-lock.json file found, reconstructing..."
-                node ${reconstructPackageLock}
-            fi
+            ${stdenv.lib.optionalString reconstructLock ''
+              if [ -f package-lock.json ]
+              then
+                  echo "WARNING: Reconstruct lock option enabled, but a lock file already exists!"
+                  echo "This will most likely result in version mismatches! We will remove the lock file and regenerate it!"
+                  rm package-lock.json
+              else
+                  echo "No package-lock.json file found, reconstructing..."
+              fi
+
+              node ${reconstructPackageLock}
+            ''}
 
             node ${addIntegrityFieldsScript}
           ''}
