@@ -48,7 +48,7 @@ var supplementJSON;
 var supplementNix = "supplement.nix";
 var nodeEnvNix = "node-env.nix";
 var lockJSON;
-var registryURL = "http://registry.npmjs.org";
+var registryURL = "https://registry.npmjs.org";
 var nodePackage = "nodejs-6_x";
 var noCopyNodeEnv = false;
 var bypassCache = false;
