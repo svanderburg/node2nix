@@ -308,51 +308,11 @@ let
     '';
   };
 
-  # Builds and composes an NPM package including all its dependencies
-  buildNodePackage =
-    { name
-    , packageName
-    , version
-    , dependencies ? []
-    , buildInputs ? []
-    , production ? true
-    , npmFlags ? ""
-    , dontNpmInstall ? false
-    , bypassCache ? false
-    , reconstructLock ? false
-    , preRebuild ? ""
-    , dontStrip ? true
-    , unpackPhase ? "true"
-    , buildPhase ? "true"
-    , ... }@args:
-
+  prepareAndInvokeNPM = {packageName, bypassCache, reconstructLock, npmFlags, production}:
     let
       forceOfflineFlag = if bypassCache then "--offline" else "--registry http://www.example.com";
-      extraArgs = removeAttrs args [ "name" "dependencies" "buildInputs" "dontStrip" "dontNpmInstall" "preRebuild" "unpackPhase" "buildPhase" ];
     in
-    stdenv.mkDerivation ({
-      name = "node-${name}-${version}";
-      buildInputs = [ tarWrapper python nodejs ]
-        ++ stdenv.lib.optional (stdenv.isLinux) utillinux
-        ++ stdenv.lib.optional (stdenv.isDarwin) libtool
-        ++ buildInputs;
-
-      inherit dontStrip; # Stripping may fail a build for some package deployments
-      inherit dontNpmInstall preRebuild unpackPhase buildPhase;
-
-      compositionScript = composePackage args;
-      pinpointDependenciesScript = pinpointDependenciesOfPackage args;
-
-      passAsFile = [ "compositionScript" "pinpointDependenciesScript" ];
-
-      installPhase = ''
-        # Create and enter a root node_modules/ folder
-        mkdir -p $out/lib/node_modules
-        cd $out/lib/node_modules
-
-        # Compose the package and all its dependencies
-        source $compositionScriptPath
-
+    ''
         # Pinpoint the versions of all dependencies to the ones that are actually being used
         echo "pinpointing versions of dependencies..."
         source $pinpointDependenciesScriptPath
@@ -401,6 +361,53 @@ let
 
             npm ${forceOfflineFlag} --nodedir=${nodeSources} ${npmFlags} ${stdenv.lib.optionalString production "--production"} install
         fi
+    '';
+
+  # Builds and composes an NPM package including all its dependencies
+  buildNodePackage =
+    { name
+    , packageName
+    , version
+    , dependencies ? []
+    , buildInputs ? []
+    , production ? true
+    , npmFlags ? ""
+    , dontNpmInstall ? false
+    , bypassCache ? false
+    , reconstructLock ? false
+    , preRebuild ? ""
+    , dontStrip ? true
+    , unpackPhase ? "true"
+    , buildPhase ? "true"
+    , ... }@args:
+
+    let
+      extraArgs = removeAttrs args [ "name" "dependencies" "buildInputs" "dontStrip" "dontNpmInstall" "preRebuild" "unpackPhase" "buildPhase" ];
+    in
+    stdenv.mkDerivation ({
+      name = "node-${name}-${version}";
+      buildInputs = [ tarWrapper python nodejs ]
+        ++ stdenv.lib.optional (stdenv.isLinux) utillinux
+        ++ stdenv.lib.optional (stdenv.isDarwin) libtool
+        ++ buildInputs;
+
+      inherit dontStrip; # Stripping may fail a build for some package deployments
+      inherit dontNpmInstall preRebuild unpackPhase buildPhase;
+
+      compositionScript = composePackage args;
+      pinpointDependenciesScript = pinpointDependenciesOfPackage args;
+
+      passAsFile = [ "compositionScript" "pinpointDependenciesScript" ];
+
+      installPhase = ''
+        # Create and enter a root node_modules/ folder
+        mkdir -p $out/lib/node_modules
+        cd $out/lib/node_modules
+
+        # Compose the package and all its dependencies
+        source $compositionScriptPath
+
+        ${prepareAndInvokeNPM { inherit packageName bypassCache reconstructLock npmFlags production; }}
 
         # Create symlink to the deployed executable folder, if applicable
         if [ -d "$out/lib/node_modules/.bin" ]
@@ -446,8 +453,6 @@ let
     , ... }@args:
 
     let
-      forceOfflineFlag = if bypassCache then "--offline" else "--registry http://www.example.com";
-
       extraArgs = removeAttrs args [ "name" "dependencies" "buildInputs" ];
 
       nodeDependencies = stdenv.mkDerivation ({
@@ -482,46 +487,13 @@ let
             fi
           ''}
 
-          # Pinpoint the versions of all dependencies to the ones that are actually being used
-          echo "pinpointing versions of dependencies..."
+          # Go to the parent folder to make sure that all packages are pinpointed
           cd ..
           ${stdenv.lib.optionalString (builtins.substring 0 1 packageName == "@") "cd .."}
 
-          source $pinpointDependenciesScriptPath
-          cd ${packageName}
+          ${prepareAndInvokeNPM { inherit packageName bypassCache reconstructLock npmFlags production; }}
 
-          # Patch the shebangs of the bundled modules to prevent them from
-          # calling executables outside the Nix store as much as possible
-          patchShebangs .
-
-          export HOME=$PWD
-
-          ${stdenv.lib.optionalString bypassCache ''
-            ${stdenv.lib.optionalString reconstructLock ''
-              if [ -f package-lock.json ]
-              then
-                  echo "WARNING: Reconstruct lock option enabled, but a lock file already exists!"
-                  echo "This will most likely result in version mismatches! We will remove the lock file and regenerate it!"
-                  rm package-lock.json
-              else
-                  echo "No package-lock.json file found, reconstructing..."
-              fi
-
-              node ${reconstructPackageLock}
-            ''}
-
-            node ${addIntegrityFieldsScript}
-          ''}
-
-          npm ${forceOfflineFlag} --nodedir=${nodeSources} ${npmFlags} ${stdenv.lib.optionalString production "--production"} rebuild
-
-          ${stdenv.lib.optionalString (!dontNpmInstall) ''
-            # NPM tries to download packages even when they already exist if npm-shrinkwrap is used.
-            rm -f npm-shrinkwrap.json
-
-            npm ${forceOfflineFlag} --nodedir=${nodeSources} ${npmFlags} ${stdenv.lib.optionalString production "--production"} install
-          ''}
-
+          # Expose the executables that were installed
           cd ..
           ${stdenv.lib.optionalString (builtins.substring 0 1 packageName == "@") "cd .."}
 
