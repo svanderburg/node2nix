@@ -11,7 +11,7 @@ let
 
     cat > $out/bin/tar <<EOF
     #! ${stdenv.shell} -e
-    $(type -p tar) "\$@" --warning=no-unknown-keyword
+    $(type -p tar) "\$@" --warning=no-unknown-keyword --delay-directory-restore
     EOF
 
     chmod +x $out/bin/tar
