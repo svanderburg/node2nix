@@ -3,6 +3,16 @@ node2nix
 Deploy [NPM Package Manager](http://www.npmjs.org) (NPM) packages with the
 [Nix package manager](http://www.nixos.org/nix)!
 
+Using `node2nix` instead of the "vanilla" NPM is useful for a variety of reasons:
+* To deploy NPM packages on [NixOS](https://nixos.org) and to manage complex
+  software installations (that include non-NPM managed dependencies) by using a
+  universal deployment solution (Nix).
+* To integrate with other tools in the Nix-ecosystem: NixOS to manage an entire
+  system from a single declarative specification,
+  [NixOps](https://nixos.org/nixops) to deploy networks of machines (bare metal
+  and in the cloud), and [Disnix](https://nixos.org/disnix) to manage
+  service-oriented systems.
+
 Table of Contents
 ================
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-generate-toc again -->
