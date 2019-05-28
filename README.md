@@ -26,9 +26,8 @@ Table of Contents
     - [Generating a tarball from a Node.js development project](#generating-a-tarball-from-a-nodejs-development-project)
     - [Deploying a development environment of a Node.js development project](#deploying-a-development-environment-of-a-nodejs-development-project)
     - [Deploying a collection of NPM packages from the NPM registry](#deploying-a-collection-of-npm-packages-from-the-npm-registry)
-    - [Generating packages for Node.js 8.x](#generating-packages-for-nodejs-8x)
-    - [Generating packages for Node.js 10.x](#generating-packages-for-nodejs-10x)
-    - [Generating packages for Node.js 4.x](#generating-packages-for-nodejs-4x)
+    - [Using NPM lock files](#using-npm-lock-files)
+    - [Generating packages for specific Node.js versions](#generating-packages-for-specific-nodejs-versions)
 - [Advanced options](#advanced-options)
     - [Development mode](#development-mode)
     - [Specifying paths](#specifying-paths)
@@ -37,6 +36,7 @@ Table of Contents
     - [Wrapping or patching the code or any of its dependencies](#wrapping-or-patching-the-code-or-any-of-its-dependencies)
     - [Adding additional/global NPM packages to a packaging process](#adding-additionalglobal-npm-packages-to-a-packaging-process)
     - [Using private Git repositories](#using-private-git-repositories)
+    - [Disable cache bypassing](#disable-cache-bypassing)
 - [Troubleshooting](#troubleshooting)
     - [Deploying peer dependencies](#deploying-peer-dependencies)
     - [Stripping optional dependencies](#striping-optional-dependencies)
@@ -234,26 +234,12 @@ This command deploys NiJS version 0.0.18:
 $ nix-env -f default.nix -iA '"nijs-0.0.18"'
 ```
 
-Generating packages for Node.js 8.x
------------------------------------
-Node.js 8.x includes npm 5.x that supports lock files pinpointing the exact
-versions used of all dependencies and transitive dependencies, and a content
-addressable cache.
-
-Unfortunately, in a Nix builder environment the cache is empty and NPM does not
-seem to trust dependencies that are already stored in the bundled
-`node_modules/` folder, because they lack the meta data that can be used for
-integrity checks.
-
-We can bypass the cache by augmenting package configuration files with these
-mandatory meta data fields, by providing the `--bypass-cache` parameter.
-
-Additionally, to make the entire generation for Node.js 8.x work, you can
-provide the `-8` parameter:
-
-```bash
-$ node2nix -8 -i node-package.json
-```
+Using NPM lock files
+--------------------
+Node.js 8.x and higher (that includes npm 5.x or higher) can also work with
+so-called *lock files* that pinpoint the exact versions used of all dependencies
+and transitive dependencies, and provides a content addressable cache to speed
+up deployments.
 
 Some Node.js development projects may include a `package-lock.json` file
 pinpointing the exact versions of the dependencies and transitive dependencies.
@@ -261,35 +247,25 @@ pinpointing the exact versions of the dependencies and transitive dependencies.
 uses the exact same packages:
 
 ```bash
-$ node2nix -8 -l package-lock.json
+$ node2nix -l package-lock.json
 ```
 
-Generating packages for Node.js 10.x
------------------------------------
-Node.js 10.x includes npm 6.x but its generation process is no different than
-8.x.
-
-To tell `node2nix` to generate for version 10.x, use the `--nodejs-10`
-parameter:
-
-```bash
-$ node2nix --nodejs-10 -l package-lock.json
-```
-
-Generating packages for Node.js 4.x
------------------------------------
+Generating packages for specific Node.js versions
+-------------------------------------------------
 By default, `node2nix` generates Nix expressions that should be used in
-conjuction with Node.js 6.x, which is currently the oldest supported release.
+conjuction with Node.js 8.x, which is currently the oldest supported release.
 
-When it is desired, it is still possible to generate expression for Node.js 4.x
-that does not use a flattening/deduplication algorithm.
+When it is desired, it is also possible to generate expressions for other
+Node.js versions. For example, Node.js 4.x does not use a
+flattening/deduplication algorithm, and 6.x that does not support lock files or
+caching.
 
 The old non-flattening structure can be simulated by adding the `--no-flatten`
 parameter.
 
-Additionally, to enable all flags to make generation for Node.js 4.x work, add
-the `-4` parameter. For example, running the following command generates
-expressions that can be used with Node.js 4.x:
+Additionally, to enable all flags to make generation for a certain Node.js
+work, `node2nix` provides convenience parameters. For example, by using the `-4`
+parameter, we can generate expressions that can be used with Node.js 4.x:
 
 ```bash
 $ node2nix -4 -i node-package.json
@@ -663,6 +639,20 @@ nodePackages // {
 By overriding a package and setting the `dontNpmInstall` parameter to `true`, we
 skip the install step (which merely serves as a check). The generated expression
 is actually responsible for obtaining and extracting the dependencies.
+
+Disable cache bypassing
+-----------------------
+In a Nix builder environment, the NPM packages cache is empty and NPM does not
+seem to trust dependencies that are already stored in the bundled
+`node_modules/` folder, because they lack the meta data that can be used for
+integrity checks.
+
+By default, `node2nix` bypasses the cache by augmenting package configuration
+files with these mandatory meta data fields.
+
+If an older NPM version is used (any version before 5.x),
+this meta information is not required. Bypassing the cache can be disabled by
+providing the `--no-bypass-cache` parameter.
 
 API documentation
 =================
