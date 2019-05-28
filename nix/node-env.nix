@@ -385,7 +385,7 @@ let
       extraArgs = removeAttrs args [ "name" "dependencies" "buildInputs" "dontStrip" "dontNpmInstall" "preRebuild" "unpackPhase" "buildPhase" ];
     in
     stdenv.mkDerivation ({
-      name = "node-${name}-${version}";
+      name = "node_${name}-${version}";
       buildInputs = [ tarWrapper python nodejs ]
         ++ stdenv.lib.optional (stdenv.isLinux) utillinux
         ++ stdenv.lib.optional (stdenv.isDarwin) libtool
