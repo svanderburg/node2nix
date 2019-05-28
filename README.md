@@ -563,6 +563,20 @@ $ export NIX_PATH=ssh-config-file=~/ssh_config:$NIX_PATH
 The above approach also makes it possible to deploy a NPM package with private
 dependencies as part of a NixOS, NixOps or Disnix configuration.
 
+Disable cache bypassing
+-----------------------
+In a Nix builder environment, the NPM packages cache is empty and NPM does not
+seem to trust dependencies that are already stored in the bundled
+`node_modules/` folder, because they lack the meta data that can be used for
+integrity checks.
+
+By default, `node2nix` bypasses the cache by augmenting package configuration
+files with these mandatory meta data fields.
+
+If an older NPM version is used (any version before 5.x),
+this meta information is not required. Bypassing the cache can be disabled by
+providing the `--no-bypass-cache` parameter.
+
 Troubleshooting
 ===============
 This section contains some troubleshooting information for common problems.
@@ -639,20 +653,6 @@ nodePackages // {
 By overriding a package and setting the `dontNpmInstall` parameter to `true`, we
 skip the install step (which merely serves as a check). The generated expression
 is actually responsible for obtaining and extracting the dependencies.
-
-Disable cache bypassing
------------------------
-In a Nix builder environment, the NPM packages cache is empty and NPM does not
-seem to trust dependencies that are already stored in the bundled
-`node_modules/` folder, because they lack the meta data that can be used for
-integrity checks.
-
-By default, `node2nix` bypasses the cache by augmenting package configuration
-files with these mandatory meta data fields.
-
-If an older NPM version is used (any version before 5.x),
-this meta information is not required. Bypassing the cache can be disabled by
-providing the `--no-bypass-cache` parameter.
 
 API documentation
 =================
