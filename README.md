@@ -89,7 +89,7 @@ Running the following command generates a collection of Nix expressions from
 $ node2nix
 ```
 
-The above command generates three files `node-packages.nix` containing Nix
+The above command generates three files: `node-packages.nix` containing Nix
 expressions for the requested package, `node-env.nix` contains the build logic
 and `default.nix` is a composition expression allowing users to deploy the
 package.
@@ -118,7 +118,7 @@ used to generate a tarball from the project:
 $ nix-build -A tarball
 ```
 
-The above command-line instruction produces a tarball that can is placed in the
+The above command-line instruction produces a tarball that is placed in the
 following location:
 
 ```bash
