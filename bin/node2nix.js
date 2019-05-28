@@ -16,17 +16,17 @@ var switches = [
     ['-e', '--node-env FILE', 'Path to the Nix expression implementing functions that builds NPM packages (defaults to: node-env.nix)'],
     ['-l', '--lock FILE', 'Path to the package-lock.json file that pinpoints the variants of all dependencies'],
     ['-d', '--development', 'Specifies whether to do a development (non-production) deployment for a package.json deployment (false by default)'],
-    ['-4', '--nodejs-4', 'Provides all settings to generate expression for usage with Node.js 4.x (default is: Node.js 4.x)'],
-    ['-6', '--nodejs-6', 'Provides all settings to generate expression for usage with Node.js 6.x (default is: Node.js 4.x)'],
-    ['-8', '--nodejs-8', 'Provides all settings to generate expression for usage with Node.js 8.x (default is: Node.js 4.x)'],
-    ['--nodejs-10', 'Provides all settings to generate expression for usage with Node.js 10.x (default is: Node.js 4.x)'],
+    ['-4', '--nodejs-4', 'Provides all settings to generate expression for usage with Node.js 4.x (default is: Node.js 8.x)'],
+    ['-6', '--nodejs-6', 'Provides all settings to generate expression for usage with Node.js 6.x (default is: Node.js 8.x)'],
+    ['-8', '--nodejs-8', 'Provides all settings to generate expression for usage with Node.js 8.x (default is: Node.js 8.x)'],
+    ['--nodejs-10', 'Provides all settings to generate expression for usage with Node.js 10.x (default is: Node.js 8.x)'],
     ['--supplement-input FILE', 'A supplement package JSON file that are passed as build inputs to all packages defined in the input JSON file'],
     ['--supplement-output FILE', 'Path to a Nix expression representing a supplementing set of Nix packages provided as inputs to a project (defaults to: supplement.nix)'],
     ['--include-peer-dependencies', 'Specifies whether to include peer dependencies. In npm 2.x, this is the default. (false by default)'],
     ['--no-flatten', 'Simulate pre-npm 3.x isolated dependency structure. (false by default)'],
     ['--pkg-name NAME', 'Specifies the name of the Node.js package to use from Nixpkgs (defaults to: nodejs)'],
     ['--registry NAME', 'URL referring to the NPM packages registry. It defaults to the official NPM one, but can be overridden to support private registries'],
-    ['--bypass-cache', 'Specifies that package builds need to bypass the content addressable cache (required for NPM 5.x)'],
+    ['--no-bypass-cache', 'Specifies that package builds do not need to bypass the content addressable cache (required for NPM 5.x)'],
     ['--no-copy-node-env', 'Do not create a copy of the Nix expression that builds NPM packages'],
     ['--use-fetchgit-private', 'Use fetchGitPrivate instead of fetchgit in the generated Nix expressions'],
     ['--strip-optional-dependencies', 'Strips the optional dependencies from the regular dependencies in the NPM registry']
@@ -49,9 +49,9 @@ var supplementNix = "supplement.nix";
 var nodeEnvNix = "node-env.nix";
 var lockJSON;
 var registryURL = "https://registry.npmjs.org";
-var nodePackage = "nodejs-6_x";
+var nodePackage = "nodejs-8_x";
 var noCopyNodeEnv = false;
-var bypassCache = false;
+var bypassCache = true;
 var useFetchGitPrivate = false;
 var stripOptionalDependencies = false;
 var executable;
@@ -105,11 +105,13 @@ parser.on('development', function(arg, value) {
 parser.on('nodejs-4', function(arg, value) {
     flatten = false;
     nodePackage = "nodejs-4_x";
+    byPassCache = false;
 });
 
 parser.on('nodejs-6', function(arg, value) {
     flatten = true;
     nodePackage = "nodejs-6_x";
+    byPassCache = false;
 });
 
 parser.on('nodejs-8', function(arg, value) {
@@ -140,8 +142,8 @@ parser.on('registry', function(arg, value) {
     registryURL = value;
 });
 
-parser.on('bypass-cache', function(arg, value) {
-    bypassCache = true;
+parser.on('no-bypass-cache', function(arg, value) {
+    bypassCache = false;
 });
 
 parser.on('no-copy-node-env', function(arg, value) {
