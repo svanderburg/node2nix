@@ -634,6 +634,24 @@ let
         sha1 = "41ae2eeb65efa62268aebfea83ac7d79299b0887";
       };
     };
+    "eve-0.4.2" = {
+      name = "eve";
+      packageName = "eve";
+      version = "0.4.2";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/eve/-/eve-0.4.2.tgz";
+        sha1 = "7eea0afc0e4efb7c9365615315a3576833ead2ae";
+      };
+    };
+    "eve-raphael-0.5.0" = {
+      name = "eve-raphael";
+      packageName = "eve-raphael";
+      version = "0.5.0";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/eve-raphael/-/eve-raphael-0.5.0.tgz";
+        sha1 = "17c754b792beef3fa6684d79cf5a47c63c4cda30";
+      };
+    };
     "execa-1.0.0" = {
       name = "execa";
       packageName = "execa";
@@ -1993,6 +2011,15 @@ let
         sha512 = "Hrgsx+orqoygnmhFbKaHE6c296J+HTAQXoxEF6gNupROmmGJRoyzfG3ccAveqCBrwr/2yxQ5BVd/GTl5agOwSg==";
       };
     };
+    "raphael-2.2.8" = {
+      name = "raphael";
+      packageName = "raphael";
+      version = "2.2.8";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/raphael/-/raphael-2.2.8.tgz";
+        sha512 = "0kWKcGn4lXTw4eUiOhjspYiG+v0m6zSmTmlO62E0hl2CYKUvCuHER9YKqXYvOn2nj24mYp8jzHOLeBuj/Gn28Q==";
+      };
+    };
     "raw-body-2.4.0" = {
       name = "raw-body";
       packageName = "raw-body";
@@ -2254,6 +2281,15 @@ let
         sha512 = "mbKkMdQKsjX4BAL4bRYTj21edOf8cN7XHdYUJEe+Zn99hVEYcMvKPct1IqNe7+AZPirn8BCDOQBHQZknqmKlZQ==";
       };
     };
+    "snapsvg-0.4.0" = {
+      name = "snapsvg";
+      packageName = "snapsvg";
+      version = "0.4.0";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/snapsvg/-/snapsvg-0.4.0.tgz";
+        sha1 = "e0767014167825957de7e125c29b0fa89796ea03";
+      };
+    };
     "source-map-0.5.7" = {
       name = "source-map";
       packageName = "source-map";
@@ -2431,6 +2467,15 @@ let
         sha1 = "e73dd3d7b0d7c5ed86fbac6b0ae7d8c6a69d50fa";
       };
     };
+    "underscore-1.8.3" = {
+      name = "underscore";
+      packageName = "underscore";
+      version = "1.8.3";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/underscore/-/underscore-1.8.3.tgz";
+        sha1 = "4f3fb53b106e6097fcf9cb4109f2a5e9bdfa5022";
+      };
+    };
     "union-value-1.0.0" = {
       name = "union-value";
       packageName = "union-value";
@@ -2546,6 +2591,15 @@ let
       src = fetchurl {
         url = "https://registry.npmjs.org/verror/-/verror-1.10.0.tgz";
         sha1 = "3a105ca17053af55d6e270c1f8288682e18da400";
+      };
+    };
+    "webfontloader-1.6.28" = {
+      name = "webfontloader";
+      packageName = "webfontloader";
+      version = "1.6.28";
+      src = fetchurl {
+        url = "https://registry.npmjs.org/webfontloader/-/webfontloader-1.6.28.tgz";
+        sha1 = "db786129253cb6e8eae54c2fb05f870af6675bae";
       };
     };
     "which-1.3.1" = {
@@ -3458,6 +3512,32 @@ in
       description = "Wrapper for reply processing code in hiredis";
       homepage = http://github.com/redis/hiredis-node;
       license = "BSD-3-Clause";
+    };
+    production = true;
+    bypassCache = true;
+    reconstructLock = true;
+  };
+  "js-sequence-diagrams-git+https://github.com/codimd/js-sequence-diagrams.git" = nodeEnv.buildNodePackage {
+    name = "js-sequence-diagrams";
+    packageName = "js-sequence-diagrams";
+    version = "2.0.1";
+    src = fetchgit {
+      url = "https://github.com/codimd/js-sequence-diagrams.git";
+      rev = "b9afa038521e5dadf9b97624a3c7db21890be669";
+      sha256 = "fcbd23d0070bfce3ed7a4087f6b842a4d16b23cb01e2dd4129429546db3a658b";
+    };
+    dependencies = [
+      sources."eve-0.4.2"
+      sources."eve-raphael-0.5.0"
+      sources."lodash-4.17.11"
+      sources."raphael-2.2.8"
+      sources."snapsvg-0.4.0"
+      sources."underscore-1.8.3"
+      sources."webfontloader-1.6.28"
+    ];
+    buildInputs = globalBuildInputs;
+    meta = {
+      license = "BSD-2-Clause";
     };
     production = true;
     bypassCache = true;

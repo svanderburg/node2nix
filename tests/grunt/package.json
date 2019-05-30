@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": "true",
   "devDependencies": {
-    "lodash": "3.x",
+    "lodash": "4.x",
     "grunt": "*",
     "grunt-contrib-jshint": "*",
     "grunt-contrib-watch": "*"

@@ -679,13 +679,13 @@ let
         sha512 = "GcRz3AWTqSUphY3vsUqQSFMbgR38a4Lh3GWlHRh/7MRwz8mcu9n2IO7HOh+bXHrR9kOPDl5RNCaEsrneb+xhHQ==";
       };
     };
-    "markdown-it-anchor-5.2.1" = {
+    "markdown-it-anchor-5.2.3" = {
       name = "markdown-it-anchor";
       packageName = "markdown-it-anchor";
-      version = "5.2.1";
+      version = "5.2.3";
       src = fetchurl {
-        url = "https://registry.npmjs.org/markdown-it-anchor/-/markdown-it-anchor-5.2.1.tgz";
-        sha512 = "Z5WY30dljha9roE8Das0UKNrtz57bpwxnECHRiraataRK5+oZ+jk+6NZM6Jwowx0li5MOwJV9hP9LpeyLFQTWQ==";
+        url = "https://registry.npmjs.org/markdown-it-anchor/-/markdown-it-anchor-5.2.3.tgz";
+        sha512 = "KjEKPZNYoanmTECbh9x1bBsXGJ6dNUTxIFg5YhdBxYkx/+27LNVUzh7Ctlb7jxadgGCWMX9tt46Aaby7Af8xSg==";
       };
     };
     "marked-0.6.2" = {
@@ -1535,7 +1535,7 @@ let
       sources."linkify-it-2.1.0"
       sources."lodash-4.17.11"
       sources."markdown-it-8.4.2"
-      sources."markdown-it-anchor-5.2.1"
+      sources."markdown-it-anchor-5.2.3"
       sources."marked-0.6.2"
       sources."mdurl-1.0.1"
       sources."mime-db-1.40.0"

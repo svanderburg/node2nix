@@ -18,5 +18,6 @@
   "@sindresorhus/df",
   { "esprima-fb": "~3001.0001.0000-dev-harmony-fb" },
   { "bcrypt": "0.8.x" },
-  "hiredis"
+  "hiredis",
+  { "js-sequence-diagrams": "git+https://github.com/codimd/js-sequence-diagrams.git" }
 ]

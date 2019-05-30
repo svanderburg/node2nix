@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "dependencies": {
     "async": "*",
-    "express": "git+https://github.com/strongloop/express.git#ef7ad68",
+    "express": "git+https://github.com/strongloop/express.git#e1b45eb",
     "testa": "../testa",
     "@sindresorhus/df": "*"
   },

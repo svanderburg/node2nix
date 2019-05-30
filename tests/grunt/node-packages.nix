@@ -697,15 +697,6 @@ let
         sha1 = "956905708d58b4bab4c2261b04f59f31c99374c0";
       };
     };
-    "lodash-3.10.1" = {
-      name = "lodash";
-      packageName = "lodash";
-      version = "3.10.1";
-      src = fetchurl {
-        url = "https://registry.npmjs.org/lodash/-/lodash-3.10.1.tgz";
-        sha1 = "5bf45e8e49ba4189e17d482789dfd15bd140b7b6";
-      };
-    };
     "lodash-4.17.11" = {
       name = "lodash";
       packageName = "lodash";
@@ -1308,7 +1299,6 @@ let
       (sources."globule-1.2.1" // {
         dependencies = [
           sources."glob-7.1.4"
-          sources."lodash-4.17.11"
         ];
       })
       sources."graceful-fs-4.1.15"
@@ -1322,25 +1312,12 @@ let
       (sources."grunt-contrib-watch-1.1.0" // {
         dependencies = [
           sources."async-2.6.2"
-          sources."lodash-4.17.11"
         ];
       })
       sources."grunt-known-options-1.1.1"
-      (sources."grunt-legacy-log-2.0.0" // {
-        dependencies = [
-          sources."lodash-4.17.11"
-        ];
-      })
-      (sources."grunt-legacy-log-utils-2.0.1" // {
-        dependencies = [
-          sources."lodash-4.17.11"
-        ];
-      })
-      (sources."grunt-legacy-util-1.1.1" // {
-        dependencies = [
-          sources."lodash-4.17.11"
-        ];
-      })
+      sources."grunt-legacy-log-2.0.0"
+      sources."grunt-legacy-log-utils-2.0.1"
+      sources."grunt-legacy-util-1.1.1"
       sources."has-flag-3.0.0"
       sources."hooker-0.2.3"
       sources."hosted-git-info-2.7.1"
@@ -1356,14 +1333,10 @@ let
       sources."isarray-0.0.1"
       sources."isexe-2.0.0"
       sources."js-yaml-3.13.1"
-      (sources."jshint-2.10.2" // {
-        dependencies = [
-          sources."lodash-4.17.11"
-        ];
-      })
+      sources."jshint-2.10.2"
       sources."livereload-js-2.4.0"
       sources."load-json-file-1.1.0"
-      sources."lodash-3.10.1"
+      sources."lodash-4.17.11"
       sources."loud-rejection-1.6.0"
       sources."map-obj-1.0.1"
       sources."meow-3.7.0"
