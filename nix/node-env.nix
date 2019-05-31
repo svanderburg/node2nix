@@ -219,7 +219,16 @@ let
                       packageObj["_integrity"] = "sha1-000000000000000000000000000="; // When no _integrity string has been provided (e.g. by Git dependencies), add a dummy one. It does not seem to harm and it bypasses downloads.
                   }
 
-                  packageObj["_resolved"] = dependency.version; // Set the resolved version to the version identifier. This prevents NPM from cloning Git repositories.
+                  if(dependency.resolved) {
+                      packageObj["_resolved"] = dependency.resolved; // Adopt the resolved property if one has been provided
+                  } else {
+                      packageObj["_resolved"] = dependency.version; // Set the resolved version to the version identifier. This prevents NPM from cloning Git repositories.
+                  }
+
+                  if(dependency.from !== undefined) { // Adopt from property if one has been provided
+                      packageObj["_from"] = dependency.from;
+                  }
+
                   fs.writeFileSync(packageJSONPath, JSON.stringify(packageObj, null, 2));
               }
 
