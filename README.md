@@ -99,10 +99,10 @@ Running the following command generates a collection of Nix expressions from
 $ node2nix
 ```
 
-The above command generates three files: `node-packages.nix` containing Nix
-expressions for the requested package, `node-env.nix` contains the build logic
-and `default.nix` is a composition expression allowing users to deploy the
-package.
+The above command generates three files: `node-packages.nix` capturing the
+packages that can be deployed including all its required dependencies,
+`node-env.nix` contains the build logic and `default.nix` is a composition
+expression allowing users to deploy the package.
 
 By running the following Nix command with these expressions, the project can be
 built:
@@ -112,8 +112,8 @@ $ nix-build -A package
 ```
 
 The above instruction places a `result` symlink in the current working dir
-pointing to the build result. An executable part of the project can be run as
-follows:
+pointing to the build result. An executable (that is part of the project) can be
+started as follows:
 
 ```bash
 $ ./result/bin/node2nix
@@ -135,7 +135,8 @@ following location:
 $ ls result/tarballs/node2nix-1.0.1.tgz
 ```
 
-The above tarball can be distributed to others and installed with NPM by running:
+The above tarball can be distributed to any user that has the NPM package
+manager installed, and installed by running:
 
 ```bash
 $ npm install node2nix-1.0.1.tgz
@@ -155,7 +156,7 @@ $ nix-shell -A shell
 ```
 
 Within this shell session, files can be modified and run without any hassle.
-For example, the following command should work without any trouble:
+For example, the following command should work:
 
 ```bash
 $ node bin/node2nix.js --help
@@ -197,7 +198,7 @@ Nix expressions can be generated from this JSON specification as follows:
 $ node2nix -i node-packages.json
 ```
 
-And by using the generated Nix expressions, we can install `async` through Nix as
+And by using the generated Nix expressions, we can install `async` with Nix as
 follows:
 
 ```bash
@@ -253,7 +254,8 @@ $ node2nix -l package-lock.json
 Generating packages for specific Node.js versions
 -------------------------------------------------
 By default, `node2nix` generates Nix expressions that should be used in
-conjuction with Node.js 8.x, which is currently the oldest supported release.
+conjuction with Node.js 8.x, which is currently the oldest supported LTS
+release.
 
 When it is desired, it is also possible to generate expressions for other
 Node.js versions. For example, Node.js 4.x does not use a
@@ -458,7 +460,7 @@ We can automate such a workflow as follows. Consider the following
 The above configuration declares grunt and two grunt plugins (`jshint` and
 `watch`) as development dependencies.
 
-We can create a supplemental package specification that represents additional
+We can create a supplemental package specification that refers to additional
 NPM packages that are supposed to be installed globally:
 
 ```json
@@ -470,7 +472,7 @@ NPM packages that are supposed to be installed globally:
 The above configuration (`supplement.json`) states that we need the `grunt-cli`
 as an additional package, installed globally.
 
-Also you can provide specific version of supplemental packages.
+Furtheremore, you can provide specific versions of supplemental packages.
 Here is example of `supplement.json` with `grunt-cli` version `1.2.0`:
 
 ```json
@@ -573,9 +575,9 @@ integrity checks.
 By default, `node2nix` bypasses the cache by augmenting package configuration
 files with these mandatory meta data fields.
 
-If an older NPM version is used (any version before 5.x),
-this meta information is not required. Bypassing the cache can be disabled by
-providing the `--no-bypass-cache` parameter.
+If older versions of NPM are used (any version before 5.x), this meta
+information is not required. Bypassing the cache can be disabled by providing
+the `--no-bypass-cache` parameter.
 
 Troubleshooting
 ===============
@@ -600,8 +602,9 @@ Stripping optional dependencies
 -------------------------------
 When NPM packages with optional dependencies are published to the NPM registry,
 the optional dependencies become regular runtime dependencies. As a result,
-when deploying a package with a broken optional dependency, the deployment
-with fail, unlike pure optional dependencies that are allowed to fail.
+when deploying a package with a broken "integrated" optional dependency, the
+deployment with fail, unlike pure optional dependencies that are allowed to
+fail.
 
 To fix these package deployments, it is possible to strip the optional
 dependencies from packages installed from the NPM registry:
@@ -615,14 +618,14 @@ Updating the package lock file
 When deploying projects that provide a `package-lock.json` file, `node2nix`
 deployments will typically fail if the corresponding `package.json`
 configuration has changed after the generation of the lock file, because the
-dependencies in the lock file may be incomplete.
+dependency tree in the lock file may be incomplete.
 
 To fix this problem, `npm install` must be executed again so that the missing
 or changed dependencies are updated in the lock file.
 
 Disabling running NPM install
 -----------------------------
-`node2nix` tries to mimic npm's dependency resolver as closely as possible.
+`node2nix` tries to mimic NPM's dependency resolver as closely as possible.
 However, it may happen that there is a small difference and the deployment fails
 a result.
 
@@ -661,7 +664,8 @@ This package includes API documentation, which can be generated with
 
 License
 =======
-The contents of this package is available under the [MIT license](http://opensource.org/licenses/MIT)
+The contents of this package is available under the
+[MIT license](http://opensource.org/licenses/MIT)
 
 Acknowledgements
 ================
