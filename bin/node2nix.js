@@ -19,6 +19,9 @@ var switches = [
     ['-4', '--nodejs-4', 'Provides all settings to generate expression for usage with Node.js 4.x (default is: Node.js 8.x)'],
     ['-6', '--nodejs-6', 'Provides all settings to generate expression for usage with Node.js 6.x (default is: Node.js 8.x)'],
     ['-8', '--nodejs-8', 'Provides all settings to generate expression for usage with Node.js 8.x (default is: Node.js 8.x)'],
+    ['-10', '--nodejs-10', 'Provides all settings to generate expression for usage with Node.js 10.x (default is: Node.js 8.x)'],
+    ['-12', '--nodejs-12', 'Provides all settings to generate expression for usage with Node.js 12.x (default is: Node.js 8.x)'],
+    ['-13', '--nodejs-13', 'Provides all settings to generate expression for usage with Node.js 13.x (default is: Node.js 8.x)'],
     ['--nodejs-10', 'Provides all settings to generate expression for usage with Node.js 10.x (default is: Node.js 8.x)'],
     ['--nodejs-12', 'Provides all settings to generate expression for usage with Node.js 12.x (default is: Node.js 8.x)'],
     ['--supplement-input FILE', 'A supplement package JSON file that are passed as build inputs to all packages defined in the input JSON file'],
@@ -130,6 +133,12 @@ parser.on('nodejs-10', function(arg, value) {
 parser.on('nodejs-12', function(arg, value) {
     flatten = true;
     nodePackage = "nodejs-12_x";
+    bypassCache = true;
+});
+
+parser.on('nodejs-13', function(arg, value) {
+    flatten = true;
+    nodePackage = "nodejs-13_x";
     bypassCache = true;
 });
 
