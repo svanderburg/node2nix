@@ -967,13 +967,13 @@ let
         sha1 = "203114d82ad2c5ed9e8e0411b3932875e889e97b";
       };
     };
-    "resolve-1.11.0" = {
+    "resolve-1.11.1" = {
       name = "resolve";
       packageName = "resolve";
-      version = "1.11.0";
+      version = "1.11.1";
       src = fetchurl {
-        url = "https://registry.npmjs.org/resolve/-/resolve-1.11.0.tgz";
-        sha512 = "WL2pBDjqT6pGUNSUzMw00o4T7If+z4H2x3Gz893WoUQ5KW8Vr9txp00ykiP16VBaZF5+j/OcXJHZ9+PCvdiDKw==";
+        url = "https://registry.npmjs.org/resolve/-/resolve-1.11.1.tgz";
+        sha512 = "vIpgF6wfuJOZI7KKKSP+HmiKggadPQAdsp5HiC1mvqnfp0gF1vdwgBWZIdrVft9pgqoMFQN+R7BSWZiBxx+BBw==";
       };
     };
     "rimraf-2.6.3" = {
@@ -1368,7 +1368,7 @@ let
       sources."readable-stream-1.1.14"
       sources."redent-1.0.0"
       sources."repeating-2.0.1"
-      sources."resolve-1.11.0"
+      sources."resolve-1.11.1"
       (sources."rimraf-2.6.3" // {
         dependencies = [
           sources."glob-7.1.4"

@@ -1,5 +1,5 @@
 {pkgs ? import <nixpkgs> {
-    inherit system;
+  inherit system;
 }, system ? builtins.currentSystem}:
 
 let

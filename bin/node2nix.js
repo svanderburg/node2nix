@@ -19,6 +19,9 @@ var switches = [
     ['-4', '--nodejs-4', 'Provides all settings to generate expression for usage with Node.js 4.x (default is: Node.js 8.x)'],
     ['-6', '--nodejs-6', 'Provides all settings to generate expression for usage with Node.js 6.x (default is: Node.js 8.x)'],
     ['-8', '--nodejs-8', 'Provides all settings to generate expression for usage with Node.js 8.x (default is: Node.js 8.x)'],
+    ['-10', '--nodejs-10', 'Provides all settings to generate expression for usage with Node.js 10.x (default is: Node.js 8.x)'],
+    ['-12', '--nodejs-12', 'Provides all settings to generate expression for usage with Node.js 12.x (default is: Node.js 8.x)'],
+    ['-13', '--nodejs-13', 'Provides all settings to generate expression for usage with Node.js 13.x (default is: Node.js 8.x)'],
     ['--nodejs-10', 'Provides all settings to generate expression for usage with Node.js 10.x (default is: Node.js 8.x)'],
     ['--nodejs-12', 'Provides all settings to generate expression for usage with Node.js 12.x (default is: Node.js 8.x)'],
     ['--supplement-input FILE', 'A supplement package JSON file that are passed as build inputs to all packages defined in the input JSON file'],
@@ -27,6 +30,7 @@ var switches = [
     ['--no-flatten', 'Simulate pre-npm 3.x isolated dependency structure. (false by default)'],
     ['--pkg-name NAME', 'Specifies the name of the Node.js package to use from Nixpkgs (defaults to: nodejs)'],
     ['--registry NAME', 'URL referring to the NPM packages registry. It defaults to the official NPM one, but can be overridden to support private registries'],
+    ['--registry-auth-token TOKEN', 'An optional token to access private NPM registry'],
     ['--no-bypass-cache', 'Specifies that package builds do not need to bypass the content addressable cache (required for NPM 5.x)'],
     ['--no-copy-node-env', 'Do not create a copy of the Nix expression that builds NPM packages'],
     ['--use-fetchgit-private', 'Use fetchGitPrivate instead of fetchgit in the generated Nix expressions'],
@@ -50,6 +54,7 @@ var supplementNix = "supplement.nix";
 var nodeEnvNix = "node-env.nix";
 var lockJSON;
 var registryURL = "https://registry.npmjs.org";
+var registryAuthToken;
 var nodePackage = "nodejs-8_x";
 var noCopyNodeEnv = false;
 var bypassCache = true;
@@ -133,6 +138,12 @@ parser.on('nodejs-12', function(arg, value) {
     bypassCache = true;
 });
 
+parser.on('nodejs-13', function(arg, value) {
+    flatten = true;
+    nodePackage = "nodejs-13_x";
+    bypassCache = true;
+});
+
 parser.on('include-peer-dependencies', function(arg, value) {
     includePeerDependencies = true;
 });
@@ -147,6 +158,10 @@ parser.on('pkg-name', function(arg, value) {
 
 parser.on('registry', function(arg, value) {
     registryURL = value;
+});
+
+parser.on('registry-auth-token', function(arg, value) {
+    registryAuthToken = value;
 });
 
 parser.on('no-bypass-cache', function(arg, value) {
@@ -227,7 +242,7 @@ if(version) {
 }
 
 /* Perform the NPM to Nix conversion */
-node2nix.npmToNix(inputJSON, outputNix, compositionNix, nodeEnvNix, lockJSON, supplementJSON, supplementNix, production, includePeerDependencies, flatten, nodePackage, registryURL, noCopyNodeEnv, bypassCache, useFetchGitPrivate, stripOptionalDependencies, function(err) {
+node2nix.npmToNix(inputJSON, outputNix, compositionNix, nodeEnvNix, lockJSON, supplementJSON, supplementNix, production, includePeerDependencies, flatten, nodePackage, registryURL, registryAuthToken, noCopyNodeEnv, bypassCache, useFetchGitPrivate, stripOptionalDependencies, function(err) {
     if(err) {
         process.stderr.write(err + "\n");
         process.exit(1);

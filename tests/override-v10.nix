@@ -1,9 +1,9 @@
 {pkgs ? import <nixpkgs> {
-    inherit system;
+  inherit system;
 }, system ? builtins.currentSystem}:
 
 let
-  nodePackages = import ./default-v8.nix {
+  nodePackages = import ./default-v10.nix {
     inherit pkgs system;
   };
 in

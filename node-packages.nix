@@ -679,13 +679,13 @@ let
         sha512 = "GcRz3AWTqSUphY3vsUqQSFMbgR38a4Lh3GWlHRh/7MRwz8mcu9n2IO7HOh+bXHrR9kOPDl5RNCaEsrneb+xhHQ==";
       };
     };
-    "markdown-it-anchor-5.2.3" = {
+    "markdown-it-anchor-5.2.4" = {
       name = "markdown-it-anchor";
       packageName = "markdown-it-anchor";
-      version = "5.2.3";
+      version = "5.2.4";
       src = fetchurl {
-        url = "https://registry.npmjs.org/markdown-it-anchor/-/markdown-it-anchor-5.2.3.tgz";
-        sha512 = "KjEKPZNYoanmTECbh9x1bBsXGJ6dNUTxIFg5YhdBxYkx/+27LNVUzh7Ctlb7jxadgGCWMX9tt46Aaby7Af8xSg==";
+        url = "https://registry.npmjs.org/markdown-it-anchor/-/markdown-it-anchor-5.2.4.tgz";
+        sha512 = "n8zCGjxA3T+Mx1pG8HEgbJbkB8JFUuRkeTZQuIM8iPY6oQ8sWOPRZJDFC9a/pNg2QkHEjjGkhBEl/RSyzaDZ3A==";
       };
     };
     "marked-0.6.2" = {
@@ -1039,13 +1039,13 @@ let
         sha512 = "oJ6y7JcUJkblRGhMByGNcszeLgU0qDxNKFCiUZR1XyzHyVsev+Mxb1tyygxLd1ORsKee1SA5BInFdUwY64GE/A==";
       };
     };
-    "resolve-1.11.0" = {
+    "resolve-1.11.1" = {
       name = "resolve";
       packageName = "resolve";
-      version = "1.11.0";
+      version = "1.11.1";
       src = fetchurl {
-        url = "https://registry.npmjs.org/resolve/-/resolve-1.11.0.tgz";
-        sha512 = "WL2pBDjqT6pGUNSUzMw00o4T7If+z4H2x3Gz893WoUQ5KW8Vr9txp00ykiP16VBaZF5+j/OcXJHZ9+PCvdiDKw==";
+        url = "https://registry.npmjs.org/resolve/-/resolve-1.11.1.tgz";
+        sha512 = "vIpgF6wfuJOZI7KKKSP+HmiKggadPQAdsp5HiC1mvqnfp0gF1vdwgBWZIdrVft9pgqoMFQN+R7BSWZiBxx+BBw==";
       };
     };
     "retry-0.10.1" = {
@@ -1264,13 +1264,13 @@ let
         sha1 = "7cbcb64b5a141b6a2efc2c5d2c67b4e150b2a268";
       };
     };
-    "tar-4.4.8" = {
+    "tar-4.4.10" = {
       name = "tar";
       packageName = "tar";
-      version = "4.4.8";
+      version = "4.4.10";
       src = fetchurl {
-        url = "https://registry.npmjs.org/tar/-/tar-4.4.8.tgz";
-        sha512 = "LzHF64s5chPQQS0IYBn9IN5h3i98c12bo4NCO7e0sGM2llXQ3p2FGC5sdENN4cTW48O915Sh+x+EXx7XW96xYQ==";
+        url = "https://registry.npmjs.org/tar/-/tar-4.4.10.tgz";
+        sha512 = "g2SVs5QIxvo6OLp0GudTqEf05maawKUxXru104iaayWA09551tFCTI8f1Asb4lPfkBr91k07iL4c11XO3/b0tA==";
       };
     };
     "temp-0.9.0" = {
@@ -1535,7 +1535,7 @@ let
       sources."linkify-it-2.1.0"
       sources."lodash-4.17.11"
       sources."markdown-it-8.4.2"
-      sources."markdown-it-anchor-5.2.3"
+      sources."markdown-it-anchor-5.2.4"
       sources."marked-0.6.2"
       sources."mdurl-1.0.1"
       sources."mime-db-1.40.0"
@@ -1589,7 +1589,7 @@ let
       sources."readable-stream-2.3.6"
       sources."request-2.88.0"
       sources."requizzle-0.2.2"
-      sources."resolve-1.11.0"
+      sources."resolve-1.11.1"
       sources."retry-0.10.1"
       sources."rimraf-2.6.3"
       sources."safe-buffer-5.1.2"
@@ -1611,7 +1611,7 @@ let
       sources."strip-ansi-3.0.1"
       sources."strip-json-comments-3.0.1"
       sources."taffydb-2.6.2"
-      sources."tar-4.4.8"
+      sources."tar-4.4.10"
       sources."temp-0.9.0"
       (sources."tough-cookie-2.4.3" // {
         dependencies = [

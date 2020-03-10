@@ -11,7 +11,7 @@ let
 
     cat > $out/bin/tar <<EOF
     #! ${stdenv.shell} -e
-    $(type -p tar) "\$@" --warning=no-unknown-keyword
+    $(type -p tar) "\$@" --warning=no-unknown-keyword --delay-directory-restore
     EOF
 
     chmod +x $out/bin/tar
@@ -57,7 +57,7 @@ let
 
   # Recursively composes the dependencies of a package
   composePackage = { name, packageName, src, dependencies ? [], ... }@args:
-    ''
+    builtins.addErrorContext "while evaluating node package '${packageName}'" ''
       DIR=$(pwd)
       cd $TMPDIR
 
@@ -219,7 +219,16 @@ let
                       packageObj["_integrity"] = "sha1-000000000000000000000000000="; // When no _integrity string has been provided (e.g. by Git dependencies), add a dummy one. It does not seem to harm and it bypasses downloads.
                   }
 
-                  packageObj["_resolved"] = dependency.version; // Set the resolved version to the version identifier. This prevents NPM from cloning Git repositories.
+                  if(dependency.resolved) {
+                      packageObj["_resolved"] = dependency.resolved; // Adopt the resolved property if one has been provided
+                  } else {
+                      packageObj["_resolved"] = dependency.version; // Set the resolved version to the version identifier. This prevents NPM from cloning Git repositories.
+                  }
+
+                  if(dependency.from !== undefined) { // Adopt from property if one has been provided
+                      packageObj["_from"] = dependency.from;
+                  }
+
                   fs.writeFileSync(packageJSONPath, JSON.stringify(packageObj, null, 2));
               }
 
@@ -354,7 +363,7 @@ let
 
         npm ${forceOfflineFlag} --nodedir=${nodeSources} ${npmFlags} ${stdenv.lib.optionalString production "--production"} rebuild
 
-        if [ "$dontNpmInstall" != "1" ]
+        if [ "''${dontNpmInstall-}" != "1" ]
         then
             # NPM tries to download packages even when they already exist if npm-shrinkwrap is used.
             rm -f npm-shrinkwrap.json
@@ -390,6 +399,8 @@ let
         ++ stdenv.lib.optional (stdenv.isLinux) utillinux
         ++ stdenv.lib.optional (stdenv.isDarwin) libtool
         ++ buildInputs;
+
+      inherit nodejs;
 
       inherit dontStrip; # Stripping may fail a build for some package deployments
       inherit dontNpmInstall preRebuild unpackPhase buildPhase;
@@ -519,8 +530,8 @@ let
       # Provide the dependencies in a development shell through the NODE_PATH environment variable
       inherit nodeDependencies;
       shellHook = stdenv.lib.optionalString (dependencies != []) ''
-        export NODE_PATH=$nodeDependencies/lib/node_modules
-        export PATH="$nodeDependencies/bin:$PATH"
+        export NODE_PATH=${nodeDependencies}/lib/node_modules
+        export PATH="${nodeDependencies}/bin:$PATH"
       '';
     };
 in
