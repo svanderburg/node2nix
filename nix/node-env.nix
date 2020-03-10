@@ -528,8 +528,8 @@ let
       # Provide the dependencies in a development shell through the NODE_PATH environment variable
       inherit nodeDependencies;
       shellHook = stdenv.lib.optionalString (dependencies != []) ''
-        export NODE_PATH=$nodeDependencies/lib/node_modules
-        export PATH="$nodeDependencies/bin:$PATH"
+        export NODE_PATH=${nodeDependencies}/lib/node_modules
+        export PATH="${nodeDependencies}/bin:$PATH"
       '';
     };
 in
