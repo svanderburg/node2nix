@@ -21,6 +21,7 @@ Table of Contents
 - [node2nix](#node2nix)
 - [Table of Contents](#table-of-contents)
 - [Installation](#installation)
+- [Building a development version](#building-a-development-version)
 - [Usage](#usage)
     - [Deploying a Node.js development project](#deploying-a-nodejs-development-project)
     - [Generating a tarball from a Node.js development project](#generating-a-tarball-from-a-nodejs-development-project)
@@ -70,6 +71,27 @@ Alternatively, this package can also be installed through NPM by running:
 ```bash
 $ npm install -g node2nix
 ```
+
+Building a development version
+==============================
+A development version can be deployed by checking out the Git repository and
+running:
+
+```bash
+$ nix-env -f release.nix -iA package.x86_64-linux
+```
+
+The above command installs the development `node2nix` executable into the Nix
+profile of the user.
+
+Alternatively, you can the use NPM to install the project dependencies:
+
+```
+$ npm install
+```
+
+The project only uses JavaScript dependencies and, as such, will also work on
+NixOS.
 
 Usage
 =====
