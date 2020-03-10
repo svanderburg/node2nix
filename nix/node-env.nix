@@ -400,6 +400,8 @@ let
         ++ stdenv.lib.optional (stdenv.isDarwin) libtool
         ++ buildInputs;
 
+      inherit nodejs;
+
       inherit dontStrip; # Stripping may fail a build for some package deployments
       inherit dontNpmInstall preRebuild unpackPhase buildPhase;
 
