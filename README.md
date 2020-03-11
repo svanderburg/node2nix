@@ -42,6 +42,7 @@ Table of Contents
     - [Deploying peer dependencies](#deploying-peer-dependencies)
     - [Stripping optional dependencies](#striping-optional-dependencies)
     - [Updating the package lock file](#updating-the-package-lock-file)
+    - [Creating a symlink to the node_modules folder in a shell session](#creating-a-symlink-to-the-node_modules-folder-in-a-shell-session)
     - [Disabling running NPM install](#disabling-running-npm-install)
 - [API documentation](#api-documentation)
 - [License](#license)
@@ -276,7 +277,7 @@ $ node2nix -l package-lock.json
 Generating packages for specific Node.js versions
 -------------------------------------------------
 By default, `node2nix` generates Nix expressions that should be used in
-conjuction with Node.js 8.x, which is currently the oldest supported LTS
+conjuction with Node.js 12.x, which is currently the oldest supported LTS
 release.
 
 When it is desired, it is also possible to generate expressions for other
@@ -644,6 +645,30 @@ dependency tree in the lock file may be incomplete.
 
 To fix this problem, `npm install` must be executed again so that the missing
 or changed dependencies are updated in the lock file.
+
+Creating a symlink to the node_modules folder in a shell session
+----------------------------------------------------------------
+In Nix shell sessions, that can be started with `nix-shell -A shell`,
+conventional Node.js projects will typically work, because there is a
+`NODE_PATH` environment variable that refers to a Nix store path that provides
+all the dependencies that the project needs.
+
+However, there are also a variety of Node.js/NPM-based build tools available,
+such as Grunt, Gulp, Babel or ESLint, that work with *plugins* that are stored
+in the `node_modules/` folder of the project.
+
+Unfortunately, these tools do not respect the `NODE_PATH` environment variable
+and, as a result, fail to work in a Nix shell session.
+
+As a workaround, you can create a symlink in the project's root folder to allow
+these tools to find their dependencies:
+
+```bash
+$ ln -s $NODE_PATH node_modules
+```
+
+Keep in mind that the symlink needs to be removed again if you want to deploy
+the package with `nix-build` or `nix-env`.
 
 Disabling running NPM install
 -----------------------------
