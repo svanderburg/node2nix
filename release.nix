@@ -31,7 +31,11 @@ rec {
 
   tests = pkgs.lib.genAttrs systems (system:
     {
-      v8 = import ./tests/override-v8.nix {
+      v10 = import ./tests/override-v10.nix {
+        pkgs = import nixpkgs { inherit system; };
+        inherit system;
+      };
+      v12 = import ./tests/override-v12.nix {
         pkgs = import nixpkgs { inherit system; };
         inherit system;
       };
@@ -62,7 +66,7 @@ rec {
     ++ map (system: builtins.getAttr system package) systems
     ++ pkgs.lib.flatten (map (system:
       let
-        tests_ = tests."${system}".v8;
+        tests_ = tests."${system}".v12;
       in
       map (name: builtins.getAttr name tests_) (builtins.attrNames tests_)
       ) systems)

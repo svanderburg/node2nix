@@ -12,7 +12,6 @@
 
 node bin/node2nix -e nix/node-env.nix --nodejs-12 -d --no-copy-node-env
 cd tests
-node ../bin/node2nix -i tests.json -o node-packages-v8.nix -c default-v8.nix -e ../nix/node-env.nix -8 --no-copy-node-env
 node ../bin/node2nix -i tests.json -o node-packages-v10.nix -c default-v10.nix -e ../nix/node-env.nix --nodejs-10 --no-copy-node-env
 node ../bin/node2nix -i tests.json -o node-packages-v12.nix -c default-v12.nix -e ../nix/node-env.nix --nodejs-12 --no-copy-node-env
 cd grunt
