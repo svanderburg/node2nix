@@ -14,11 +14,11 @@
   "grunt-cli",
   "bower",
   "coffee-script",
-  "floomatic",
+  "node-libcurl",
   "@sindresorhus/df",
   { "esprima-fb": "~3001.0001.0000-dev-harmony-fb" },
   { "bcrypt": "3.0.x" },
-  "hiredis",
+  "node-libuuid",
   { "js-sequence-diagrams": "git+https://github.com/codimd/js-sequence-diagrams.git" },
   { "@bengotow/slate-edit-list": "github:bengotow/slate-edit-list" }
 ]

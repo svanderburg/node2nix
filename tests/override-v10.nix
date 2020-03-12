@@ -8,7 +8,7 @@ let
   };
 in
 nodePackages // {
-  floomatic = nodePackages.floomatic.override {
-    buildInputs = [ pkgs.pkgconfig pkgs.qt4 ];
+  node-libcurl = nodePackages.node-libcurl.override {
+    buildInputs = [ pkgs.curl ];
   };
 }
