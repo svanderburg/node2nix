@@ -22,6 +22,7 @@ var switches = [
     ['-10', '--nodejs-10', 'Provides all settings to generate expression for usage with Node.js 10.x (default is: Node.js 12.x)'],
     ['-12', '--nodejs-12', 'Provides all settings to generate expression for usage with Node.js 12.x (default is: Node.js 12.x)'],
     ['-13', '--nodejs-13', 'Provides all settings to generate expression for usage with Node.js 13.x (default is: Node.js 12.x)'],
+    ['-14', '--nodejs-14', 'Provides all settings to generate expression for usage with Node.js 14.x (default is: Node.js 12.x)'],
     ['--supplement-input FILE', 'A supplement package JSON file that are passed as build inputs to all packages defined in the input JSON file'],
     ['--supplement-output FILE', 'Path to a Nix expression representing a supplementing set of Nix packages provided as inputs to a project (defaults to: supplement.nix)'],
     ['--include-peer-dependencies', 'Specifies whether to include peer dependencies. In npm 2.x, this is the default. (false by default)'],
@@ -139,6 +140,12 @@ parser.on('nodejs-12', function(arg, value) {
 parser.on('nodejs-13', function(arg, value) {
     flatten = true;
     nodePackage = "nodejs-13_x";
+    bypassCache = true;
+});
+
+parser.on('nodejs-14', function(arg, value) {
+    flatten = true;
+    nodePackage = "nodejs-14_x";
     bypassCache = true;
 });
 
