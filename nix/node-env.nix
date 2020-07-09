@@ -71,6 +71,13 @@ let
           # Figure out what directory has been unpacked
           packageDir="$(find . -maxdepth 1 -type d | tail -1)"
 
+          if [ "$packageDir" == "." ]; then
+              echo "error: npm tarball did not contain any folders."
+              echo "It should contain a single folder with a package.json file inside."
+              echo "See also: https://docs.npmjs.com/cli/publish"
+              exit 1
+          fi
+
           # Restore write permissions to make building work
           find "$packageDir" -type d -exec chmod u+x {} \;
           chmod -R u+w "$packageDir"
