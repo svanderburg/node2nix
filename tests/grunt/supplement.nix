@@ -1255,13 +1255,13 @@ let
         sha1 = "956905708d58b4bab4c2261b04f59f31c99374c0";
       };
     };
-    "lodash-4.17.15" = {
+    "lodash-4.17.20" = {
       name = "lodash";
       packageName = "lodash";
-      version = "4.17.15";
+      version = "4.17.20";
       src = fetchurl {
-        url = "https://registry.npmjs.org/lodash/-/lodash-4.17.15.tgz";
-        sha512 = "8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==";
+        url = "https://registry.npmjs.org/lodash/-/lodash-4.17.20.tgz";
+        sha512 = "PlhdFcillOINfeV7Ni6oF1TAEayyZBoZ8bcshTHqOYJYlrqzRK5hagpagky5o4HfCzzd1TRkXPMFq6cKk9rGmA==";
       };
     };
     "loud-rejection-1.6.0" = {
@@ -2364,7 +2364,7 @@ in
       sources."kind-of-6.0.3"
       sources."liftoff-2.5.0"
       sources."load-json-file-1.1.0"
-      sources."lodash-4.17.15"
+      sources."lodash-4.17.20"
       sources."loud-rejection-1.6.0"
       sources."make-iterator-1.0.1"
       sources."map-cache-0.2.2"
