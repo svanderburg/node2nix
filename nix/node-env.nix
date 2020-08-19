@@ -43,7 +43,7 @@ let
         ''
           # Bundle the dependencies of the package
           mkdir -p node_modules
-          cd node_modules
+          pushd node_modules
 
           # Only include dependencies if they don't exist. They may also be bundled in the package.
           if [ ! -e "${dependency.name}" ]
@@ -51,57 +51,74 @@ let
               ${composePackage dependency}
           fi
 
-          cd ..
+          popd
         ''
       ) dependencies);
 
   # Recursively composes the dependencies of a package
-  composePackage = { name, packageName, src, dependencies ? [], ... }@args:
-    builtins.addErrorContext "while evaluating node package '${packageName}'" ''
-      DIR=$(pwd)
-      cd $TMPDIR
+  composePackage = { name, packageName, src ? null, symlink ? null, dependencies ? [], ... }@args:
+    let
+      isOrgPackage = builtins.substring 0 1 packageName == "@";
+    in builtins.addErrorContext "while evaluating node package '${packageName}'" (
+      if symlink != null then ''
+        # Make the base dir in which the target dependency resides first
+        mkdir -p "$(dirname "${packageName}")"
 
-      unpackFile ${src}
+        # Create the symlink to the workspace package
+        # The symlink path is relative to the top-level workspace directory
+        ln -s "$toplevelPackagePath/${symlink}" "${packageName}"
 
-      # Make the base dir in which the target dependency resides first
-      mkdir -p "$(dirname "$DIR/${packageName}")"
+        # Include the dependencies of the package
+        pushd "${packageName}"
+        ${includeDependencies { inherit dependencies; }}
+        popd
+      '' else ''
+        DIR=$(pwd)
+        pushd $TMPDIR
 
-      if [ -f "${src}" ]
-      then
-          # Figure out what directory has been unpacked
-          packageDir="$(find . -maxdepth 1 -type d | tail -1)"
+        unpackFile ${src}
 
-          # Restore write permissions to make building work
-          find "$packageDir" -type d -exec chmod u+x {} \;
-          chmod -R u+w "$packageDir"
+        # Make the base dir in which the target dependency resides first
+        mkdir -p "$(dirname "$DIR/${packageName}")"
 
-          # Move the extracted tarball into the output folder
-          mv "$packageDir" "$DIR/${packageName}"
-      elif [ -d "${src}" ]
-      then
-          # Get a stripped name (without hash) of the source directory.
-          # On old nixpkgs it's already set internally.
-          if [ -z "$strippedName" ]
-          then
-              strippedName="$(stripHash ${src})"
-          fi
+        if [ -f "${src}" ]
+        then
+            # Figure out what directory has been unpacked
+            packageDir="$(find . -maxdepth 1 -type d | tail -1)"
 
-          # Restore write permissions to make building work
-          chmod -R u+w "$strippedName"
+            # Restore write permissions to make building work
+            find "$packageDir" -type d -exec chmod u+x {} \;
+            chmod -R u+w "$packageDir"
 
-          # Move the extracted directory into the output folder
-          mv "$strippedName" "$DIR/${packageName}"
-      fi
+            # Move the extracted tarball into the output folder
+            mv "$packageDir" "$DIR/${packageName}"
+        elif [ -d "${src}" ]
+        then
+            # Get a stripped name (without hash) of the source directory.
+            # On old nixpkgs it's already set internally.
+            if [ -z "$strippedName" ]
+            then
+                strippedName="$(stripHash ${src})"
+            fi
 
-      # Unset the stripped name to not confuse the next unpack step
-      unset strippedName
+            # Restore write permissions to make building work
+            chmod -R u+w "$strippedName"
 
-      # Include the dependencies of the package
-      cd "$DIR/${packageName}"
-      ${includeDependencies { inherit dependencies; }}
-      cd ..
-      ${stdenv.lib.optionalString (builtins.substring 0 1 packageName == "@") "cd .."}
-    '';
+            # Move the extracted directory into the output folder
+            mv "$strippedName" "$DIR/${packageName}"
+        fi
+
+        # Unset the stripped name to not confuse the next unpack step
+        unset strippedName
+
+        popd
+
+        # Include the dependencies of the package
+        pushd "${packageName}"
+        ${includeDependencies { inherit dependencies; }}
+        popd
+      ''
+    );
 
   pinpointDependencies = {dependencies, production}:
     let
@@ -165,9 +182,9 @@ let
         ''
           if [ -d node_modules ]
           then
-              cd node_modules
+              pushd node_modules
               ${stdenv.lib.concatMapStrings (dependency: pinpointDependenciesOfPackage dependency) dependencies}
-              cd ..
+              popd
           fi
         ''}
     '';
@@ -180,10 +197,9 @@ let
     ''
       if [ -d "${packageName}" ]
       then
-          cd "${packageName}"
+          pushd "${packageName}"
           ${pinpointDependencies { inherit dependencies production; }}
-          cd ..
-          ${stdenv.lib.optionalString (builtins.substring 0 1 packageName == "@") "cd .."}
+          popd
       fi
     '';
 
@@ -415,7 +431,10 @@ let
         mkdir -p $out/lib/node_modules
         cd $out/lib/node_modules
 
-        # Compose the package and all its dependencies
+        # Store the top-level package path to help with symlinked dependencies
+        toplevelPackagePath="$PWD/${packageName}"
+
+        # Compose the package and all dependencies
         source $compositionScriptPath
 
         ${prepareAndInvokeNPM { inherit packageName bypassCache reconstructLock npmFlags production; }}
@@ -484,7 +503,7 @@ let
 
         installPhase = ''
           mkdir -p $out/${packageName}
-          cd $out/${packageName}
+          pushd $out/${packageName}
 
           source $includeScriptPath
 
@@ -499,8 +518,7 @@ let
           ''}
 
           # Go to the parent folder to make sure that all packages are pinpointed
-          cd ..
-          ${stdenv.lib.optionalString (builtins.substring 0 1 packageName == "@") "cd .."}
+          popd
 
           ${prepareAndInvokeNPM { inherit packageName bypassCache reconstructLock npmFlags production; }}
 
