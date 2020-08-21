@@ -746,6 +746,6 @@ in
   sources = sources;
   tarball = nodeEnv.buildNodeSourceDist args;
   package = nodeEnv.buildNodePackage args;
-  shell = (nodeEnv.buildNodeShell args).shell;
-  nodeDependencies = (nodeEnv.buildNodeShell args).nodeDependencies;
+  shell = nodeEnv.buildNodeShell args;
+  nodeDependencies = nodeEnv.buildNodeDependencies args;
 }

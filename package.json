@@ -23,7 +23,8 @@
     "base64-js": "1.3.x",
     "slasp": "0.0.4",
     "nijs": "0.0.25",
-    "spdx-license-ids": "3.0.x"
+    "spdx-license-ids": "3.0.x",
+    "glob": "7.x.x"
   },
   "devDependencies": {
     "jsdoc": "*"
