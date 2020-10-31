@@ -47,6 +47,10 @@ rec {
         pkgs = import nixpkgs { inherit system; };
         inherit system;
       }).package;
+      lockfile-v2 = (import ./tests/lockfile-v2 {
+        pkgs = import nixpkgs { inherit system; };
+        inherit system;
+      }).package;
       scoped = (import ./tests/scoped {
         pkgs = import nixpkgs { inherit system; };
         inherit system;

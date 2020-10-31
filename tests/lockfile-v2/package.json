@@ -1,0 +1,11 @@
+{
+  "name": "lockfile-v2",
+  "version": "0.0.1",
+  "dependencies": {
+    "@sindresorhus/df": "*",
+    "async": "*",
+    "express": "git+https://github.com/strongloop/express.git#e1b45eb",
+    "testa": "../testa"
+  },
+  "private": true
+}
