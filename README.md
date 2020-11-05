@@ -368,10 +368,17 @@ $ node2nix --input package.json --output registry.nix --composition default.nix 
 Using alternative NPM registries
 --------------------------------
 You can also use an alternative NPM registry (such as a private one), by adding
-the `--registry` option:
+the `--registry`, `--registry-auth-token` and `--registry-scope` option:
 
 ```bash
 $ node2nix -i node-packages.json --registry http://private.registry.local
+
+
+$ node2nix \
+  --registry "https://registry.npmjs.org" \
+  --registry "https://npm.pkg.github.com/" \
+  --registry-auth-token "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" \
+  --registry-scope "@myorg"
 ```
 
 Adding unspecified dependencies
