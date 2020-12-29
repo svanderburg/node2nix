@@ -203,7 +203,7 @@ Here's an example derivation showing this technique:
 
 ```nix
 let
-  nodeDependencies = (pkgs.callPackage ./my-app {}).nodeDependencies;
+  nodeDependencies = (pkgs.callPackage ./default.nix {}).shell.nodeDependencies;
 
 in
 
