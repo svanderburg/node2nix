@@ -4,6 +4,7 @@ var fs = require('fs');
 var path = require('path');
 var optparse = require('optparse');
 var node2nix = require('../lib/node2nix.js');
+var Registry = require('../lib/Registry.js').Registry;
 
 /* Define command-line options */
 
@@ -163,11 +164,8 @@ parser.on('pkg-name', function(arg, value) {
 
 var registryIndex = -1;
 parser.on('registry', function(arg, value) {
-    registryIndex += 1;
-    registries.push({
-        URL: value
-    })
-    lastRegistry = value;
+    registries.push(new Registry(value));
+    registryIndex++;
 });
 
 parser.on('registry-auth-token', function(arg, value) {
@@ -255,10 +253,8 @@ if(version) {
     process.exit(0);
 }
 
-if (registries.length == 0) {
-    registries = [{
-        URL: 'https://registry.npmjs.org'
-    }];
+if(registries.length == 0) {
+    registries.push(new Registry("https://registry.npmjs.org"));
 }
 
 /* Perform the NPM to Nix conversion */
