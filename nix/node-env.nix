@@ -49,7 +49,7 @@ let
           cd node_modules
 
           # Only include dependencies if they don't exist. They may also be bundled in the package.
-          if [ ! -e "${dependency.name}" ]
+          if [ ! -e "${dependency.packageName}" ]
           then
               ${composePackage dependency}
           fi
