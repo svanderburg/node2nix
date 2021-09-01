@@ -246,8 +246,8 @@ let
           var packageLock = JSON.parse(fs.readFileSync("./package-lock.json"));
 
           if(![1, 2].includes(packageLock.lockfileVersion)) {
-             process.stderr.write("Sorry, I only understand lock file versions 1 and 2!\n");
-             process.exit(1);
+            process.stderr.write("Sorry, I only understand lock file versions 1 and 2!\n");
+            process.exit(1);
           }
 
           if(packageLock.dependencies !== undefined) {
