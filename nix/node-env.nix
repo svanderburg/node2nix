@@ -493,6 +493,7 @@ let
     , dontNpmInstall ? false
     , bypassCache ? false
     , reconstructLock ? false
+    , preRebuild ? ""
     , dontStrip ? true
     , unpackPhase ? "true"
     , buildPhase ? "true"
@@ -510,7 +511,7 @@ let
           ++ buildInputs;
 
         inherit dontStrip; # Stripping may fail a build for some package deployments
-        inherit dontNpmInstall unpackPhase buildPhase;
+        inherit dontNpmInstall preRebuild unpackPhase buildPhase;
 
         includeScript = includeDependencies { inherit dependencies; };
         pinpointDependenciesScript = pinpointDependenciesOfPackage args;
