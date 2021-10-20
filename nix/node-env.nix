@@ -560,8 +560,9 @@ let
 
     let
       nodeDependencies = buildNodeDependencies args;
+      extraArgs = removeAttrs args [ "name" "dependencies" "buildInputs" "dontStrip" "dontNpmInstall" "unpackPhase" "buildPhase" ];
     in
-    stdenv.mkDerivation {
+    stdenv.mkDerivation ({
       name = "node-shell-${name}-${version}";
 
       buildInputs = [ python nodejs ] ++ lib.optional (stdenv.isLinux) utillinux ++ buildInputs;
@@ -581,7 +582,7 @@ let
         export NODE_PATH=${nodeDependencies}/lib/node_modules
         export PATH="${nodeDependencies}/bin:$PATH"
       '';
-    };
+    } // extraArgs);
 in
 {
   buildNodeSourceDist = lib.makeOverridable buildNodeSourceDist;
