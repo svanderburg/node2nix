@@ -377,6 +377,9 @@ let
 
         npm ${forceOfflineFlag} --nodedir=${nodeSources} ${npmFlags} ${lib.optionalString production "--production"} rebuild
 
+        ## The previous command may add additional executable scripts that need to be patched.
+        patchShebangs .
+
         if [ "''${dontNpmInstall-}" != "1" ]
         then
             # NPM tries to download packages even when they already exist if npm-shrinkwrap is used.
