@@ -481,7 +481,7 @@ let
   };
 in
 nodePackages // {
-  dnschain = nodePackages.floomatic.override {
+  dnschain = nodePackages.dnschain.override {
     preRebuild = ''
       wrapProgram $out/bin/dnschain --suffix PATH : ${pkgs.openssl.bin}/bin
     '';
