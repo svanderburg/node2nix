@@ -278,6 +278,10 @@ declared in the JSON configuration:
 $ nix-env -f default.nix -iA '"mocha-1.21.x"'
 ```
 
+(As a sidenote: because the attribute name contains dots: `.`, that also serve
+as an attribute selector in the Nix expression language, we have to quote the
+attribute name)
+
 `node2nix` can be referenced as follows:
 
 ```bash
