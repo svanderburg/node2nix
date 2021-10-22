@@ -20,5 +20,6 @@
   { "@bengotow/slate-edit-list": "github:bengotow/slate-edit-list" },
   "node-libcurl",
   "node-libuuid",
-  { "bcrypt": "3.0.x" }
+  { "bcrypt": "3.0.x" },
+  { "next": "npm:@blitzjs/next@10.2.3-0.37.0" }
 ]
