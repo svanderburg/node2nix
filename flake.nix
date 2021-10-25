@@ -11,7 +11,10 @@
         inherit (import ./default.nix { inherit pkgs; })
           sources package shell nodeDependencies;
         node2nix = package;
-        app = flake-utils.lib.mkApp { drv = package; };
+        app = flake-utils.lib.mkApp {
+          drv = package;
+          exePath = "/bin/node2nix";
+        };
       in {
         packages.node2nix = node2nix;
         defaultPackage = node2nix;
