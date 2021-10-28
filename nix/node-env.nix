@@ -98,7 +98,7 @@ let
       ''
       + (lib.concatMapStrings (dependency:
         ''
-          if [ ! -e "${dependency.name}" ]; then
+          if [ ! -e "${dependency.packageName}" ]; then
               ${composePackage dependency}
           fi
         ''
