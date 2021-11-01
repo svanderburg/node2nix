@@ -23,3 +23,5 @@ cd ../lockfile-v2
 node ../../bin/node2nix -l package-lock.json -e ../../nix/node-env.nix --no-copy-node-env
 cd ../scoped
 node ../../bin/node2nix -e ../../nix/node-env.nix --no-copy-node-env
+cd ../versionless
+node ../../bin/node2nix -e ../../nix/node-env.nix --no-copy-node-env

@@ -59,6 +59,10 @@ rec {
         pkgs = import nixpkgs { inherit system; };
         inherit system;
       }).package;
+      versionless = (import ./tests/versionless {
+        pkgs = import nixpkgs { inherit system; };
+        inherit system;
+      }).package;
     }) // {
       cli = import ./tests/cli {
         inherit nixpkgs;

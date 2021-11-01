@@ -393,7 +393,7 @@ let
   buildNodePackage =
     { name
     , packageName
-    , version
+    , version ? null
     , dependencies ? []
     , buildInputs ? []
     , production ? true
@@ -412,7 +412,7 @@ let
       extraArgs = removeAttrs args [ "name" "dependencies" "buildInputs" "dontStrip" "dontNpmInstall" "preRebuild" "unpackPhase" "buildPhase" "meta" ];
     in
     stdenv.mkDerivation ({
-      name = "${name}-${version}";
+      name = "${name}${if version == null then "" else "-${version}"}";
       buildInputs = [ tarWrapper python nodejs ]
         ++ lib.optional (stdenv.isLinux) utillinux
         ++ lib.optional (stdenv.isDarwin) libtool
@@ -474,7 +474,7 @@ let
   buildNodeDependencies =
     { name
     , packageName
-    , version
+    , version ? null
     , src
     , dependencies ? []
     , buildInputs ? []
@@ -492,7 +492,7 @@ let
       extraArgs = removeAttrs args [ "name" "dependencies" "buildInputs" ];
     in
       stdenv.mkDerivation ({
-        name = "node-dependencies-${name}-${version}";
+        name = "node-dependencies-${name}${if version == null then "" else "-${version}"}";
 
         buildInputs = [ tarWrapper python nodejs ]
           ++ lib.optional (stdenv.isLinux) utillinux
@@ -544,7 +544,7 @@ let
   buildNodeShell =
     { name
     , packageName
-    , version
+    , version ? null
     , src
     , dependencies ? []
     , buildInputs ? []
@@ -563,7 +563,7 @@ let
       extraArgs = removeAttrs args [ "name" "dependencies" "buildInputs" "dontStrip" "dontNpmInstall" "unpackPhase" "buildPhase" ];
     in
     stdenv.mkDerivation ({
-      name = "node-shell-${name}-${version}";
+      name = "node-shell-${name}${if version == null then "" else "-${version}"}";
 
       buildInputs = [ python nodejs ] ++ lib.optional (stdenv.isLinux) utillinux ++ buildInputs;
       buildCommand = ''
