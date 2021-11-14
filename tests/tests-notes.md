@@ -58,8 +58,10 @@ This code snippet explains the purpose of each test package:
   // Testcase for a package with an external native dependency
   "node-libcurl",
   // Testcase for a package with native C code that needs to be compiled
-  "node-libuuid",
+  "libxmljs",
   // Testcase for a package with native C code and an Xcode-related workaround in node-gyp to make it compile on macOS
-  { "bcrypt": "3.0.x" }
+  { "bcrypt": "3.0.x" },
+  // Testcase for an NPM alias
+  { "next": "npm:@blitzjs/next@10.2.3-0.37.0" }
 ]
 ```
