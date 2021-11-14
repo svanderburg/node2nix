@@ -22,6 +22,9 @@ simpleTest {
       )
       machine.succeed("chmod u+w testprojects")
 
+      # Try to use an invalid option. This should fail.
+      machine.fail("cd testprojects/complete; node2nix --invalid-option")
+
       # Try to generate Nix expressions for a package.json with no name. This should fail.
       machine.fail("cd testprojects/noname; node2nix")
 

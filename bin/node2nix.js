@@ -65,6 +65,11 @@ var executable;
 
 /* Define process rules for option parameters */
 
+parser.on(function(arg, value) {
+    process.stderr.write("node2nix: " + arg + ": invalid option\n");
+    process.exit(1);
+})
+
 parser.on('help', function(arg, value) {
     help = true;
 });
