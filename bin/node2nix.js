@@ -157,6 +157,12 @@ parser.on('nodejs-16', function(arg, value) {
     bypassCache = true;
 });
 
+parser.on('nodejs-17', function(arg, value) {
+    flatten = true;
+    nodePackage = "nodejs-17_x";
+    bypassCache = true;
+});
+
 parser.on('include-peer-dependencies', function(arg, value) {
     includePeerDependencies = true;
 });
