@@ -15,6 +15,7 @@ cd tests
 node ../bin/node2nix -i tests.json -o node-packages-v10.nix -c default-v10.nix -e ../nix/node-env.nix --nodejs-10 --no-copy-node-env
 node ../bin/node2nix -i tests.json -o node-packages-v12.nix -c default-v12.nix -e ../nix/node-env.nix --nodejs-12 --no-copy-node-env
 node ../bin/node2nix -i tests.json -o node-packages-v14.nix -c default-v14.nix -e ../nix/node-env.nix --nodejs-14 --no-copy-node-env
+node ../bin/node2nix -i tests.json -o node-packages-v16.nix -c default-v16.nix -e ../nix/node-env.nix --nodejs-16 --no-copy-node-env
 cd grunt
 node ../../bin/node2nix -d -i package.json --supplement-input supplement.json -e ../../nix/node-env.nix --no-copy-node-env
 cd ../lockfile
