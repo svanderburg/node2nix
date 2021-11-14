@@ -28,9 +28,6 @@ simpleTest {
       # Try to generate Nix expressions for a package.json with no name. This should fail.
       machine.fail("cd testprojects/noname; node2nix")
 
-      # Try to generate Nix expressions for a package.json with no version. This should fail.
-      machine.fail("cd testprojects/noversion; node2nix")
-
       # Try to generate Nix expressions for a package.json with a name and version. This should succeed.
       machine.succeed("cd testprojects/complete; node2nix")
 
