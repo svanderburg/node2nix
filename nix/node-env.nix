@@ -441,15 +441,15 @@ let
         if [ -d "$out/lib/node_modules/.bin" ]
         then
             ln -s $out/lib/node_modules/.bin $out/bin
-        fi
 
-        # Patch the shebang lines of all the executables
-        ls $out/bin/* | while read i
-        do
-            file="$(readlink -f "$i")"
-            chmod u+rwx "$file"
-            patchShebangs "$file"
-        done
+            # Patch the shebang lines of all the executables
+            ls $out/bin/* | while read i
+            do
+                file="$(readlink -f "$i")"
+                chmod u+rwx "$file"
+                patchShebangs "$file"
+            done
+        fi
 
         # Create symlinks to the deployed manual page folders, if applicable
         if [ -d "$out/lib/node_modules/${packageName}/man" ]
