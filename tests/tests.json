@@ -13,6 +13,7 @@
   { "express": "git+https://github.com/strongloop/express.git#master" },
   { "js-sequence-diagrams": "git+https://github.com/codimd/js-sequence-diagrams.git" },
   { "nijs": "svanderburg/nijs" },
+  { "mocha": "mochajs/mocha#pull/4779/head" },
   { "lodash": "github:lodash/lodash" },
   { "testb": "./testb" },
   "es5-ext",
