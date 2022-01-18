@@ -45,6 +45,8 @@ This code snippet explains the purpose of each test package:
   { "js-sequence-diagrams": "git+https://github.com/codimd/js-sequence-diagrams.git" },
   // Testcase for a Github repository alias
   { "nijs": "svanderburg/nijs" },
+  // Testcase for a Github pull request branch alias
+  { "mocha": "mochajs/mocha#pull/4779/head" },
   // Testcase for a Git service provider (in this case GitHub)
   { "lodash": "github:lodash/lodash" },
   // Testcase for a directory reference
