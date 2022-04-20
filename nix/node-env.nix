@@ -527,6 +527,7 @@ let
             if [ -f ${src}/package-lock.json ]
             then
                 cp ${src}/package-lock.json .
+                chmod 644 package-lock.json
             fi
           ''}
 
