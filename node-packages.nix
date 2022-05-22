@@ -4,13 +4,13 @@
 
 let
   sources = {
-    "@babel/parser-7.17.9" = {
+    "@babel/parser-7.18.0" = {
       name = "_at_babel_slash_parser";
       packageName = "@babel/parser";
-      version = "7.17.9";
+      version = "7.18.0";
       src = fetchurl {
-        url = "https://registry.npmjs.org/@babel/parser/-/parser-7.17.9.tgz";
-        sha512 = "vqUSBLP8dQHFPdPi9bc5GK9vRkYHJ49fsZdtoJ8EQ8ibpwk5rPKfvNIwChB0KVXcIjcepEBBd2VHC5r9Gy8ueg==";
+        url = "https://registry.npmjs.org/@babel/parser/-/parser-7.18.0.tgz";
+        sha512 = "AqDccGC+m5O/iUStSJy3DGRIUFu7WbY/CppZYwrEUB4N0tZlnI8CSTsgL7v5fHVFmUbRv2sd+yy27o8Ydt4MGg==";
       };
     };
     "@types/linkify-it-3.0.2" = {
@@ -64,7 +64,7 @@ let
       version = "2.1.1";
       src = fetchurl {
         url = "https://registry.npmjs.org/ansi-regex/-/ansi-regex-2.1.1.tgz";
-        sha1 = "c3b33ab5ee360d86e0e628f0468ae7ef27d654df";
+        sha512 = "TIGnTpdo+E3+pCyAluZvtED5p5wCqLdezCyhPZzKPcxvFplEt4i+W7OONCKgeZFT3+y5NZZfOOS/Bdcanm1MYA==";
       };
     };
     "aproba-1.2.0" = {
@@ -109,7 +109,7 @@ let
       version = "1.0.0";
       src = fetchurl {
         url = "https://registry.npmjs.org/assert-plus/-/assert-plus-1.0.0.tgz";
-        sha1 = "f12e0f3c5d77b0b1cdd9146942e4e96c1e4dd525";
+        sha512 = "NfJ4UzBCcQGLDlQq7nHxH+tv3kyZ0hHQqF5BO6J7tNJeP5do1llPr8dZ8zHonfhAu0PHAdMkSo+8o0wxg9lZWw==";
       };
     };
     "asynckit-0.4.0" = {
@@ -118,7 +118,7 @@ let
       version = "0.4.0";
       src = fetchurl {
         url = "https://registry.npmjs.org/asynckit/-/asynckit-0.4.0.tgz";
-        sha1 = "c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79";
+        sha512 = "Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==";
       };
     };
     "aws-sign2-0.7.0" = {
@@ -127,7 +127,7 @@ let
       version = "0.7.0";
       src = fetchurl {
         url = "https://registry.npmjs.org/aws-sign2/-/aws-sign2-0.7.0.tgz";
-        sha1 = "b46e890934a9591f2d2f6f86d7e6a9f1b3fe76a8";
+        sha512 = "08kcGqnYf/YmjoRhfxyu+CLxBjUtHLXLXX/vUfx9l2LYzG3c1m61nrpyFUZI6zeS+Li/wWMMidD9KgrqtGq3mA==";
       };
     };
     "aws4-1.11.0" = {
@@ -163,7 +163,7 @@ let
       version = "1.0.2";
       src = fetchurl {
         url = "https://registry.npmjs.org/bcrypt-pbkdf/-/bcrypt-pbkdf-1.0.2.tgz";
-        sha1 = "a4301d389b6a43f9b67ff3ca11a3f6637e360e9e";
+        sha512 = "qeFIXtP4MSoi6NLqO12WfqARWWuCKi2Rn/9hJLEmtB5yTNr9DqFWkJRCf2qShWzPeAMRnOgCrq0sg/KLv5ES9w==";
       };
     };
     "bluebird-3.7.2" = {
@@ -199,7 +199,7 @@ let
       version = "1.0.3";
       src = fetchurl {
         url = "https://registry.npmjs.org/builtins/-/builtins-1.0.3.tgz";
-        sha1 = "cb94faeb61c8696451db36534e1422f94f0aee88";
+        sha512 = "uYBjakWipfaO/bXI7E8rq6kpwHRZK5cNYrUv2OzZSI/FvmdMyXJ2tG9dKcjEC5YHmHpUAwsargWIZNWdxb/bnQ==";
       };
     };
     "caseless-0.12.0" = {
@@ -208,7 +208,7 @@ let
       version = "0.12.0";
       src = fetchurl {
         url = "https://registry.npmjs.org/caseless/-/caseless-0.12.0.tgz";
-        sha1 = "1b681c21ff84033c826543090689420d187151dc";
+        sha512 = "4tYFyifaFfGacoiObjJegolkwSU4xQNGbVgUiNYVUxbQ2x2lUsFvY4hVgVzGiIe6WLOPqycWXA40l+PWsxthUw==";
       };
     };
     "catharsis-0.9.0" = {
@@ -490,13 +490,13 @@ let
         sha1 = "5eff8e3e684d569ae4cb2b1282604e8ba62149fa";
       };
     };
-    "glob-7.2.0" = {
+    "glob-7.2.3" = {
       name = "glob";
       packageName = "glob";
-      version = "7.2.0";
+      version = "7.2.3";
       src = fetchurl {
-        url = "https://registry.npmjs.org/glob/-/glob-7.2.0.tgz";
-        sha512 = "lmLf6gtyrPq8tTjSmrO94wBeQbFR3HbLHbuyD69wuyQkImp2hWqMGB47OX65FBkPffO641IP9jWa1z4ivqG26Q==";
+        url = "https://registry.npmjs.org/glob/-/glob-7.2.3.tgz";
+        sha512 = "nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q==";
       };
     };
     "graceful-fs-4.2.10" = {
@@ -751,22 +751,22 @@ let
         sha512 = "TchMembfxfNVpHkbtriWltGWc+m3xszaRD0CZup7GFFhzIgQqxIfn3eGj1yZpfuflzPvfkt611B2Q/Bsk1YnGg==";
       };
     };
-    "markdown-it-anchor-8.6.2" = {
+    "markdown-it-anchor-8.6.4" = {
       name = "markdown-it-anchor";
       packageName = "markdown-it-anchor";
-      version = "8.6.2";
+      version = "8.6.4";
       src = fetchurl {
-        url = "https://registry.npmjs.org/markdown-it-anchor/-/markdown-it-anchor-8.6.2.tgz";
-        sha512 = "JNaekTlIwwyYGBN3zifZDxgz4bSL8sbEj58fdTZGmPSMMGXBZapFjcZk2I33Jy79c1fvCKHpF7MA/67FOTjvzA==";
+        url = "https://registry.npmjs.org/markdown-it-anchor/-/markdown-it-anchor-8.6.4.tgz";
+        sha512 = "Ul4YVYZNxMJYALpKtu+ZRdrryYt/GlQ5CK+4l1bp/gWXOG2QWElt6AqF3Mih/wfUKdZbNAZVXGR73/n6U/8img==";
       };
     };
-    "marked-4.0.14" = {
+    "marked-4.0.16" = {
       name = "marked";
       packageName = "marked";
-      version = "4.0.14";
+      version = "4.0.16";
       src = fetchurl {
-        url = "https://registry.npmjs.org/marked/-/marked-4.0.14.tgz";
-        sha512 = "HL5sSPE/LP6U9qKgngIIPTthuxC0jrfxpYMZ3LdGDD3vTnLs59m2Z7r6+LNDR3ToqEQdkKd6YaaEfJhodJmijQ==";
+        url = "https://registry.npmjs.org/marked/-/marked-4.0.16.tgz";
+        sha512 = "wahonIQ5Jnyatt2fn8KqF/nIqZM8mh3oRu2+l5EANGMhu6RFjiSG52QNE2eWzFMI94HqYSgN184NurgNG6CztA==";
       };
     };
     "mdurl-1.0.1" = {
@@ -1417,13 +1417,13 @@ let
         sha1 = "5a3db23ef5dbd55b81fce0ec9a2ac6fccdebb81e";
       };
     };
-    "underscore-1.13.2" = {
+    "underscore-1.13.3" = {
       name = "underscore";
       packageName = "underscore";
-      version = "1.13.2";
+      version = "1.13.3";
       src = fetchurl {
-        url = "https://registry.npmjs.org/underscore/-/underscore-1.13.2.tgz";
-        sha512 = "ekY1NhRzq0B08g4bGuX4wd2jZx5GnKz6mKSqFL4nqBlfyMGiG10gDFhDTMEfYmDL6Jy0FUIZp7wiRB+0BP7J2g==";
+        url = "https://registry.npmjs.org/underscore/-/underscore-1.13.3.tgz";
+        sha512 = "QvjkYpiD+dJJraRA8+dGAU4i7aBbb2s0S3jA45TFOvg2VgqvdCDd/3N6CqA8gluk1W91GLoXg5enMUx560QzuA==";
       };
     };
     "uri-js-4.4.1" = {
@@ -1532,7 +1532,7 @@ let
     version = "1.11.1";
     src = ./.;
     dependencies = [
-      sources."@babel/parser-7.17.9"
+      sources."@babel/parser-7.18.0"
       sources."@types/linkify-it-3.0.2"
       sources."@types/markdown-it-12.2.3"
       sources."@types/mdurl-1.0.2"
@@ -1585,7 +1585,7 @@ let
       sources."function-bind-1.1.1"
       sources."gauge-2.7.4"
       sources."getpass-0.1.7"
-      sources."glob-7.2.0"
+      sources."glob-7.2.3"
       sources."graceful-fs-4.2.10"
       sources."har-schema-2.0.0"
       sources."har-validator-5.1.5"
@@ -1618,8 +1618,8 @@ let
       sources."lodash-4.17.21"
       sources."lru-cache-6.0.0"
       sources."markdown-it-12.3.2"
-      sources."markdown-it-anchor-8.6.2"
-      sources."marked-4.0.14"
+      sources."markdown-it-anchor-8.6.4"
+      sources."marked-4.0.16"
       sources."mdurl-1.0.1"
       sources."mime-db-1.52.0"
       sources."mime-types-2.1.35"
@@ -1720,7 +1720,7 @@ let
       sources."typedarray-0.0.6"
       sources."uc.micro-1.0.6"
       sources."uid-number-0.0.5"
-      sources."underscore-1.13.2"
+      sources."underscore-1.13.3"
       sources."uri-js-4.4.1"
       sources."util-deprecate-1.0.2"
       sources."uuid-3.4.0"

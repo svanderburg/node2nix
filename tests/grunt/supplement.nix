@@ -37,7 +37,7 @@ let
       version = "4.0.0";
       src = fetchurl {
         url = "https://registry.npmjs.org/arr-diff/-/arr-diff-4.0.0.tgz";
-        sha1 = "d6461074febfec71e7e15235761a329a5dc7c520";
+        sha512 = "YVIQ82gZPGBebQV/a8dar4AitzCQs0jjXwMPZllpXMaGjXPYVUawSxQrRsjhjupyVxEvbHgUmIhKVlND+j02kA==";
       };
     };
     "arr-flatten-1.1.0" = {
@@ -55,7 +55,7 @@ let
       version = "3.1.0";
       src = fetchurl {
         url = "https://registry.npmjs.org/arr-union/-/arr-union-3.1.0.tgz";
-        sha1 = "e39b09aea9def866a8f206e288af63919bae39c4";
+        sha512 = "sKpyeERZ02v1FeCZT8lrfJq5u6goHCtpTAzPwJYe7c8SPFOboNjNg1vz2L4VTn9T4PQxEx13TbXLmYUcS6Ug7Q==";
       };
     };
     "array-each-1.0.1" = {
@@ -64,7 +64,7 @@ let
       version = "1.0.1";
       src = fetchurl {
         url = "https://registry.npmjs.org/array-each/-/array-each-1.0.1.tgz";
-        sha1 = "a794af0c05ab1752846ee753a1f211a05ba0c44f";
+        sha512 = "zHjL5SZa68hkKHBFBK6DJCTtr9sfTCPCaph/L7tMSLcTFgy+zX7E+6q5UArbtOtMBCtxdICpfTCspRse+ywyXA==";
       };
     };
     "array-slice-1.1.0" = {
@@ -82,7 +82,7 @@ let
       version = "0.3.2";
       src = fetchurl {
         url = "https://registry.npmjs.org/array-unique/-/array-unique-0.3.2.tgz";
-        sha1 = "a894b75d4bc4f6cd679ef3244a9fd8f46ae2d428";
+        sha512 = "SleRWjh9JUud2wH1hPs9rZBZ33H6T9HOiL0uwGnGx9FpE6wKGyfWugmbkEOIs6qWrZhg0LWeLziLrEwQJhs5mQ==";
       };
     };
     "assign-symbols-1.0.0" = {
@@ -91,7 +91,7 @@ let
       version = "1.0.0";
       src = fetchurl {
         url = "https://registry.npmjs.org/assign-symbols/-/assign-symbols-1.0.0.tgz";
-        sha1 = "59667f41fadd4f20ccbc2bb96b8d4f7f78ec0367";
+        sha512 = "Q+JC7Whu8HhmTdBph/Tq59IoRtoy6KAm5zzPv00WdujX82lbAL8K7WVjne7vdCsAmbF4AYaDOPyO3k0kl8qIrw==";
       };
     };
     "async-3.2.3" = {
@@ -190,7 +190,7 @@ let
       version = "1.0.1";
       src = fetchurl {
         url = "https://registry.npmjs.org/cli/-/cli-1.0.1.tgz";
-        sha1 = "22817534f24bfa4950c34d532d48ecbc621b8c14";
+        sha512 = "41U72MB56TfUMGndAKK8vJ78eooOD4Z5NOL4xEfjc0c23s+6EYKXlXsmACBVclLP1yOfWCgEganVzddVrSNoTg==";
       };
     };
     "collection-visit-1.0.0" = {

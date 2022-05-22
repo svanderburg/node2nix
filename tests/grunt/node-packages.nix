@@ -37,7 +37,7 @@ let
       version = "1.0.1";
       src = fetchurl {
         url = "https://registry.npmjs.org/array-each/-/array-each-1.0.1.tgz";
-        sha1 = "a794af0c05ab1752846ee753a1f211a05ba0c44f";
+        sha512 = "zHjL5SZa68hkKHBFBK6DJCTtr9sfTCPCaph/L7tMSLcTFgy+zX7E+6q5UArbtOtMBCtxdICpfTCspRse+ywyXA==";
       };
     };
     "array-slice-1.1.0" = {
@@ -82,7 +82,7 @@ let
       version = "5.1.0";
       src = fetchurl {
         url = "https://registry.npmjs.org/body/-/body-5.1.0.tgz";
-        sha1 = "e4ba0ce410a46936323367609ecb4e6553125069";
+        sha512 = "chUsBxGRtuElD6fmw1gHLpvnKdVLK302peeFa9ZqAEk8TyzZ3fygLyUEDDPTJvL9+Bor0dIwn6ePOsRM2y0zQQ==";
       };
     };
     "brace-expansion-1.1.11" = {
@@ -109,7 +109,7 @@ let
       version = "1.0.0";
       src = fetchurl {
         url = "https://registry.npmjs.org/bytes/-/bytes-1.0.0.tgz";
-        sha1 = "3569ede8ba34315fab99c3e92cb04c7220de1fa8";
+        sha512 = "/x68VkHLeTl3/Ll8IvxdwzhrT+IyKc52e/oyHhA2RwqPqswSnjVbSddfPRwAsJtbilMAPSRWwAlpxdYsSWOTKQ==";
       };
     };
     "call-bind-1.0.2" = {
@@ -136,7 +136,7 @@ let
       version = "1.0.1";
       src = fetchurl {
         url = "https://registry.npmjs.org/cli/-/cli-1.0.1.tgz";
-        sha1 = "22817534f24bfa4950c34d532d48ecbc621b8c14";
+        sha512 = "41U72MB56TfUMGndAKK8vJ78eooOD4Z5NOL4xEfjc0c23s+6EYKXlXsmACBVclLP1yOfWCgEganVzddVrSNoTg==";
       };
     };
     "color-convert-2.0.1" = {
@@ -517,13 +517,13 @@ let
         sha512 = "mb1aYtDbIjTu4ShMB85m3UzjX9BVKe9WCzsnfMSZk+K5GpIbBOexgg4PPCt5eHDEG5/ZQAUX2Kct02zfiPLsKg==";
       };
     };
-    "grunt-1.5.2" = {
+    "grunt-1.5.3" = {
       name = "grunt";
       packageName = "grunt";
-      version = "1.5.2";
+      version = "1.5.3";
       src = fetchurl {
-        url = "https://registry.npmjs.org/grunt/-/grunt-1.5.2.tgz";
-        sha512 = "XCtfaIu72OyDqK24MjWiGC9SwlkuhkS1mrULr1xzuJ2XqAFhP3ZAchZGHJeSCY6mkaOXU4F7SbmmCF7xIVoC9w==";
+        url = "https://registry.npmjs.org/grunt/-/grunt-1.5.3.tgz";
+        sha512 = "mKwmo4X2d8/4c/BmcOETHek675uOqw0RuA/zy12jaspWqvTp4+ZeQF1W+OTpcbncnaBsfbQJ6l0l4j+Sn/GmaQ==";
       };
     };
     "grunt-cli-1.4.3" = {
@@ -940,13 +940,13 @@ let
         sha1 = "2109adc7965887cfc05cbbd442cac8bfbb360863";
       };
     };
-    "object-inspect-1.12.0" = {
+    "object-inspect-1.12.1" = {
       name = "object-inspect";
       packageName = "object-inspect";
-      version = "1.12.0";
+      version = "1.12.1";
       src = fetchurl {
-        url = "https://registry.npmjs.org/object-inspect/-/object-inspect-1.12.0.tgz";
-        sha512 = "Ho2z80bVIvJloH+YzRmpZVQe87+qASmBUKZDWgx9cu+KDrX2ZDH/3tMy+gXbZETVGs2M8YdxObOh7XAtim9Y0g==";
+        url = "https://registry.npmjs.org/object-inspect/-/object-inspect-1.12.1.tgz";
+        sha512 = "Y/jF6vnvEtOPGiKD1+q+X0CiUYRQtEHp89MLLUJ7TUivtH8Ugn2+3A7Rynqk7BRsAoqeOQWnFnjpDrKSxDgIGA==";
       };
     };
     "object.defaults-1.1.0" = {
@@ -1408,7 +1408,7 @@ let
       sources."global-modules-1.0.0"
       sources."global-prefix-1.0.2"
       sources."globule-1.3.3"
-      sources."grunt-1.5.2"
+      sources."grunt-1.5.3"
       (sources."grunt-cli-1.4.3" // {
         dependencies = [
           sources."nopt-4.0.3"
@@ -1470,7 +1470,7 @@ let
       sources."ms-2.1.3"
       sources."nopt-3.0.6"
       sources."object-assign-4.1.1"
-      sources."object-inspect-1.12.0"
+      sources."object-inspect-1.12.1"
       sources."object.defaults-1.1.0"
       sources."object.map-1.0.1"
       sources."object.pick-1.3.0"

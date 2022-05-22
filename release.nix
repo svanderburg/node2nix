@@ -31,14 +31,6 @@ rec {
 
   tests = pkgs.lib.genAttrs systems (system:
     {
-      v10 = import ./tests/override-v10.nix {
-        pkgs = import nixpkgs { inherit system; };
-        inherit system;
-      };
-      v12 = import ./tests/override-v12.nix {
-        pkgs = import nixpkgs { inherit system; };
-        inherit system;
-      };
       v14 = import ./tests/override-v14.nix {
         pkgs = import nixpkgs { inherit system; };
         inherit system;
