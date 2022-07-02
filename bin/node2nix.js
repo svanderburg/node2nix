@@ -35,7 +35,10 @@ var switches = [
     ['--registry-auth-token TOKEN', 'An optional token to access private NPM registry'],
     ['--no-bypass-cache', 'Specifies that package builds do not need to bypass the content addressable cache (required for NPM 5.x)'],
     ['--no-copy-node-env', 'Do not create a copy of the Nix expression that builds NPM packages'],
-    ['--use-fetchgit-private', 'Use fetchGitPrivate instead of fetchgit in the generated Nix expressions'],
+    ['--fetchgit-package', 'fetchgit package to use (builtins.fetchGit by default)'],
+    ['--fetchgit-ref', 'Reference branch to use with fetchgit. Only works with builtins.fetchGit. (HEAD by default)'],
+    ['--fetchgit-include-hash', 'Include sha256 hash in fetchgit arguments. Incompatible with builtins.fetchGit. Only change if you know what you\'re doing.'],
+    ['--use-fetchgit-private', 'DEPRECATED (builtins.fetchGit (default) handles private repositories): Use fetchGitPrivate instead of fetchgit in the generated Nix expressions'],
     ['--strip-optional-dependencies', 'Strips the optional dependencies from the regular dependencies in the NPM registry']
 ];
 
@@ -59,7 +62,9 @@ var registries = [];
 var nodePackage = "nodejs-14_x";
 var noCopyNodeEnv = false;
 var bypassCache = true;
-var useFetchGitPrivate = false;
+var fetchGitPackage = "builtins.fetchGit";
+var fetchGitRef = "HEAD";
+var fetchGitIncludeHash = false;
 var stripOptionalDependencies = false;
 var executable;
 
@@ -68,7 +73,7 @@ var executable;
 parser.on(function(arg, value) {
     process.stderr.write("node2nix: " + arg + ": invalid option\n");
     process.exit(1);
-})
+});
 
 parser.on('help', function(arg, value) {
     help = true;
@@ -202,8 +207,23 @@ parser.on('no-copy-node-env', function(arg, value) {
     noCopyNodeEnv = true;
 });
 
+parser.on('fetchgit-package', function(arg, value) {
+    fetchGitPackage = value;
+});
+
+parser.on('fetchgit-ref', function(arg, value) {
+    fetchGitRef = value;
+});
+
+parser.on('fetchgit-include-hash', function(arg, value) {
+    fetchGitIncludeHash = true;
+    fetchGitRef = '';
+});
+
 parser.on('use-fetchgit-private', function(arg, value) {
-    useFetchGitPrivate = true;
+    fetchGitIncludeHash = true;
+    fetchGitPackage = 'pkgs.fetchgitPrivate';
+    fetchGitRef = '';
 });
 
 parser.on('strip-optional-dependencies', function(arg, value) {
@@ -276,7 +296,7 @@ if(registries.length == 0) {
 }
 
 /* Perform the NPM to Nix conversion */
-node2nix.npmToNix(inputJSON, outputNix, compositionNix, nodeEnvNix, lockJSON, supplementJSON, supplementNix, production, includePeerDependencies, flatten, nodePackage, registries, noCopyNodeEnv, bypassCache, useFetchGitPrivate, stripOptionalDependencies, function(err) {
+node2nix.npmToNix(inputJSON, outputNix, compositionNix, nodeEnvNix, lockJSON, supplementJSON, supplementNix, production, includePeerDependencies, flatten, nodePackage, registries, noCopyNodeEnv, bypassCache, fetchGitPackage, fetchGitRef, fetchGitIncludeHash, stripOptionalDependencies, function(err) {
     if(err) {
         process.stderr.write(err + "\n");
         process.exit(1);
@@ -284,3 +304,4 @@ node2nix.npmToNix(inputJSON, outputNix, compositionNix, nodeEnvNix, lockJSON, su
         process.exit(0);
     }
 });
+
