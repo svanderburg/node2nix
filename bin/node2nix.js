@@ -28,7 +28,7 @@ var switches = [
     ['-18', '--nodejs-18', 'Provides all settings to generate expression for usage with Node.js 18.x (default is: nodejs-14_x)'],
     ['--supplement-input FILE', 'A supplement package JSON file that are passed as build inputs to all packages defined in the input JSON file'],
     ['--supplement-output FILE', 'Path to a Nix expression representing a supplementing set of Nix packages provided as inputs to a project (defaults to: supplement.nix)'],
-    ['--include-peer-dependencies', 'Specifies whether to include peer dependencies. In npm 2.x, this is the default. (false by default)'],
+    ['--include-peer-dependencies', 'Specifies whether to include peer dependencies. In npm 2.x, this is the default. (true by default for Node.js 16+)'],
     ['--no-flatten', 'Simulate pre-npm 3.x isolated dependency structure. (false by default)'],
     ['--pkg-name NAME', 'Specifies the name of the Node.js package to use from Nixpkgs (defaults to: nodejs)'],
     ['--registry URL', 'URL referring to the NPM packages registry. It defaults to the official NPM one, but can be overridden to support private registries'],
@@ -47,7 +47,7 @@ var parser = new optparse.OptionParser(switches);
 var help = false;
 var version = false;
 var production = true;
-var includePeerDependencies = false;
+var includePeerDependencies = true;
 var flatten = true;
 var inputJSON = "package.json";
 var outputNix = "node-packages.nix";
@@ -118,61 +118,71 @@ parser.on('development', function(arg, value) {
 parser.on('nodejs-4', function(arg, value) {
     flatten = false;
     nodePackage = "nodejs-4_x";
-    byPassCache = false;
+    bypassCache = false;
+    includePeerDependencies = false;
 });
 
 parser.on('nodejs-6', function(arg, value) {
     flatten = true;
     nodePackage = "nodejs-6_x";
-    byPassCache = false;
+    bypassCache = false;
+    includePeerDependencies = false;
 });
 
 parser.on('nodejs-8', function(arg, value) {
     flatten = true;
     nodePackage = "nodejs-8_x";
     bypassCache = true;
+    includePeerDependencies = false;
 });
 
 parser.on('nodejs-10', function(arg, value) {
     flatten = true;
     nodePackage = "nodejs-10_x";
     bypassCache = true;
+    includePeerDependencies = false;
 });
 
 parser.on('nodejs-12', function(arg, value) {
     flatten = true;
     nodePackage = "nodejs-12_x";
     bypassCache = true;
+    includePeerDependencies = false;
 });
 
 parser.on('nodejs-13', function(arg, value) {
     flatten = true;
     nodePackage = "nodejs-13_x";
     bypassCache = true;
+    includePeerDependencies = false;
 });
 
 parser.on('nodejs-14', function(arg, value) {
     flatten = true;
     nodePackage = "nodejs-14_x";
     bypassCache = true;
+    includePeerDependencies = false;
 });
 
 parser.on('nodejs-16', function(arg, value) {
     flatten = true;
     nodePackage = "nodejs-16_x";
     bypassCache = true;
+    includePeerDependencies = true;
 });
 
 parser.on('nodejs-17', function(arg, value) {
     flatten = true;
     nodePackage = "nodejs-17_x";
     bypassCache = true;
+    includePeerDependencies = true;
 });
 
 parser.on('nodejs-18', function(arg, value) {
     flatten = true;
     nodePackage = "nodejs-18_x";
     bypassCache = true;
+    includePeerDependencies = true;
 });
 
 parser.on('include-peer-dependencies', function(arg, value) {
