@@ -17,15 +17,15 @@ var switches = [
     ['-e', '--node-env FILE', 'Path to the Nix expression implementing functions that builds NPM packages (defaults to: node-env.nix)'],
     ['-l', '--lock FILE', 'Path to the package-lock.json file that pinpoints the variants of all dependencies'],
     ['-d', '--development', 'Specifies whether to do a development (non-production) deployment for a package.json deployment (false by default)'],
-    ['-4', '--nodejs-4', 'Provides all settings to generate expression for usage with Node.js 4.x (default is: nodejs-14_x)'],
-    ['-6', '--nodejs-6', 'Provides all settings to generate expression for usage with Node.js 6.x (default is: nodejs-14_x)'],
-    ['-8', '--nodejs-8', 'Provides all settings to generate expression for usage with Node.js 8.x (default is: nodejs-14_x)'],
-    ['-10', '--nodejs-10', 'Provides all settings to generate expression for usage with Node.js 10.x (default is: nodejs-14_x)'],
-    ['-12', '--nodejs-12', 'Provides all settings to generate expression for usage with Node.js 12.x (default is: nodejs-14_x)'],
-    ['-13', '--nodejs-13', 'Provides all settings to generate expression for usage with Node.js 13.x (default is: nodejs-14_x)'],
-    ['-14', '--nodejs-14', 'Provides all settings to generate expression for usage with Node.js 14.x (default is: nodejs-14_x)'],
-    ['-16', '--nodejs-16', 'Provides all settings to generate expression for usage with Node.js 16.x (default is: nodejs-14_x)'],
-    ['-18', '--nodejs-18', 'Provides all settings to generate expression for usage with Node.js 18.x (default is: nodejs-14_x)'],
+    ['-4', '--nodejs-4', 'Provides all settings to generate expression for usage with Node.js 4.x (default is: nodejs_14)'],
+    ['-6', '--nodejs-6', 'Provides all settings to generate expression for usage with Node.js 6.x (default is: nodejs_14)'],
+    ['-8', '--nodejs-8', 'Provides all settings to generate expression for usage with Node.js 8.x (default is: nodejs_14)'],
+    ['-10', '--nodejs-10', 'Provides all settings to generate expression for usage with Node.js 10.x (default is: nodejs_14)'],
+    ['-12', '--nodejs-12', 'Provides all settings to generate expression for usage with Node.js 12.x (default is: nodejs_14)'],
+    ['-13', '--nodejs-13', 'Provides all settings to generate expression for usage with Node.js 13.x (default is: nodejs_14)'],
+    ['-14', '--nodejs-14', 'Provides all settings to generate expression for usage with Node.js 14.x (default is: nodejs_14)'],
+    ['-16', '--nodejs-16', 'Provides all settings to generate expression for usage with Node.js 16.x (default is: nodejs_14)'],
+    ['-18', '--nodejs-18', 'Provides all settings to generate expression for usage with Node.js 18.x (default is: nodejs_14)'],
     ['--supplement-input FILE', 'A supplement package JSON file that are passed as build inputs to all packages defined in the input JSON file'],
     ['--supplement-output FILE', 'Path to a Nix expression representing a supplementing set of Nix packages provided as inputs to a project (defaults to: supplement.nix)'],
     ['--include-peer-dependencies', 'Specifies whether to include peer dependencies. In npm 2.x, this is the default. (true by default for Node.js 16+)'],
@@ -57,7 +57,7 @@ var supplementNix = "supplement.nix";
 var nodeEnvNix = "node-env.nix";
 var lockJSON;
 var registries = [];
-var nodePackage = "nodejs-14_x";
+var nodePackage = "nodejs_14";
 var noCopyNodeEnv = false;
 var bypassCache = true;
 var useFetchGitPrivate = false;
@@ -138,14 +138,14 @@ parser.on('nodejs-8', function(arg, value) {
 
 parser.on('nodejs-10', function(arg, value) {
     flatten = true;
-    nodePackage = "nodejs-10_x";
+    nodePackage = "nodejs_10";
     bypassCache = true;
     includePeerDependencies = false;
 });
 
 parser.on('nodejs-12', function(arg, value) {
     flatten = true;
-    nodePackage = "nodejs-12_x";
+    nodePackage = "nodejs_12";
     bypassCache = true;
     includePeerDependencies = false;
 });
@@ -159,14 +159,14 @@ parser.on('nodejs-13', function(arg, value) {
 
 parser.on('nodejs-14', function(arg, value) {
     flatten = true;
-    nodePackage = "nodejs-14_x";
+    nodePackage = "nodejs_14";
     bypassCache = true;
     includePeerDependencies = false;
 });
 
 parser.on('nodejs-16', function(arg, value) {
     flatten = true;
-    nodePackage = "nodejs-16_x";
+    nodePackage = "nodejs_16";
     bypassCache = true;
     includePeerDependencies = true;
 });
@@ -180,7 +180,7 @@ parser.on('nodejs-17', function(arg, value) {
 
 parser.on('nodejs-18', function(arg, value) {
     flatten = true;
-    nodePackage = "nodejs-18_x";
+    nodePackage = "nodejs_18";
     bypassCache = true;
     includePeerDependencies = true;
 });
