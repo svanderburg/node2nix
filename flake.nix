@@ -18,9 +18,9 @@
         overlays = final: prev: { node2nix = node2nix; };
       in {
         packages.node2nix = node2nix;
-        defaultPackage = node2nix;
+        packages.default = node2nix;
         apps.node2nix = app;
-        defaultApp = app;
+        apps.default = app;
         nodeDependencies = nodeDependencies;
         nodeShell = shell;
         inherit overlays;
