@@ -6,7 +6,7 @@
 
 let
   nodeEnv = import ./nix/node-env.nix {
-    inherit (pkgs) stdenv lib python2 runCommand writeTextFile writeShellScript;
+    inherit (pkgs) stdenv lib python2 runCommand writeTextFile writeShellScript jq;
     inherit pkgs nodejs;
     libtool = if pkgs.stdenv.isDarwin then pkgs.darwin.cctools else null;
   };

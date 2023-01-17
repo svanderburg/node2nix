@@ -1,6 +1,6 @@
 # This file originates from node2nix
 
-{lib, stdenv, nodejs, python2, pkgs, libtool, runCommand, writeTextFile, writeShellScript}:
+{lib, stdenv, nodejs, python2, pkgs, libtool, runCommand, writeTextFile, writeShellScript, jq}:
 
 let
   # Workaround to cope with utillinux in Nixpkgs 20.09 and util-linux in Nixpkgs master
@@ -84,6 +84,16 @@ let
 
       # Change to the package directory to install dependencies
       cd "$DIR/$packageName"
+
+      # Patch shebangs in any binary files
+      if [ -f package.json ]; then
+        set +e
+        for file in $(cat package.json | ${jq}/bin/jq '((.bin // {}) | if type=="string" then [.] else (. | values) end) | .[]' -r); do
+          chmod u+x "$file"
+          patchShebangs "$file"
+        done
+        set -e
+      fi
     }
   '';
 
@@ -576,6 +586,7 @@ let
     , dontNpmInstall ? false
     , bypassCache ? false
     , reconstructLock ? false
+    , preRebuild ? ""
     , dontStrip ? true
     , unpackPhase ? "true"
     , buildPhase ? "true"
@@ -593,7 +604,7 @@ let
           ++ buildInputs;
 
         inherit dontStrip; # Stripping may fail a build for some package deployments
-        inherit dontNpmInstall unpackPhase buildPhase;
+        inherit dontNpmInstall preRebuild unpackPhase buildPhase;
 
         includeScript = includeDependencies { inherit dependencies; };
         pinpointDependenciesScript = pinpointDependenciesOfPackage args;
