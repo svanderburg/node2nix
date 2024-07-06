@@ -22,5 +22,6 @@
   "node-libcurl",
   "libxmljs",
   { "bcrypt": "3.0.x" },
-  { "next": "npm:@blitzjs/next@10.2.3-0.37.0" }
+  { "next": "npm:@blitzjs/next@10.2.3-0.37.0" },
+  { "abcd": "npm:@codingame/monaco-vscode-api@ >= 1.69.0 < 1.70.0" }
 ]
