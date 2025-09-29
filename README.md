@@ -41,7 +41,7 @@ Table of Contents
     - [Disable cache bypassing](#disable-cache-bypassing)
 - [Troubleshooting](#troubleshooting)
     - [Deploying peer dependencies](#deploying-peer-dependencies)
-    - [Stripping optional dependencies](#striping-optional-dependencies)
+    - [Stripping optional dependencies](#stripping-optional-dependencies)
     - [Updating the package lock file](#updating-the-package-lock-file)
     - [Creating a symlink to the node_modules folder in a shell session](#creating-a-symlink-to-the-node_modules-folder-in-a-shell-session)
     - [Disabling running NPM install](#disabling-running-npm-install)
